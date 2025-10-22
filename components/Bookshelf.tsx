@@ -261,8 +261,8 @@ export function Bookshelf({ books }: BookshelfProps) {
                   height={bookHeight}
                   flexShrink={0}
                   transformOrigin="right"
-                  backgroundColor={book.spineColor}
-                  color={book.textColor}
+                  backgroundColor={book.spineColor ?? "gray.200"}
+                  color={book.textColor ?? "gray.800"}
                   transform={`translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(${
                     bookIndex === index ? "-60deg" : "0deg"
                   }) rotateZ(0deg) skew(0deg, 0deg)`}
@@ -342,7 +342,7 @@ export function Bookshelf({ books }: BookshelfProps) {
                     }}
                   />
                   <Image
-                    src={book.coverImage}
+                    src={book.coverImage ?? "https://via.placeholder.com/166x220"}
                     alt={book.title}
                     width={coverWidth}
                     height={bookHeight}
