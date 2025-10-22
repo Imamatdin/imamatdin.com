@@ -8,12 +8,16 @@ export interface Book {
   slug: string;
   title: string;
   author: string;
-  link?: string;
-  status?: 'reading' | 'finished' | 'want-to-read';
-  year?: number;
-  rating?: number;
-  date?: string;
-  content?: string;
+  link?: string | null;
+  status?: 'reading' | 'finished' | 'want-to-read' | null;
+  year?: number | null;
+  rating?: number | null;
+  date?: string | null;
+  content?: string | null;
+  spineColor?: string | null;
+  textColor?: string | null;
+  coverImage?: string | null;
+  category?: string | string[] | null;
 }
 
 export function getAllBooks(): Book[] {
@@ -43,6 +47,9 @@ export function getAllBooks(): Book[] {
         rating: data.rating || null,
         date: data.date || null,
         content: content || null,
+        spineColor: data.spineColor || null,
+        textColor: data.textColor || null,
+        coverImage: data.coverImage || null,
         ...data,
       } as Book;
     });
