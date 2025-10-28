@@ -1,11 +1,12 @@
 import { serialize } from "next-mdx-remote/serialize";
+import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import path from "path";
 import fs from "fs";
 import remarkGfm from "remark-gfm";
 
 export interface Content<TMetadata = { [key: string]: any }> {
   metadata: TMetadata;
-  source: string;
+  source: MDXRemoteSerializeResult;
 }
 
 export type MaybeContent<TMetadata> = Content<TMetadata> | undefined;
@@ -29,12 +30,15 @@ export async function getMdxContent<TMetadata>(
 
   // Remove the ugly footnotes heading from react-gfm
   const footnotes =
-    /_jsx\(_components.h2, {.*?children: "Footnotes".*?}\), "\\n", /gs;
+    /_jsx\(_components.h2, {.*?children: "Footnotes".*?}\), "\\n", /g;
   const hr = ``;
   const compiledSource = source.compiledSource.replaceAll(footnotes, hr);
 
   return {
     metadata: source.frontmatter as TMetadata,
-    source: compiledSource,
+    source: {
+      ...source,
+      compiledSource,
+    },
   };
 }
