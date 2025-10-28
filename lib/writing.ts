@@ -21,7 +21,7 @@ export function getDeepDives(): DeepDive[] {
   );
 }
 
-export interface Post {
+export interface Post extends Record<string, any> {
   title: string;
   description: string;
   image: string;

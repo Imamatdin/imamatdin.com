@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import { ReactElement } from 'react';
 import { DefaultSeo } from 'next-seo';
 import { Lora } from '@next/font/google';
+import Head from 'next/head';
 
 const lora = Lora({ subsets: ['latin'], display: 'swap' });
 
@@ -65,6 +66,10 @@ export default function App({ Component, pageProps }: AppProps) {
   // PostHog analytics and other logic remains unchanged
   return (
     <ChakraProvider theme={theme}>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon-dark.ico" media="(prefers-color-scheme: dark)" />
+      </Head>
       <DefaultSeo title="Imamatdin | Personal Website" description="My personal website" />
       {getDefaultLayout(<Component {...pageProps} />)}
     </ChakraProvider>

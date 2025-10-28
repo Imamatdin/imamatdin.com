@@ -12,26 +12,30 @@ interface PostProps {
 }
 
 const Post: NextPageWithLayout<PostProps> = ({ post }) => {
+  if (!post.frontmatter) {
+    return null;
+  }
+
   return (
     <>
       <NextSeo
-        title={post.metadata.title}
-        description={post.metadata.description}
+        title={post.frontmatter.title}
+        description={post.frontmatter.description}
         openGraph={{
-          title: post.metadata.title,
-          description: post.metadata.description,
+          title: post.frontmatter.title,
+          description: post.frontmatter.description,
           images: [
             {
               url:
-                post.metadata.image || "https://adammaj.com/og-image-dark.jpg",
+                post.frontmatter.image || "https://adammaj.com/og-image-dark.jpg",
             },
           ],
         }}
       />
       <Flex direction="column" gap={2}>
-        <Heading size="lg">{post.metadata.title}</Heading>
+        <Heading size="lg">{post.frontmatter.title}</Heading>
         <Prose>
-          <MDXRemote compiledSource={post.source} />
+          <MDXRemote {...post} />
         </Prose>
       </Flex>
     </>

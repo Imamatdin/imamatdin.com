@@ -74,7 +74,7 @@ export function Bookshelf({ books }: BookshelfProps) {
       );
       setBookIndex(idx);
     }
-  }, []);
+  }, [bookIndex, books, router.query.slug]);
 
   React.useEffect(() => {
     if (bookIndex === -1) {
@@ -167,7 +167,7 @@ export function Bookshelf({ books }: BookshelfProps) {
         clearScrollInterval
       );
     };
-  }, [boundedRelativeScroll]);
+  }, [boundedRelativeScroll, scrollEvents]);
 
   return (
     <>
