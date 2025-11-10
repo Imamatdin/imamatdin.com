@@ -81,6 +81,7 @@ function Layout({ children }: PropsWithChildren) {
           <NavLink href="/reading">Reading</NavLink>
           <NavLink href="/writing">Writing</NavLink>
           <NavLink href="/deep-dives">Deep Dives</NavLink>
+          <NavLink href="/about">About</NavLink>
         </HStack>
         <Spacer />
         <ThemeToggleButton />
