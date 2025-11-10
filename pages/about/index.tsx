@@ -54,7 +54,7 @@ export default function About() {
           <Box>
             <Heading size="2xl" mb={4}>About Me</Heading>
             <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }} mb={4}>
-              Welcome! I'm Imamatdin, an 18-year-old passionate about emerging tech, engineering, and culture.
+              Welcome! I&apos;m Imamatdin, an 18-year-old passionate about emerging tech, engineering, and culture.
             </Text>
             <Text fontSize="md" color="gray.600" _dark={{ color: "gray.400" }}>
               Explore different aspects of my life, interests, and the people and ideas that have shaped my journey.

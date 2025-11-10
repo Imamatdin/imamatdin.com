@@ -24,7 +24,7 @@ export default function Culture() {
               [Replace this with your story about your Karakalpak background]
             </Text>
             <Text fontSize="md" lineHeight="1.7" mb={4}>
-              I'm incredibly proud of my heritage. During our cultural discussions, I had the honor of sharing my background and reading two poems from Ibrayim Yusupov to an audience of 30+ people.
+              I&apos;m incredibly proud of my heritage. During our cultural discussions, I had the honor of sharing my background and reading two poems from Ibrayim Yusupov to an audience of 30+ people.
             </Text>
           </Box>
 
