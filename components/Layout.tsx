@@ -1,4 +1,4 @@
-import { Container, VStack, Flex, HStack, Link, useColorModeValue, Spacer, Box } from "@chakra-ui/react";
+import { Container, VStack, Flex, HStack, useColorModeValue, Spacer, Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
 import { ThemeToggleButton } from "./ThemeToggleButton";
@@ -37,7 +37,7 @@ function MuseumIcon() {
   );
 
   return (
-    <Link href="/">
+    <NextLink href="/">
       <Box
         position="relative"
         width="40px"
@@ -58,7 +58,7 @@ function MuseumIcon() {
           }}
         />
       </Box>
-    </Link>
+    </NextLink>
   );
 }
 
