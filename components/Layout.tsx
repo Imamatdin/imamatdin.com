@@ -1,9 +1,10 @@
-import { Container, VStack, Flex, HStack, Link, useColorModeValue, Spacer, Box } from "@chakra-ui/react";
+import { Container, VStack, Flex, HStack, useColorModeValue, Spacer, Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
 import { ThemeToggleButton } from "./ThemeToggleButton";
 import Image from "next/image";
 import NextLink from "next/link";
+
 function NavLink({ href, children }: { href: string; children: string }) {
   const router = useRouter();
   const isActive = router.asPath === href;
@@ -32,20 +33,27 @@ function MuseumIcon() {
   const router = useRouter();
   const isActive = router.asPath === "/";
   const filter = useColorModeValue(
-    'none', // Light mode: no filter
-    'invert(1) brightness(0.9)' // Dark mode: invert colors
+    'none',
+    'invert(1) brightness(0.9)'
   );
 
   return (
-    <Link href="/">
+    <NextLink href="/">
       <Box
         position="relative"
         width="40px"
         height="40px"
         cursor="pointer"
         transition="all 0.2s"
-        opacity={isActive ? 1 : 0.7}
-        _hover={{ opacity: 1, transform: 'scale(1.05)' }}
+        style={{ opacity: isActive ? 1 : 0.7 }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.opacity = '1';
+          e.currentTarget.style.transform = 'scale(1.05)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.opacity = isActive ? '1' : '0.7';
+          e.currentTarget.style.transform = 'scale(1)';
+        }}
       >
         <Image
           src="/icons/museum-savitsky.png"
@@ -58,7 +66,7 @@ function MuseumIcon() {
           }}
         />
       </Box>
-    </Link>
+    </NextLink>
   );
 }
 
