@@ -235,23 +235,16 @@ export default function Reading({ books }: PageProps) {
                     }}
                     transition="all 0.2s"
                   >
-                    <HStack spacing={3} flex={1}>
-                      <NextLink href={`/books/${book.slug}`} passHref legacyBehavior>
-                        <ChakraLink
-                          fontSize="lg"
-                          fontWeight="medium"
-                          color={book.spineColor || 'red.600'}
-                          _dark={{ color: book.spineColor || 'red.400' }}
-                        >
-                          {book.title}
-                        </ChakraLink>
-                      </NextLink>
-                      {book.rating && (
-                        <Text fontSize="sm" color="yellow.500">
-                          {'★'.repeat(book.rating)}
-                        </Text>
-                      )}
-                    </HStack>
+                    <NextLink href={`/books/${book.slug}`} passHref legacyBehavior>
+                      <ChakraLink
+                        fontSize="lg"
+                        fontWeight="medium"
+                        color="accent"
+                        _hover={{ opacity: 0.8 }}
+                      >
+                        {book.title}
+                      </ChakraLink>
+                    </NextLink>
                     <Text fontSize="sm" color="gray.500" flexShrink={0}>
                       {date}
                     </Text>

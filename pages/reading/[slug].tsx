@@ -1,9 +1,11 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { Box, Container, Heading, Text, VStack, HStack, Tag } from '@chakra-ui/react';
+import { Box, Container, Heading, Text, VStack, HStack, Tag, Link as ChakraLink } from '@chakra-ui/react';
 import { getAllBooks, getBookBySlug, Book } from '../../lib/books';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import { NextSeo } from 'next-seo';
+import NextLink from 'next/link';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 
 interface BookPageProps {
   book: Book;
@@ -35,16 +37,11 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
                 by {book.author}
               </Text>
               
-              {book.rating && book.rating > 0 && book.rating <= 5 && (
-  <HStack spacing={1}>
-    <Text fontSize="lg" color="yellow.500">
-      {'★'.repeat(Math.min(book.rating, 5))}
-    </Text>
-    <Text fontSize="lg" color="gray.400">
-      {'★'.repeat(Math.max(5 - book.rating, 0))}
-    </Text>
-  </HStack>
-)}
+              {book.rating && (
+                <Text fontSize="lg" fontWeight="medium" color="accent">
+                  Rating: {book.rating}/10
+                </Text>
+              )}
             </HStack>
 
             {book.date && (
@@ -111,6 +108,34 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
           >
             <MDXRemote {...mdxSource} />
           </Box>
+
+          {/* Back to Bookshelf Button */}
+          <Box 
+            mt={12}
+            pt={6}
+            borderTop="1px solid"
+            borderColor="gray.200"
+            _dark={{ borderColor: "gray.700" }}
+          >
+            <NextLink href="/reading" passHref legacyBehavior>
+              <ChakraLink
+                display="inline-flex"
+                alignItems="center"
+                gap={2}
+                fontSize="lg"
+                fontWeight="medium"
+                color="accent"
+                transition="all 0.2s"
+                _hover={{
+                  textDecoration: "none",
+                  transform: "translateX(-4px)"
+                }}
+              >
+                <ArrowBackIcon />
+                Back to Bookshelf
+              </ChakraLink>
+            </NextLink>
+          </Box>
         </VStack>
       </Container>
     </>
@@ -142,7 +167,6 @@ export const getStaticProps: GetStaticProps<BookPageProps> = async ({ params }) 
 
   const mdxSource = await serialize(book.content || '');
 
-  // Remove content from book object to avoid duplication
   const { content, ...bookWithoutContent } = book;
 
   return {

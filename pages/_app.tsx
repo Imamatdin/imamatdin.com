@@ -15,9 +15,9 @@ const config: ThemeConfig = {
 
 const semanticTokens = {
   colors: {
-    background: { default: '#F5F1E8', _dark: '#2D323A' },
-    text: { default: '#4C4237', _dark: '#D8DCE2' },
-    accent: { default: '#8C2D2D', _dark: '#8AA895' },
+    background: { default: '#F5F1E8', _dark: '#1E1E1E' }, // Changed to black
+    text: { default: '#4C4237', _dark: '#FFE388' }, // Changed to yellow
+    accent: { default: '#8C2D2D', _dark: '#FFE388' }, // Changed to yellow for links
     subtle: { default: '#8C7D6B', _dark: '#7A828E' },
   },
 };

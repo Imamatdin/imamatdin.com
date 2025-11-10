@@ -5,29 +5,23 @@ import { ThemeToggleButton } from "./ThemeToggleButton";
 import Image from "next/image";
 import NextLink from "next/link";
 
-// Smarter NavLink with pill background on hover/active
+// NavLink without border decoration
 function NavLink({ href, children }: { href: string; children: string }) {
   const router = useRouter();
   const isActive = router.asPath === href;
   const activeColor = useColorModeValue("#8A5A20", "#f6c86e");
   const inactiveColor = useColorModeValue("#735824", "#f6c86e");
-  const activeBg = useColorModeValue("#fff8e1", "#22212b");
-  const hoverBg = useColorModeValue("#f0ead6", "#39394b");
 
   return (
     <NextLink href={href} passHref>
       <Box
         as="span"
-        py={1} px={3}
-        borderRadius="md"
         fontWeight={isActive ? "bold" : 500}
         color={isActive ? activeColor : inactiveColor}
         fontSize="md"
         cursor="pointer"
         transition="all 0.2s"
-        bg={isActive ? activeBg : "transparent"}
         _hover={{
-          background: hoverBg,
           color: activeColor,
         }}
       >
@@ -71,7 +65,6 @@ function MuseumIcon() {
 
 function Layout({ children }: PropsWithChildren) {
   const borderColor = useColorModeValue("#eee0b7", "#22212b");
-  const navBg = useColorModeValue("#fffbe8", "#22222e");
 
   return (
     <Container maxW="container.md" centerContent>
@@ -80,21 +73,17 @@ function Layout({ children }: PropsWithChildren) {
         width="100%"
         px={6} py={3} mb={8}
         align="center"
-        bg={navBg}
-        borderRadius="xl"
-        border="1px solid"
+        borderBottom="1px solid"
         borderColor={borderColor}
-        boxShadow="sm"
       >
         <HStack spacing={4} align="center">
           <MuseumIcon />
-          <NavLink href="/reading">Reading</NavLink>
-          <NavLink href="/writing">Writing</NavLink>
-          <NavLink href="/deep-dives">Deep Dives</NavLink>
-          <NavLink href="/about">About</NavLink>
         </HStack>
         <Spacer />
-        <ThemeToggleButton />
+        <HStack spacing={3} align="center">
+          <NavLink href="/about">About</NavLink>
+          <ThemeToggleButton />
+        </HStack>
       </Flex>
 
       <VStack width="100%" pb={16} align="flex-start" spacing={8}>
