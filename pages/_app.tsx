@@ -15,9 +15,9 @@ const config: ThemeConfig = {
 
 const semanticTokens = {
   colors: {
-    background: { default: '#F5F1E8', _dark: '#1E1E1E' }, // Changed to black
-    text: { default: '#4C4237', _dark: '#FFE388' }, // Changed to yellow
-    accent: { default: '#8C2D2D', _dark: '#FFE388' }, // Changed to yellow for links
+    background: { default: '#F5F1E8', _dark: '#1E1E1E' },
+    text: { default: '#4C4237', _dark: '#FFE388' },
+    accent: { default: '#8C2D2D', _dark: '#FFE388' },
     subtle: { default: '#8C7D6B', _dark: '#7A828E' },
   },
 };
@@ -41,7 +41,7 @@ const theme = extendTheme(
     semanticTokens,
     styles,
     components,
-    colors: { glow: '#87D3C3' }, // Your custom glow color
+    colors: { glow: '#87D3C3' },
     fonts: {
       heading: lora.style.fontFamily,
       body: lora.style.fontFamily,
@@ -62,10 +62,24 @@ const getDefaultLayout = (page: ReactElement) => (
 );
 
 export default function App({ Component, pageProps }: AppProps) {
-  // PostHog analytics and other logic remains unchanged
   return (
     <ChakraProvider theme={theme}>
-      <DefaultSeo title="Imamatdin | Personal Website" description="My personal website" />
+      <DefaultSeo 
+        title="Imamatdin Sultaniyazov" 
+        description="18-year-old passionate about emerging tech, engineering, and Karakalpak culture"
+        canonical="https://imamatdin.com"
+        openGraph={{
+          type: 'website',
+          locale: 'en_US',
+          url: 'https://imamatdin.com',
+          siteName: 'Imamatdin Sultaniyazov',
+        }}
+        twitter={{
+          handle: '@Imamatdin_S',
+          site: '@Imamatdin_S',
+          cardType: 'summary_large_image',
+        }}
+      />
       {getDefaultLayout(<Component {...pageProps} />)}
     </ChakraProvider>
   );
