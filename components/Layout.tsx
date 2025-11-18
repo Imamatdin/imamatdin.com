@@ -1,4 +1,4 @@
-import { Container, VStack, Flex, HStack, useColorModeValue, Spacer, Box } from "@chakra-ui/react";
+import { Container, VStack, Flex, HStack, useColorModeValue, Spacer, Box, Text, Link as ChakraLink } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
 import { ThemeToggleButton } from "./ThemeToggleButton";
@@ -63,6 +63,25 @@ function MuseumIcon() {
   );
 }
 
+// Footer link component
+function FooterLink({ href, children }: { href: string; children: string }) {
+  const linkColor = useColorModeValue("#8C2D2D", "#FFE388");
+
+  return (
+    <NextLink href={href} passHref legacyBehavior>
+      <ChakraLink
+        fontSize="md"
+        fontWeight="medium"
+        color={linkColor}
+        transition="opacity 0.2s"
+        _hover={{ opacity: 0.7 }}
+      >
+        {children}
+      </ChakraLink>
+    </NextLink>
+  );
+}
+
 function Layout({ children }: PropsWithChildren) {
   const borderColor = useColorModeValue("#eee0b7", "#22212b");
 
@@ -88,6 +107,26 @@ function Layout({ children }: PropsWithChildren) {
 
       <VStack width="100%" pb={16} align="flex-start" spacing={8}>
         {children}
+      </VStack>
+
+      {/* Footer */}
+      <VStack 
+        width="100%" 
+        py={8} 
+        spacing={3}
+        borderTop="1px solid"
+        borderColor={borderColor}
+        align="center"
+      >
+        <HStack spacing={4}>
+          <FooterLink href="/about">About</FooterLink>
+          <FooterLink href="/writing">Writing</FooterLink>
+          <FooterLink href="/reading">Bookshelf</FooterLink>
+          <FooterLink href="/deep-dives">Projects</FooterLink>
+        </HStack>
+        <Text fontSize="sm" color="gray.500">
+          © {new Date().getFullYear()} Imamatdin Sultaniyazov
+        </Text>
       </VStack>
     </Container>
   );

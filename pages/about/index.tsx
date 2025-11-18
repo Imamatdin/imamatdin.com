@@ -1,4 +1,4 @@
-import { Container, Heading, Text, VStack, SimpleGrid, Box, Icon, HStack, Link } from "@chakra-ui/react";
+import { Container, Heading, Text, VStack, Box, Icon, HStack, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { NextSeo } from "next-seo";
 import { FaGithub, FaLinkedin, FaEnvelope, FaTelegram, FaXTwitter } from "react-icons/fa6";
@@ -111,8 +111,8 @@ export default function About() {
         description="Learn more about me, my culture, interests, and influences"
       />
       
-      <Container maxW="5xl" py={12}>
-        <VStack align="stretch" spacing={8} mb={12}>
+      <Container maxW="4xl" py={12}>
+        <VStack align="stretch" spacing={12}>
           <Box>
             <Heading size="2xl" mb={4}>About Me</Heading>
             <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }} mb={4}>
@@ -122,93 +122,93 @@ export default function About() {
               Explore different aspects of my life, interests, and the people and ideas that have shaped my journey.
             </Text>
           </Box>
+
+          {/* Main Content Sections */}
+          <Box>
+            <Heading size="lg" mb={6} color="gray.500" _dark={{ color: "gray.400" }}>
+              Main Sections
+            </Heading>
+            <VStack align="stretch" spacing={4}>
+              {mainSections.map((section) => (
+                <NextLink key={section.href} href={section.href}>
+                  <Box cursor="pointer">
+                    <HStack spacing={3} mb={1}>
+                      <Text fontSize="xl">{section.emoji}</Text>
+                      <Text
+                        fontSize="lg"
+                        fontWeight="medium"
+                        color="red.600"
+                        _dark={{ color: "red.400" }}
+                        transition="opacity 0.2s"
+                        _hover={{ opacity: 0.7 }}
+                      >
+                        {section.title}
+                      </Text>
+                    </HStack>
+                    <Text fontSize="sm" color="gray.600" _dark={{ color: "gray.500" }} pl={10}>
+                      {section.description}
+                    </Text>
+                  </Box>
+                </NextLink>
+              ))}
+            </VStack>
+          </Box>
+
+          {/* About Me Sections */}
+          <Box>
+            <Heading size="lg" mb={6} color="gray.500" _dark={{ color: "gray.400" }}>
+              More About Me
+            </Heading>
+            <VStack align="stretch" spacing={4}>
+              {aboutSections.map((section) => (
+                <NextLink key={section.href} href={section.href}>
+                  <Box cursor="pointer">
+                    <HStack spacing={3} mb={1}>
+                      <Text fontSize="xl">{section.emoji}</Text>
+                      <Text
+                        fontSize="lg"
+                        fontWeight="medium"
+                        color="red.600"
+                        _dark={{ color: "red.400" }}
+                        transition="opacity 0.2s"
+                        _hover={{ opacity: 0.7 }}
+                      >
+                        {section.title}
+                      </Text>
+                    </HStack>
+                    <Text fontSize="sm" color="gray.600" _dark={{ color: "gray.500" }} pl={10}>
+                      {section.description}
+                    </Text>
+                  </Box>
+                </NextLink>
+              ))}
+            </VStack>
+          </Box>
+
+          {/* Social Links Section */}
+          <Box borderTop="1px solid" borderColor="gray.200" _dark={{ borderColor: "gray.700" }} pt={8}>
+            <HStack spacing={6} justify="center" flexWrap="wrap">
+              {socialLinks.map((social) => (
+                <Link
+                  key={social.label}
+                  href={social.href}
+                  isExternal
+                  _hover={{ transform: "translateY(-2px)" }}
+                  transition="all 0.2s"
+                >
+                  <Icon
+                    as={social.icon}
+                    boxSize={6}
+                    color="gray.600"
+                    _dark={{ color: "gray.400" }}
+                    _hover={{ color: social.color }}
+                    transition="color 0.2s"
+                  />
+                </Link>
+              ))}
+            </HStack>
+          </Box>
         </VStack>
-
-        {/* Main Content Sections */}
-        <Box mb={12}>
-          <Heading size="lg" mb={6}>Main Sections</Heading>
-          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
-            {mainSections.map((section) => (
-              <NextLink key={section.href} href={section.href}>
-                <Box
-                  p={6}
-                  borderRadius="lg"
-                  border="1px solid"
-                  borderColor="gray.200"
-                  _dark={{ borderColor: "gray.700" }}
-                  cursor="pointer"
-                  transition="all 0.2s"
-                  _hover={{
-                    transform: "translateY(-4px)",
-                    boxShadow: "lg",
-                    borderColor: "blue.400"
-                  }}
-                >
-                  <Text fontSize="4xl" mb={3}>{section.emoji}</Text>
-                  <Heading size="md" mb={2}>{section.title}</Heading>
-                  <Text fontSize="sm" color="gray.600" _dark={{ color: "gray.400" }}>
-                    {section.description}
-                  </Text>
-                </Box>
-              </NextLink>
-            ))}
-          </SimpleGrid>
-        </Box>
-
-        {/* About Me Sections */}
-        <Box mb={12}>
-          <Heading size="lg" mb={6}>More About Me</Heading>
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-            {aboutSections.map((section) => (
-              <NextLink key={section.href} href={section.href}>
-                <Box
-                  p={6}
-                  borderRadius="lg"
-                  border="1px solid"
-                  borderColor="gray.200"
-                  _dark={{ borderColor: "gray.700" }}
-                  cursor="pointer"
-                  transition="all 0.2s"
-                  _hover={{
-                    transform: "translateY(-4px)",
-                    boxShadow: "lg",
-                    borderColor: "blue.400"
-                  }}
-                >
-                  <Text fontSize="4xl" mb={3}>{section.emoji}</Text>
-                  <Heading size="md" mb={2}>{section.title}</Heading>
-                  <Text fontSize="sm" color="gray.600" _dark={{ color: "gray.400" }}>
-                    {section.description}
-                  </Text>
-                </Box>
-              </NextLink>
-            ))}
-          </SimpleGrid>
-        </Box>
-
-        {/* Social Links Section - At the bottom */}
-        <Box borderTop="1px solid" borderColor="gray.200" _dark={{ borderColor: "gray.700" }} pt={8}>
-          <HStack spacing={6} justify="center" flexWrap="wrap">
-            {socialLinks.map((social) => (
-              <Link
-                key={social.label}
-                href={social.href}
-                isExternal
-                _hover={{ transform: "translateY(-2px)" }}
-                transition="all 0.2s"
-              >
-                <Icon
-                  as={social.icon}
-                  boxSize={6}
-                  color="gray.600"
-                  _dark={{ color: "gray.400" }}
-                  _hover={{ color: social.color }}
-                  transition="color 0.2s"
-                />
-              </Link>
-            ))}
-          </HStack>
-        </Box>
       </Container>
     </>
   );
