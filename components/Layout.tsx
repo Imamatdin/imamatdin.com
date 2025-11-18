@@ -1,9 +1,11 @@
-import { Container, VStack, Flex, HStack, useColorModeValue, Spacer, Box, Text, Link as ChakraLink } from "@chakra-ui/react";
+import { Container, VStack, Flex, HStack, useColorModeValue, Spacer, Box, Text, Link as ChakraLink, Icon } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
 import { ThemeToggleButton } from "./ThemeToggleButton";
 import Image from "next/image";
 import NextLink from "next/link";
+import { FaGithub, FaLinkedin, FaEnvelope, FaTelegram, FaXTwitter } from "react-icons/fa6";
+import { SiSubstack } from "react-icons/si";
 
 // NavLink without border decoration
 function NavLink({ href, children }: { href: string; children: string }) {
@@ -124,6 +126,71 @@ function Layout({ children }: PropsWithChildren) {
           <FooterLink href="/reading">Bookshelf</FooterLink>
           <FooterLink href="/deep-dives">Projects</FooterLink>
         </HStack>
+        
+        {/* Social Icons */}
+        <HStack spacing={5} pt={1}>
+          <ChakraLink href="https://twitter.com/Imamatdin_S" isExternal>
+            <Icon
+              as={FaXTwitter}
+              boxSize={5}
+              color="gray.500"
+              _hover={{ color: "gray.700" }}
+              _dark={{ color: "gray.500", _hover: { color: "gray.300" } }}
+              transition="color 0.2s"
+            />
+          </ChakraLink>
+          <ChakraLink href="https://github.com/Imamatdin" isExternal>
+            <Icon
+              as={FaGithub}
+              boxSize={5}
+              color="gray.500"
+              _hover={{ color: "gray.700" }}
+              _dark={{ color: "gray.500", _hover: { color: "gray.300" } }}
+              transition="color 0.2s"
+            />
+          </ChakraLink>
+          <ChakraLink href="https://www.linkedin.com/in/imamatdin-sultaniyazov" isExternal>
+            <Icon
+              as={FaLinkedin}
+              boxSize={5}
+              color="gray.500"
+              _hover={{ color: "gray.700" }}
+              _dark={{ color: "gray.500", _hover: { color: "gray.300" } }}
+              transition="color 0.2s"
+            />
+          </ChakraLink>
+          <ChakraLink href="https://www.substack.com/@imamatdinsultaniyazov" isExternal>
+            <Icon
+              as={SiSubstack}
+              boxSize={5}
+              color="gray.500"
+              _hover={{ color: "gray.700" }}
+              _dark={{ color: "gray.500", _hover: { color: "gray.300" } }}
+              transition="color 0.2s"
+            />
+          </ChakraLink>
+          <ChakraLink href="https://t.me/Imamatdin_Sultaniyazov" isExternal>
+            <Icon
+              as={FaTelegram}
+              boxSize={5}
+              color="gray.500"
+              _hover={{ color: "gray.700" }}
+              _dark={{ color: "gray.500", _hover: { color: "gray.300" } }}
+              transition="color 0.2s"
+            />
+          </ChakraLink>
+          <ChakraLink href="mailto:imamatdinsultniyazov@gmail.com" isExternal>
+            <Icon
+              as={FaEnvelope}
+              boxSize={5}
+              color="gray.500"
+              _hover={{ color: "gray.700" }}
+              _dark={{ color: "gray.500", _hover: { color: "gray.300" } }}
+              transition="color 0.2s"
+            />
+          </ChakraLink>
+        </HStack>
+        
         <Text fontSize="sm" color="gray.500">
           © {new Date().getFullYear()} Imamatdin Sultaniyazov
         </Text>

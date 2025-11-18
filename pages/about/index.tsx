@@ -1,8 +1,6 @@
-import { Container, Heading, Text, VStack, Box, Icon, HStack, Link } from "@chakra-ui/react";
+import { Container, Heading, Text, VStack, Box, HStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { NextSeo } from "next-seo";
-import { FaGithub, FaLinkedin, FaEnvelope, FaTelegram, FaXTwitter } from "react-icons/fa6";
-import { SiSubstack } from "react-icons/si";
 
 const mainSections = [
   {
@@ -64,45 +62,6 @@ const aboutSections = [
   }
 ];
 
-const socialLinks = [
-  {
-    icon: FaXTwitter,
-    href: "https://twitter.com/Imamatdin_S",
-    label: "X (Twitter)",
-    color: "#000000"
-  },
-  {
-    icon: FaGithub,
-    href: "https://github.com/Imamatdin",
-    label: "GitHub",
-    color: "#333"
-  },
-  {
-    icon: FaLinkedin,
-    href: "https://www.linkedin.com/in/imamatdin-sultaniyazov",
-    label: "LinkedIn",
-    color: "#0A66C2"
-  },
-  {
-    icon: SiSubstack,
-    href: "https://www.substack.com/@imamatdinsultaniyazov",
-    label: "Substack",
-    color: "#FF6719"
-  },
-  {
-    icon: FaTelegram,
-    href: "https://t.me/Imamatdin_Sultaniyazov",
-    label: "Telegram",
-    color: "#0088cc"
-  },
-  {
-    icon: FaEnvelope,
-    href: "mailto:imamatdinsultniyazov@gmail.com",
-    label: "Email",
-    color: "#EA4335"
-  }
-];
-
 export default function About() {
   return (
     <>
@@ -133,7 +92,7 @@ export default function About() {
                 <NextLink key={section.href} href={section.href}>
                   <Box cursor="pointer">
                     <HStack spacing={3} mb={1}>
-                      <Text fontSize="xl">{section.emoji}</Text>
+                      <Text fontSize="xl" as="span">{section.emoji}</Text>
                       <Text
                         fontSize="lg"
                         fontWeight="medium"
@@ -164,7 +123,7 @@ export default function About() {
                 <NextLink key={section.href} href={section.href}>
                   <Box cursor="pointer">
                     <HStack spacing={3} mb={1}>
-                      <Text fontSize="xl">{section.emoji}</Text>
+                      <Text fontSize="xl" as="span">{section.emoji}</Text>
                       <Text
                         fontSize="lg"
                         fontWeight="medium"
@@ -183,30 +142,6 @@ export default function About() {
                 </NextLink>
               ))}
             </VStack>
-          </Box>
-
-          {/* Social Links Section */}
-          <Box borderTop="1px solid" borderColor="gray.200" _dark={{ borderColor: "gray.700" }} pt={8}>
-            <HStack spacing={6} justify="center" flexWrap="wrap">
-              {socialLinks.map((social) => (
-                <Link
-                  key={social.label}
-                  href={social.href}
-                  isExternal
-                  _hover={{ transform: "translateY(-2px)" }}
-                  transition="all 0.2s"
-                >
-                  <Icon
-                    as={social.icon}
-                    boxSize={6}
-                    color="gray.600"
-                    _dark={{ color: "gray.400" }}
-                    _hover={{ color: social.color }}
-                    transition="color 0.2s"
-                  />
-                </Link>
-              ))}
-            </HStack>
           </Box>
         </VStack>
       </Container>
