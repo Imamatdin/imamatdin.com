@@ -32,7 +32,7 @@ export default function Poetry({ poems }: PageProps) {
       <Container maxW="4xl" py={12}>
         <Heading size="2xl" mb={2}>Poetry & Art</Heading>
         <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }} mb={12}>
-          Poems I've encountered and my reflections on them.
+          Poems I&apos;ve encountered and my reflections on them.
         </Text>
 
         <VStack spacing={10} align="stretch">
