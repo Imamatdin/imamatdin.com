@@ -3,14 +3,14 @@
     "title": "Zero Knowlege Mastermind",
     "description": "Smart-contract based mastermind game secured with zero knowlege proofs.",
     "date": "November 14, 2022",
-    "image": "https://github.com/adam-maj/zk-mastermind/raw/main/public/mastermind.png",
-    "url": "https://zk-mastermind.vercel.app"
+    "image": "",
+    "url": ""
   },
   {
     "title": "Dovetale",
     "description": "An affiliate and influencer marketing platform where I built machine learning algorithms to improve search, and worked as a full-stack engineer. Later acquired by Shopify.",
     "date": "March 31, 2021",
-    "image": "https://talkcmo.com/wp-content/uploads/2020/02/Dovetale-Launches-Integration-With-Shopify-to-Help-Brands-Track-Influencer-Marketing-Conversions-and-Speed-Up-Process-Working-With-Creators.jpg",
+    "image": "",
     "url": "https://dovetale.com/"
   },
   {

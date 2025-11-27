@@ -1,66 +1,6 @@
-import { Container, Heading, Text, VStack, Box, HStack } from "@chakra-ui/react";
+import { Container, Heading, Text, VStack, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { NextSeo } from "next-seo";
-
-const mainSections = [
-  {
-    title: "Reading",
-    emoji: "📚",
-    href: "/reading",
-    description: "Books I'm reading and my notes on them"
-  },
-  {
-    title: "Writing",
-    emoji: "✍️",
-    href: "/writing",
-    description: "My essays, thoughts, and reflections"
-  },
-  {
-    title: "Deep Dives",
-    emoji: "🔍",
-    href: "/deep-dives",
-    description: "In-depth explorations of topics I'm passionate about"
-  }
-];
-
-const aboutSections = [
-  {
-    title: "My Culture",
-    emoji: "📜",
-    href: "/about/culture",
-    description: "My Karakalpak heritage and cultural background"
-  },
-  {
-    title: "Poetry & Art",
-    emoji: "🎨",
-    href: "/about/poetry",
-    description: "Poems I've read and reflections on art"
-  },
-  {
-    title: "Idea Diary",
-    emoji: "💡",
-    href: "/about/ideas",
-    description: "Reflections on ideas and how I came to learn about them"
-  },
-  {
-    title: "Academic Influences",
-    emoji: "🎓",
-    href: "/about/academics",
-    description: "Professors and forgotten scientists who shaped my path"
-  },
-  {
-    title: "Podcasts",
-    emoji: "🎙️",
-    href: "/about/podcasts",
-    description: "Podcasts I listen to and recommend"
-  },
-  {
-    title: "Fun Facts",
-    emoji: "✨",
-    href: "/about/facts",
-    description: "Interesting things about me"
-  }
-];
 
 export default function About() {
   return (
@@ -70,79 +10,75 @@ export default function About() {
         description="Learn more about me, my culture, interests, and influences"
       />
       
-      <Container maxW="4xl" py={12}>
-        <VStack align="stretch" spacing={12}>
-          <Box>
-            <Heading size="2xl" mb={4}>About Me</Heading>
-            <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }} mb={4}>
-              Welcome! I'm Imamatdin, an 18-year-old passionate about emerging tech, engineering, and culture.
-            </Text>
-            <Text fontSize="md" color="gray.600" _dark={{ color: "gray.400" }}>
-              Explore different aspects of my life, interests, and the people and ideas that have shaped my journey.
-            </Text>
-          </Box>
+      <Container maxW="2xl" py={12}>
+        <VStack align="stretch" spacing={8}>
+          <Heading size="2xl">About</Heading>
+          
+          <Text fontSize="lg" lineHeight="tall">
+            I'm Imamatdin, an 18-year-old from Karakalpakstan passionate about emerging tech, 
+            engineering, and culture. I'm currently in a gap year preparing university applications 
+            while working on technical projects and content creation.
+          </Text>
 
-          {/* Main Content Sections */}
-          <Box>
-            <Heading size="lg" mb={6} color="gray.500" _dark={{ color: "gray.400" }}>
-              Main Sections
-            </Heading>
-            <VStack align="stretch" spacing={4}>
-              {mainSections.map((section) => (
-                <NextLink key={section.href} href={section.href}>
-                  <Box cursor="pointer">
-                    <HStack spacing={3} mb={1}>
-                      <Text fontSize="xl" as="span">{section.emoji}</Text>
-                      <Text
-                        fontSize="lg"
-                        fontWeight="medium"
-                        color="red.600"
-                        _dark={{ color: "red.400" }}
-                        transition="opacity 0.2s"
-                        _hover={{ opacity: 0.7 }}
-                      >
-                        {section.title}
-                      </Text>
-                    </HStack>
-                    <Text fontSize="sm" color="gray.600" _dark={{ color: "gray.500" }} pl={10}>
-                      {section.description}
-                    </Text>
-                  </Box>
-                </NextLink>
-              ))}
-            </VStack>
-          </Box>
+          <Text fontSize="lg" lineHeight="tall">
+            I spend my time building things—from reinforcement learning simulations for datacenter 
+            cooling to Telegram bots for digital libraries. I'm drawn to systems that bridge 
+            theory and practice, whether that's in code, research, or writing.
+          </Text>
 
-          {/* About Me Sections */}
-          <Box>
-            <Heading size="lg" mb={6} color="gray.500" _dark={{ color: "gray.400" }}>
-              More About Me
-            </Heading>
-            <VStack align="stretch" spacing={4}>
-              {aboutSections.map((section) => (
-                <NextLink key={section.href} href={section.href}>
-                  <Box cursor="pointer">
-                    <HStack spacing={3} mb={1}>
-                      <Text fontSize="xl" as="span">{section.emoji}</Text>
-                      <Text
-                        fontSize="lg"
-                        fontWeight="medium"
-                        color="red.600"
-                        _dark={{ color: "red.400" }}
-                        transition="opacity 0.2s"
-                        _hover={{ opacity: 0.7 }}
-                      >
-                        {section.title}
-                      </Text>
-                    </HStack>
-                    <Text fontSize="sm" color="gray.600" _dark={{ color: "gray.500" }} pl={10}>
-                      {section.description}
-                    </Text>
-                  </Box>
-                </NextLink>
-              ))}
-            </VStack>
-          </Box>
+          <Text fontSize="lg" lineHeight="tall">
+            You can explore my{" "}
+            <Link as={NextLink} href="/reading" color="red.600" _dark={{ color: "red.400" }}>
+              reading notes
+            </Link>
+            ,{" "}
+            <Link as={NextLink} href="/writing" color="red.600" _dark={{ color: "red.400" }}>
+              essays and reflections
+            </Link>
+            , or{" "}
+            <Link as={NextLink} href="/deep-dives" color="red.600" _dark={{ color: "red.400" }}>
+              deep dives
+            </Link>
+            {" "}into topics I care about.
+          </Text>
+
+          <Text fontSize="lg" lineHeight="tall">
+            I'm fascinated by Russian literature—Dostoevsky, Tolstoy, Chekhov—and 
+            philosophy from Nietzsche to Camus to Aristotle. I perform Ibrayim Yusupov poems 
+            reflecting my Karakalpak heritage. You can read about{" "}
+            <Link as={NextLink} href="/about/culture" color="red.600" _dark={{ color: "red.400" }}>
+              my culture
+            </Link>
+            {" "}and the{" "}
+            <Link as={NextLink} href="/about/poetry" color="red.600" _dark={{ color: "red.400" }}>
+              poetry and art
+            </Link>
+            {" "}that moves me.
+          </Text>
+
+          <Text fontSize="lg" lineHeight="tall">
+            I keep an{" "}
+            <Link as={NextLink} href="/about/ideas" color="red.600" _dark={{ color: "red.400" }}>
+              idea diary
+            </Link>
+            {" "}documenting how I encounter and develop thoughts. I write about{" "}
+            <Link as={NextLink} href="/about/academics" color="red.600" _dark={{ color: "red.400" }}>
+              professors and forgotten scientists
+            </Link>
+            {" "}who've shaped my path, and share{" "}
+            <Link as={NextLink} href="/about/podcasts" color="red.600" _dark={{ color: "red.400" }}>
+              podcasts
+            </Link>
+            {" "}I listen to and{" "}
+            <Link as={NextLink} href="/about/facts" color="red.600" _dark={{ color: "red.400" }}>
+              interesting things
+            </Link>
+            {" "}about myself.
+          </Text>
+
+          <Text fontSize="lg" lineHeight="tall" color="gray.600" _dark={{ color: "gray.400" }}>
+            You are here, in the wilderness of my mind.
+          </Text>
         </VStack>
       </Container>
     </>

@@ -7,12 +7,12 @@ import NextLink from "next/link";
 import { FaGithub, FaLinkedin, FaEnvelope, FaTelegram, FaXTwitter } from "react-icons/fa6";
 import { SiSubstack } from "react-icons/si";
 
-// NavLink without border decoration
+// NavLink with Flexoki colors
 function NavLink({ href, children }: { href: string; children: string }) {
   const router = useRouter();
   const isActive = router.asPath === href;
-  const activeColor = useColorModeValue("#8A5A20", "#f6c86e");
-  const inactiveColor = useColorModeValue("#735824", "#f6c86e");
+  const activeColor = useColorModeValue("#BC5215", "#DA702C"); // Flexoki orange-600 / orange-400
+  const inactiveColor = useColorModeValue("#6F6E69", "#878580"); // Flexoki base-600 / base-500
 
   return (
     <NextLink href={href} passHref>
@@ -65,9 +65,9 @@ function MuseumIcon() {
   );
 }
 
-// Footer link component
+// Footer link component with Flexoki colors
 function FooterLink({ href, children }: { href: string; children: string }) {
-  const linkColor = useColorModeValue("#8C2D2D", "#FFE388");
+  const linkColor = useColorModeValue("#BC5215", "#DA702C"); // Flexoki orange-600 / orange-400
 
   return (
     <NextLink href={href} passHref legacyBehavior>
@@ -85,7 +85,7 @@ function FooterLink({ href, children }: { href: string; children: string }) {
 }
 
 function Layout({ children }: PropsWithChildren) {
-  const borderColor = useColorModeValue("#eee0b7", "#22212b");
+  const borderColor = useColorModeValue("#E6E4D9", "#282726"); // Flexoki base-100 / base-900
 
   return (
     <Container maxW="container.md" centerContent>
@@ -103,6 +103,9 @@ function Layout({ children }: PropsWithChildren) {
         <Spacer />
         <HStack spacing={3} align="center">
           <NavLink href="/about">About</NavLink>
+          <Box display={{ base: "none", md: "block" }}>
+            <NavLink href="/now">Now</NavLink>
+          </Box>
           <ThemeToggleButton />
         </HStack>
       </Flex>
