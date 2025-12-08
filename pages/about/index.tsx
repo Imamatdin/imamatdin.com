@@ -73,7 +73,11 @@ export default function About() {
             <Link as={NextLink} href="/about/facts" color="accent">
               interesting things
             </Link>
-            {" "}about myself.
+            {" "}about myself. You can also see my{" "}
+            <Link as={NextLink} href="/about/stack" color="accent">
+              tools and stack
+            </Link>
+            .
           </Text>
 
           <Text fontSize="lg" lineHeight="tall" color="gray.600" _dark={{ color: "gray.400" }}>
