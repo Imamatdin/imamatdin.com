@@ -6,17 +6,19 @@ export const ThemeToggleButton = () => {
   const isLight = colorMode === 'light';
 
   return (
-    <Box 
-      onClick={toggleColorMode} 
-      bg={isLight ? 'gray.200' : 'gray.600'} 
-      width="48px" 
-      height="24px" 
-      borderRadius="full" 
-      p="2px" 
-      cursor="pointer" 
-      transition="background-color 0.3s ease" 
-      display="flex" 
+    <Box
+      onClick={toggleColorMode}
+      bg={isLight ? 'gray.200' : 'gray.600'}
+      width="48px"
+      height="24px"
+      borderRadius="full"
+      p="2px"
+      cursor="pointer"
+      transition="background-color 0.3s ease"
+      display="flex"
       alignItems="center"
+      role="button"
+      aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
     >
       <Box 
         as="div" 

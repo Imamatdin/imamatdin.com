@@ -235,7 +235,7 @@ export default function Reading({ books }: PageProps) {
                     }}
                     transition="all 0.2s"
                   >
-                    <NextLink href={`/books/${book.slug}`} passHref legacyBehavior>
+                    <NextLink href={`/reading/${book.slug}`} passHref legacyBehavior>
                       <ChakraLink
                         fontSize="lg"
                         fontWeight="medium"

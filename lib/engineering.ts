@@ -27,6 +27,6 @@ export function getAllSlugs(): string[] {
   return data.filter((item) => !item.external).map((item) => item.url);
 }
 
-export async function getBuil(slug: string): Promise<MaybeContent<Build>> {
+export async function getBuild(slug: string): Promise<MaybeContent<Build>> {
   return getMdxContent<Build>("engineering", `${slug}.mdx`);
 }
