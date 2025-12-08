@@ -28,15 +28,15 @@ export default function About() {
 
           <Text fontSize="lg" lineHeight="tall">
             You can explore my{" "}
-            <Link as={NextLink} href="/reading" color="red.600" _dark={{ color: "red.400" }}>
+            <Link as={NextLink} href="/reading" color="accent">
               reading notes
             </Link>
             ,{" "}
-            <Link as={NextLink} href="/writing" color="red.600" _dark={{ color: "red.400" }}>
+            <Link as={NextLink} href="/writing" color="accent">
               essays and reflections
             </Link>
             , or{" "}
-            <Link as={NextLink} href="/deep-dives" color="red.600" _dark={{ color: "red.400" }}>
+            <Link as={NextLink} href="/deep-dives" color="accent">
               deep dives
             </Link>
             {" "}into topics I care about.
@@ -46,11 +46,11 @@ export default function About() {
             I'm fascinated by Russian literature—Dostoevsky, Tolstoy, Chekhov—and 
             philosophy from Nietzsche to Camus to Aristotle. I perform Ibrayim Yusupov poems 
             reflecting my Karakalpak heritage. You can read about{" "}
-            <Link as={NextLink} href="/about/culture" color="red.600" _dark={{ color: "red.400" }}>
+            <Link as={NextLink} href="/about/culture" color="accent">
               my culture
             </Link>
             {" "}and the{" "}
-            <Link as={NextLink} href="/about/poetry" color="red.600" _dark={{ color: "red.400" }}>
+            <Link as={NextLink} href="/about/poetry" color="accent">
               poetry and art
             </Link>
             {" "}that moves me.
@@ -58,22 +58,26 @@ export default function About() {
 
           <Text fontSize="lg" lineHeight="tall">
             I keep an{" "}
-            <Link as={NextLink} href="/about/ideas" color="red.600" _dark={{ color: "red.400" }}>
+            <Link as={NextLink} href="/about/ideas" color="accent">
               idea diary
             </Link>
             {" "}documenting how I encounter and develop thoughts. I write about{" "}
-            <Link as={NextLink} href="/about/academics" color="red.600" _dark={{ color: "red.400" }}>
+            <Link as={NextLink} href="/about/academics" color="accent">
               professors and forgotten scientists
             </Link>
             {" "}who've shaped my path, and share{" "}
-            <Link as={NextLink} href="/about/podcasts" color="red.600" _dark={{ color: "red.400" }}>
+            <Link as={NextLink} href="/about/podcasts" color="accent">
               podcasts
             </Link>
             {" "}I listen to and{" "}
-            <Link as={NextLink} href="/about/facts" color="red.600" _dark={{ color: "red.400" }}>
+            <Link as={NextLink} href="/about/facts" color="accent">
               interesting things
             </Link>
-            {" "}about myself.
+            {" "}about myself. You can also see my{" "}
+            <Link as={NextLink} href="/about/stack" color="accent">
+              tools and stack
+            </Link>
+            .
           </Text>
 
           <Text fontSize="lg" lineHeight="tall" color="gray.600" _dark={{ color: "gray.400" }}>

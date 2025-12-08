@@ -11,8 +11,8 @@ import { SiSubstack } from "react-icons/si";
 function NavLink({ href, children }: { href: string; children: string }) {
   const router = useRouter();
   const isActive = router.asPath === href;
-  const activeColor = useColorModeValue("#BC5215", "#DA702C"); // Flexoki orange-600 / orange-400
-  const inactiveColor = useColorModeValue("#6F6E69", "#878580"); // Flexoki base-600 / base-500
+  const activeColor = useColorModeValue("#BC5215", "#DA702C") as string; // Flexoki orange-600 / orange-400
+  const inactiveColor = useColorModeValue("#6F6E69", "#878580") as string; // Flexoki base-600 / base-500
 
   return (
     <NextLink href={href} passHref>
@@ -37,7 +37,7 @@ function NavLink({ href, children }: { href: string; children: string }) {
 function MuseumIcon() {
   const router = useRouter();
   const isActive = router.asPath === "/";
-  const filter = useColorModeValue('none', 'invert(1) brightness(0.9)');
+  const filter = useColorModeValue('none', 'invert(1) brightness(0.9)') as string;
 
   return (
     <NextLink href="/" passHref>
@@ -67,7 +67,7 @@ function MuseumIcon() {
 
 // Footer link component with Flexoki colors
 function FooterLink({ href, children }: { href: string; children: string }) {
-  const linkColor = useColorModeValue("#BC5215", "#DA702C"); // Flexoki orange-600 / orange-400
+  const linkColor = useColorModeValue("#BC5215", "#DA702C") as string; // Flexoki orange-600 / orange-400
 
   return (
     <NextLink href={href} passHref legacyBehavior>
@@ -85,17 +85,19 @@ function FooterLink({ href, children }: { href: string; children: string }) {
 }
 
 function Layout({ children }: PropsWithChildren) {
-  const borderColor = useColorModeValue("#E6E4D9", "#282726"); // Flexoki base-100 / base-900
+  const borderColor = useColorModeValue("#E6E4D9", "#282726") as string; // Flexoki base-100 / base-900
 
   return (
     <Container maxW="container.md" centerContent>
-      <Flex
+      <Box
         as="nav"
+        display="flex"
         width="100%"
-        px={6} py={3} mb={8}
-        align="center"
-        borderBottom="1px solid"
-        borderColor={borderColor}
+        px={6}
+        py={3}
+        mb={8}
+        alignItems="center"
+        borderBottom={`1px solid ${borderColor}`}
       >
         <HStack spacing={4} align="center">
           <MuseumIcon />
@@ -108,7 +110,7 @@ function Layout({ children }: PropsWithChildren) {
           </Box>
           <ThemeToggleButton />
         </HStack>
-      </Flex>
+      </Box>
 
       <VStack width="100%" pb={16} align="flex-start" spacing={8}>
         {children}

@@ -6,29 +6,24 @@ export const ThemeToggleButton = () => {
   const isLight = colorMode === 'light';
 
   return (
-    <Box 
-      as="button"  // Makes it a proper button element
-      onClick={toggleColorMode} 
-      bg={isLight ? 'gray.200' : 'gray.600'} 
-      width="48px" 
-      height="24px" 
-      borderRadius="full" 
-      p="2px" 
-      cursor="pointer" 
-      transition="background-color 0.3s ease" 
-      display="flex" 
+    <Box
+      as="button"
+      onClick={toggleColorMode}
+      bg={isLight ? 'gray.200' : 'gray.600'}
+      width="48px"
+      height="24px"
+      borderRadius="full"
+      p="2px"
+      cursor="pointer"
+      transition="background-color 0.3s ease"
+      display="flex"
       alignItems="center"
-      border="none"  // Removes default button border
-      outline="none"  // Removes the blue focus outline
-      _focus={{
-        boxShadow: 'none'  // Removes focus box shadow
-      }}
-      _active={{
-        transform: 'scale(0.95)'  // Adds a nice press effect
-      }}
-      _hover={{
-        opacity: 0.8  // Subtle hover feedback
-      }}
+      border="none"
+      outline="none"
+      aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
+      _focus={{ boxShadow: 'none' }}
+      _active={{ transform: 'scale(0.95)' }}
+      _hover={{ opacity: 0.8 }}
     >
       <Box 
         as="div" 

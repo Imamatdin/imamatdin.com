@@ -1,7 +1,14 @@
-import { Container, Heading, Text, VStack, Box, HStack, Badge } from "@chakra-ui/react";
+import { Container, Heading, Text, VStack, Box, HStack, Badge, useColorModeValue } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 
 export default function Now() {
+  const textColor = useColorModeValue("gray.600", "gray.400") as string;
+  const boxBg = useColorModeValue("orange.50", "gray.800") as string;
+  const boxBorderColor = useColorModeValue("orange.500", "orange.400") as string;
+  const urgentTextColor = useColorModeValue("red.600", "red.400") as string;
+  const footerBorderColor = useColorModeValue("gray.200", "gray.700") as string;
+  const footerTextColor = useColorModeValue("gray.600", "gray.400") as string;
+
   return (
     <>
       <NextSeo
@@ -13,8 +20,8 @@ export default function Now() {
         <VStack align="stretch" spacing={8}>
           <Box>
             <Heading size="2xl" mb={2}>Now</Heading>
-            <Text fontSize="md" color="gray.600" _dark={{ color: "gray.400" }}>
-              Last updated: November 27, 2025
+            <Text fontSize="md" color={textColor}>
+              Last updated: December 8, 2025
             </Text>
           </Box>
 
@@ -32,13 +39,12 @@ export default function Now() {
               <Box 
                 p={4} 
                 borderLeft="3px solid" 
-                borderColor="orange.500"
-                bg="orange.50"
-                _dark={{ bg: "gray.800", borderColor: "orange.400" }}
+                borderColor={boxBorderColor}
+                bg={boxBg}
               >
                 <HStack mb={2}>
                   <Badge colorScheme="red" fontSize="xs">DUE TONIGHT</Badge>
-                  <Text fontSize="sm" fontWeight="bold" color="red.600" _dark={{ color: "red.400" }}>
+                  <Text fontSize="sm" fontWeight="bold" color={urgentTextColor}>
                     December 13, 2025
                   </Text>
                 </HStack>
@@ -55,13 +61,12 @@ export default function Now() {
               <Box 
                 p={4} 
                 borderLeft="3px solid" 
-                borderColor="orange.500"
-                bg="orange.50"
-                _dark={{ bg: "gray.800", borderColor: "orange.400" }}
+                borderColor={boxBorderColor}
+                bg={boxBg}
               >
                 <HStack mb={2}>
                   <Badge colorScheme="red" fontSize="xs">DUE TONIGHT</Badge>
-                  <Text fontSize="sm" fontWeight="bold" color="red.600" _dark={{ color: "red.400" }}>
+                  <Text fontSize="sm" fontWeight="bold" color={urgentTextColor}>
                     December 13, 2025
                   </Text>
                 </HStack>
@@ -78,13 +83,12 @@ export default function Now() {
               <Box 
                 p={4} 
                 borderLeft="3px solid" 
-                borderColor="orange.500"
-                bg="orange.50"
-                _dark={{ bg: "gray.800", borderColor: "orange.400" }}
+                borderColor={boxBorderColor}
+                bg={boxBg}
               >
                 <HStack mb={2}>
                   <Badge colorScheme="red" fontSize="xs">DUE TONIGHT</Badge>
-                  <Text fontSize="sm" fontWeight="bold" color="red.600" _dark={{ color: "red.400" }}>
+                  <Text fontSize="sm" fontWeight="bold" color={urgentTextColor}>
                     December 13, 2025
                   </Text>
                 </HStack>
@@ -145,8 +149,8 @@ export default function Now() {
             </Text>
           </Box>
 
-          <Box pt={4} borderTop="1px solid" borderColor="gray.200" _dark={{ borderColor: "gray.700" }}>
-            <Text fontSize="sm" color="gray.600" _dark={{ color: "gray.400" }}>
+          <Box pt={4} borderTop="1px solid" borderColor={footerBorderColor}>
+            <Text fontSize="sm" color={footerTextColor}>
               This page is a snapshot of my life right now. It changes as I do.
             </Text>
           </Box>

@@ -23,21 +23,19 @@ const Writing: NextPageWithLayout<WritingProps> = ({ posts }) => {
       <Flex direction="column" align="flex-start" width="100%" gap={3}>
         <Divider width="100%" />
         {posts.map((post) => (
-          <>
-            <Stack width="100%" align="flex-start" spacing={1}>
-              <Link
-                href={post.url}
-                target={post.external ? "_blank" : "_self"}
-                color="blue.600"
-              >
-                <Text>{post.title}</Text>
-              </Link>
-              <Text fontSize="sm" textAlign={"right"} color="gray.500">
-                {post.date}
-              </Text>
-            </Stack>
+          <Stack key={post.url || post.title} width="100%" align="flex-start" spacing={1}>
+            <Link
+              href={post.url}
+              target={post.external ? "_blank" : "_self"}
+              color="accent"
+            >
+              <Text>{post.title}</Text>
+            </Link>
+            <Text fontSize="sm" textAlign={"right"} color="gray.500">
+              {post.date}
+            </Text>
             <Divider width="100%" />
-          </>
+          </Stack>
         ))}
       </Flex>
     </>
