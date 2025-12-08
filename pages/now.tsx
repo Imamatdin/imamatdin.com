@@ -14,7 +14,7 @@ export default function Now() {
           <Box>
             <Heading size="2xl" mb={2}>Now</Heading>
             <Text fontSize="md" color="gray.600" _dark={{ color: "gray.400" }}>
-              Last updated: November 27, 2024
+              Last updated: December 8, 2025
             </Text>
           </Box>
 
@@ -39,7 +39,7 @@ export default function Now() {
                 <HStack mb={2}>
                   <Badge colorScheme="red" fontSize="xs">DUE TONIGHT</Badge>
                   <Text fontSize="sm" fontWeight="bold" color="red.600" _dark={{ color: "red.400" }}>
-                    December 13, 2024
+                    December 13, 2025
                   </Text>
                 </HStack>
                 <Text fontWeight="bold" fontSize="lg" mb={1}>
@@ -62,7 +62,7 @@ export default function Now() {
                 <HStack mb={2}>
                   <Badge colorScheme="red" fontSize="xs">DUE TONIGHT</Badge>
                   <Text fontSize="sm" fontWeight="bold" color="red.600" _dark={{ color: "red.400" }}>
-                    December 13, 2024
+                    December 13, 2025
                   </Text>
                 </HStack>
                 <Text fontWeight="bold" fontSize="lg" mb={1}>
@@ -85,7 +85,7 @@ export default function Now() {
                 <HStack mb={2}>
                   <Badge colorScheme="red" fontSize="xs">DUE TONIGHT</Badge>
                   <Text fontSize="sm" fontWeight="bold" color="red.600" _dark={{ color: "red.400" }}>
-                    December 13, 2024
+                    December 13, 2025
                   </Text>
                 </HStack>
                 <Text fontWeight="bold" fontSize="lg" mb={1}>
@@ -105,7 +105,7 @@ export default function Now() {
                 <HStack mb={2}>
                   <Badge colorScheme="orange" fontSize="xs">URGENT</Badge>
                   <Text fontSize="sm" fontWeight="bold">
-                    December 13, 2024
+                    December 13, 2025
                   </Text>
                 </HStack>
                 <Text fontWeight="bold" fontSize="lg" mb={1}>
