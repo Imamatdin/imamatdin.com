@@ -8,6 +8,8 @@ export const ThemeToggleButton = () => {
   return (
     <Box
       onClick={toggleColorMode}
+      onKeyDown={(e) => e.key === 'Enter' && toggleColorMode()}
+      tabIndex={0}
       bg={isLight ? 'gray.200' : 'gray.600'}
       width="48px"
       height="24px"
@@ -19,6 +21,8 @@ export const ThemeToggleButton = () => {
       alignItems="center"
       role="button"
       aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
+      _focus={{ outline: 'none', boxShadow: 'none' }}
+      _focusVisible={{ outline: 'none', boxShadow: 'none' }}
     >
       <Box 
         as="div" 
