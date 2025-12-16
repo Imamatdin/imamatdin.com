@@ -1,7 +1,6 @@
-// FILE: pages/deep-dives/[slug].tsx
+// FILE: pages/projects/[slug].tsx
 
 import {
-  VStack,
   Heading,
   Text,
   Box,
@@ -11,19 +10,21 @@ import {
   useColorModeValue,
   Wrap,
   WrapItem,
+  Link as ChakraLink,
+  VStack,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { NextSeo } from 'next-seo';
-import { DeepDive, getDeepDives, getDeepDiveBySlug } from '../../lib/deep-dives';
+import { Project, getProjects, getProjectBySlug } from '../../lib/projects';
 import ReactMarkdown from 'react-markdown';
 
 interface PageProps {
-  dive: DeepDive;
+  project: Project;
   pageNumber: number;
 }
 
-const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
+const ProjectDetailPage = ({ project, pageNumber }: PageProps) => {
   const bgColor = useColorModeValue('#f5f0e8', '#1a1612');
   const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
   const inkLight = useColorModeValue('#6b5c4a', '#a89060');
@@ -31,7 +32,7 @@ const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
   const sepiaAccent = useColorModeValue('#704214', '#8b4513');
   const codeBg = useColorModeValue('#e8dfd0', '#2a1a0a');
 
-  if (!dive) {
+  if (!project) {
     return <Text>Loading...</Text>;
   }
 
@@ -48,8 +49,8 @@ const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
   return (
     <>
       <NextSeo
-        title={`${dive.title} | Deep Dives`}
-        description={dive.question}
+        title={`${project.title} | Projects`}
+        description={project.description}
       />
 
       <Box
@@ -60,7 +61,7 @@ const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
       >
         <Container maxW="800px" py={16}>
           {/* Back link */}
-          <NextLink href="/deep-dives">
+          <NextLink href="/projects">
             <Text
               fontFamily="handwriting"
               fontSize="sm"
@@ -69,11 +70,11 @@ const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
               cursor="pointer"
               _hover={{ color: inkColor }}
             >
-              back to index
+              back to projects
             </Text>
           </NextLink>
 
-          {/* Title as handwritten header */}
+          {/* Title */}
           <Heading
             as="h1"
             fontFamily="handwriting"
@@ -82,81 +83,77 @@ const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
             mb={2}
             transform="rotate(-1deg)"
           >
-            {dive.title}
+            {project.title}
           </Heading>
 
-          {/* Date and category notation */}
+          {/* Date and status */}
           <HStack spacing={4} mb={6}>
             <Text
               fontFamily="handwriting"
               fontSize="sm"
               color={inkLight}
             >
-              {formatDate(dive.date)}
+              {formatDate(project.date)}
             </Text>
-            <Text fontFamily="handwriting" fontSize="sm" color={inkLight}>
-              |
-            </Text>
-            <Text
+            <Badge
+              bg="transparent"
+              color={sepiaAccent}
               fontFamily="handwriting"
               fontSize="sm"
-              color={inkLight}
-              textTransform="capitalize"
+              border="1px solid"
+              borderColor={sepiaAccent}
+              borderRadius="none"
+              textTransform="lowercase"
             >
-              {dive.category}
-            </Text>
+              {project.status}
+            </Badge>
           </HStack>
 
-          {/* Status badge */}
-          <Badge
-            bg="transparent"
-            color={sepiaAccent}
-            fontFamily="handwriting"
-            fontSize="sm"
-            border="1px solid"
-            borderColor={sepiaAccent}
-            borderRadius="none"
-            px={3}
-            py={1}
+          {/* Description */}
+          <Text
+            fontFamily="body"
+            fontSize="lg"
+            color={inkLight}
             mb={8}
-            textTransform="lowercase"
           >
-            {dive.status}
-          </Badge>
+            {project.description}
+          </Text>
 
-          {/* The Question */}
-          <Box
-            my={8}
-            p={6}
-            border="1px dashed"
-            borderColor={borderColor}
-            position="relative"
-          >
-            <Text
-              fontFamily="handwriting"
-              fontSize="xs"
-              color={inkLight}
-              position="absolute"
-              top={2}
-              right={2}
-            >
-              the question
-            </Text>
-            <Text
-              fontFamily="body"
-              fontSize="lg"
-              fontStyle="italic"
-              color={inkColor}
-              lineHeight="tall"
-            >
-              {dive.question}
-            </Text>
-          </Box>
+          {/* Links */}
+          {project.links && project.links.length > 0 && (
+            <Box mb={8}>
+              <Text
+                fontFamily="handwriting"
+                fontSize="sm"
+                color={inkLight}
+                mb={2}
+              >
+                links:
+              </Text>
+              <VStack align="flex-start" spacing={1}>
+                {project.links.map((link, i) => (
+                  <ChakraLink
+                    key={i}
+                    href={link.href}
+                    isExternal
+                    fontFamily="body"
+                    fontSize="sm"
+                    color={sepiaAccent}
+                    borderBottom="1px dashed"
+                    borderColor={sepiaAccent}
+                    _hover={{ borderStyle: 'solid' }}
+                  >
+                    {link.label}
+                  </ChakraLink>
+                ))}
+              </VStack>
+            </Box>
+          )}
 
           {/* Tags */}
-          {dive.tags && dive.tags.length > 0 && (
+          {project.tags && project.tags.length > 0 && (
             <Wrap spacing={2} mb={8}>
-              {dive.tags.map((tag) => (
+              {project.tags.map((tag) => (
                 <WrapItem key={tag}>
                   <Text
                     fontFamily="handwriting"
@@ -174,7 +171,7 @@ const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
             </Wrap>
           )}
 
-          {/* Body content - rendered MDX */}
+          {/* Body content */}
           <Box
             fontFamily="body"
             color={inkColor}
@@ -198,19 +195,6 @@ const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
               'p': {
                 mb: 4,
               },
-              'blockquote': {
-                borderLeft: '2px solid',
-                borderColor: sepiaAccent,
-                fontStyle: 'italic',
-                pl: 4,
-                my: 4,
-              },
-              'code': {
-                fontFamily: 'mono',
-                bg: codeBg,
-                px: 1,
-                borderRadius: 'sm',
-              },
               'ul, ol': {
                 pl: 6,
                 mb: 4,
@@ -218,9 +202,15 @@ const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
               'li': {
                 mb: 2,
               },
+              'code': {
+                fontFamily: 'mono',
+                bg: codeBg,
+                px: 1,
+                borderRadius: 'sm',
+              },
             }}
           >
-            <ReactMarkdown>{dive.content || ''}</ReactMarkdown>
+            <ReactMarkdown>{project.content || ''}</ReactMarkdown>
           </Box>
 
           {/* Page number */}
@@ -233,7 +223,7 @@ const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
             color={inkLight}
             zIndex={10}
           >
-            folio {pageNumber}
+            folio {pageNumber + 10}
           </Text>
         </Container>
       </Box>
@@ -242,25 +232,25 @@ const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const dives = getDeepDives();
-  const paths = dives.map((dive) => ({
-    params: { slug: dive.slug },
+  const projects = getProjects();
+  const paths = projects.map((project) => ({
+    params: { slug: project.slug },
   }));
 
   return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const dive = getDeepDiveBySlug(params?.slug as string);
-  const dives = getDeepDives();
-  const pageNumber = dives.findIndex((d) => d.slug === params?.slug) + 1;
+  const project = getProjectBySlug(params?.slug as string);
+  const projects = getProjects();
+  const pageNumber = projects.findIndex((p) => p.slug === params?.slug) + 1;
 
   return {
     props: {
-      dive,
+      project,
       pageNumber,
     },
   };
 };
 
-export default DeepDiveDetailPage;
+export default ProjectDetailPage;

@@ -1,0 +1,158 @@
+/* Da Vinci Parchment Styles */
+
+.parchment-bg {
+  background-color: #f5f0e8;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(139, 90, 43, 0.02) 0%,
+      rgba(139, 90, 43, 0.05) 50%,
+      rgba(139, 90, 43, 0.02) 100%
+    );
+  position: relative;
+}
+
+/* Aged edges effect */
+.parchment-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 100px rgba(139, 90, 43, 0.1);
+  pointer-events: none;
+}
+
+/* CSS-only noise texture overlay */
+.parchment-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+/* Dark mode parchment */
+.dark .parchment-bg {
+  background-color: #1a1612;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(168, 144, 96, 0.03) 0%,
+      rgba(168, 144, 96, 0.06) 50%,
+      rgba(168, 144, 96, 0.03) 100%
+    );
+}
+
+.dark .parchment-bg::before {
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3);
+}
+
+/* Notebook binding effect */
+.notebook-binding {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(to right, #8b7355 0%, #a89060 50%, transparent 100%);
+  box-shadow: inset -2px 0 4px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.dark .notebook-binding {
+  background: linear-gradient(to right, #3a2a1a 0%, #5a4a3a 50%, transparent 100%);
+}
+
+/* Notebook page styles */
+.notebook-page {
+  position: relative;
+  background-color: #f5f0e8;
+  border-right: 1px solid rgba(139, 90, 43, 0.2);
+}
+
+.dark .notebook-page {
+  background-color: #1a1612;
+  border-right-color: rgba(168, 144, 96, 0.15);
+}
+
+/* Handwritten annotation style */
+.annotation {
+  font-family: var(--font-handwriting);
+  color: #6b5c4a;
+  transform: rotate(-2deg);
+}
+
+.dark .annotation {
+  color: #a89060;
+}
+
+/* Sketch card with dashed border */
+.sketch-card {
+  border: 1px dashed #6b5c4a;
+  transition: all 0.3s ease;
+}
+
+.sketch-card:hover {
+  border-style: solid;
+  box-shadow: 4px 4px 0 rgba(139, 90, 43, 0.1);
+  transform: translate(-2px, -2px);
+}
+
+.dark .sketch-card {
+  border-color: #5a4a3a;
+}
+
+.dark .sketch-card:hover {
+  box-shadow: 4px 4px 0 rgba(168, 144, 96, 0.1);
+}
+
+/* Sepia filter for images */
+.sepia-image {
+  filter: sepia(20%) contrast(95%);
+  transition: filter 0.3s ease;
+}
+
+.sepia-image:hover {
+  filter: sepia(10%) contrast(100%);
+}
+
+/* Page number style */
+.page-number {
+  font-family: var(--font-handwriting);
+  color: #6b5c4a;
+  font-size: 0.875rem;
+}
+
+.dark .page-number {
+  color: #a89060;
+}
+
+/* Shelf styling for bookshelf */
+.book-shelf {
+  height: 8px;
+  background: linear-gradient(to bottom, #8b7355, #5a4a3a);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+.dark .book-shelf {
+  background: linear-gradient(to bottom, #5a4a3a, #3a2a1a);
+}
+
+/* Running animation for bookshelf */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.running-books {
+  animation: scroll 60s linear infinite;
+}
+
+.running-books:hover {
+  animation-play-state: paused;
+}

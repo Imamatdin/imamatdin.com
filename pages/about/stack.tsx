@@ -1,4 +1,4 @@
-import { Container, Heading, Text, VStack, Box, SimpleGrid, Badge, HStack } from "@chakra-ui/react";
+import { Container, Heading, Text, VStack, Box, HStack } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 
 interface Tool {
@@ -9,14 +9,12 @@ interface Tool {
 
 interface Category {
   title: string;
-  icon: string;
   tools: Tool[];
 }
 
 const stack: Category[] = [
   {
     title: "Hardware",
-    icon: "💻",
     tools: [
       { name: "HP Envy x360", description: "My daily driver. Versatile 2-in-1 that handles everything from coding to note-taking." },
       { name: "Samsung A56", description: "Does what I need. No fancy flagship required." },
@@ -24,7 +22,6 @@ const stack: Category[] = [
   },
   {
     title: "AI Arsenal",
-    icon: "🤖",
     tools: [
       { name: "Claude", description: "Deep thinking, long-form writing, coding assistance.", badge: "Pro" },
       { name: "Perplexity", description: "Research and fact-checking. Replaced Google for most searches.", badge: "Pro" },
@@ -36,7 +33,6 @@ const stack: Category[] = [
   },
   {
     title: "Browsers",
-    icon: "🌐",
     tools: [
       { name: "Comet", description: "Primary browser. Clean and fast." },
       { name: "Chrome", description: "When I need extensions or compatibility." },
@@ -45,7 +41,6 @@ const stack: Category[] = [
   },
   {
     title: "Development",
-    icon: "⌨️",
     tools: [
       { name: "VS Code", description: "The obvious choice. Extensions make it infinitely customizable." },
       { name: "Default Terminal", description: "No fancy setup. It works." },
@@ -55,7 +50,6 @@ const stack: Category[] = [
   },
   {
     title: "Productivity",
-    icon: "📋",
     tools: [
       { name: "Obsidian", description: "Second brain for notes and writing. Markdown + local files = peace of mind." },
       { name: "Physical Notebook", description: "Task management. Simple. No notifications. Can't be hacked." },
@@ -64,7 +58,6 @@ const stack: Category[] = [
   },
   {
     title: "Creative",
-    icon: "🎨",
     tools: [
       { name: "Figma", description: "UI design and prototyping.", badge: "Pro" },
       { name: "Scribble", description: "The website that erases everything if you stop writing. Forces flow state." },
@@ -72,7 +65,6 @@ const stack: Category[] = [
   },
   {
     title: "Infrastructure",
-    icon: "🚀",
     tools: [
       { name: "Vercel", description: "Deploy and forget. This site runs on it." },
       { name: "GitHub", description: "Code lives here. Version control is non-negotiable." },
@@ -81,7 +73,6 @@ const stack: Category[] = [
   },
   {
     title: "What I Don't Use",
-    icon: "🚫",
     tools: [
       { name: "Music while working", description: "Silence or nothing. Music is for full attention, not background noise." },
       { name: "Headphones", description: "Don't own any. Probably should." },
@@ -107,44 +98,36 @@ export default function Stack() {
             </Text>
           </Box>
 
-          <VStack spacing={8} align="stretch">
+          <VStack spacing={10} align="stretch">
             {stack.map((category) => (
               <Box key={category.title}>
-                <HStack mb={4}>
-                  <Text fontSize="2xl">{category.icon}</Text>
-                  <Heading size="md" color="gray.600" _dark={{ color: "gray.400" }}>
-                    {category.title}
-                  </Heading>
-                </HStack>
+                <Heading size="sm" color="gray.500" _dark={{ color: "gray.400" }} mb={4} textTransform="uppercase" letterSpacing="wider">
+                  {category.title}
+                </Heading>
 
-                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={3}>
+                <VStack align="stretch" spacing={3}>
                   {category.tools.map((tool) => (
-                    <Box
-                      key={tool.name}
-                      p={4}
-                      borderRadius="md"
-                      border="1px solid"
-                      borderColor="gray.200"
-                      _dark={{ borderColor: "gray.700" }}
-                    >
-                      <HStack justify="space-between" align="flex-start" mb={1}>
-                        <Text fontWeight="bold" color="accent">
-                          {tool.name}
-                        </Text>
-                        {tool.badge && (
-                          <Badge colorScheme="green" fontSize="xs">
-                            {tool.badge}
-                          </Badge>
+                    <HStack key={tool.name} justify="space-between" align="flex-start">
+                      <Box>
+                        <HStack spacing={2} align="center">
+                          <Text fontWeight="medium" color="accent">
+                            {tool.name}
+                          </Text>
+                          {tool.badge && (
+                            <Text fontSize="xs" color="gray.400">
+                              ({tool.badge})
+                            </Text>
+                          )}
+                        </HStack>
+                        {tool.description && (
+                          <Text fontSize="sm" color="gray.600" _dark={{ color: "gray.400" }} mt={0.5}>
+                            {tool.description}
+                          </Text>
                         )}
-                      </HStack>
-                      {tool.description && (
-                        <Text fontSize="sm" color="gray.600" _dark={{ color: "gray.400" }}>
-                          {tool.description}
-                        </Text>
-                      )}
-                    </Box>
+                      </Box>
+                    </HStack>
                   ))}
-                </SimpleGrid>
+                </VStack>
               </Box>
             ))}
           </VStack>
