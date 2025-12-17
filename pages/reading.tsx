@@ -106,9 +106,9 @@ function CategoryShelf({ name, books }: { name: string; books: Book[] }) {
     <Box mb={8}>
       <HStack justify="space-between" mb={3} px={1}>
         <Text
-          fontFamily="handwriting"
+          fontFamily="heading"
           fontSize={{ base: "lg", md: "xl" }}
-          fontWeight="bold"
+          fontWeight="500"
         >
           {name}
         </Text>

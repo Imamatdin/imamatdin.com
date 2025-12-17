@@ -5,6 +5,7 @@ import {
   VStack,
   Box,
   Container,
+  HStack,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { getAllPostData, Post } from "../../lib/writing";
@@ -25,53 +26,77 @@ const Writing: NextPageWithLayout<WritingProps> = ({ posts }) => {
     <>
       <NextSeo title="Writing | Imamatdin" />
       <Container maxW="container.lg" px={{ base: 4, md: 8, lg: 12 }}>
-        <Box w="100%" maxW={{ base: "100%", md: "700px", lg: "800px" }} mx="auto">
-          <Heading
-            as="h1"
-            fontFamily="handwriting"
-            fontSize={{ base: '2xl', md: '3xl' }}
-            color={inkColor}
-            mb={2}
-          >
-            Writing
-          </Heading>
+        <Box w="100%" maxW={{ base: "100%", md: "800px", lg: "900px" }} mx="auto">
+          {/* Header */}
+          <Box mb={10}>
+            <Heading
+              as="h1"
+              fontFamily="heading"
+              fontSize={{ base: '2xl', md: '3xl' }}
+              fontWeight="600"
+              color={inkColor}
+              mb={2}
+            >
+              Writing
+            </Heading>
+            <Text fontFamily="body" fontSize="md" color={inkLight}>
+              Essays and thoughts.
+            </Text>
+          </Box>
 
-          <Text fontFamily="body" fontSize="md" color={inkLight} mb={8}>
-            Essays and thoughts.
-          </Text>
-
+          {/* Posts List */}
           <VStack align="stretch" spacing={0}>
-            {posts.map((post) => (
+            {posts.map((post, index) => (
               <Link
                 key={post.url || post.title}
                 href={post.url}
                 target={post.external ? "_blank" : "_self"}
                 _hover={{ textDecoration: 'none' }}
               >
-                <Box
-                  py={4}
-                  borderBottom="1px dashed"
+                <HStack
+                  py={5}
+                  borderBottom="1px solid"
                   borderColor={borderColor}
-                  transition="opacity 0.2s"
-                  _hover={{ opacity: 0.7 }}
+                  transition="all 0.2s"
+                  _hover={{
+                    bg: 'rgba(139, 90, 43, 0.03)',
+                    pl: 2
+                  }}
+                  justify="space-between"
+                  align="flex-start"
                 >
-                  <Text
-                    fontFamily="body"
-                    fontSize="lg"
-                    fontWeight="medium"
-                    color={inkColor}
-                    mb={1}
-                  >
-                    {post.title}
-                  </Text>
+                  <Box flex={1}>
+                    <HStack spacing={3} mb={1}>
+                      <Text
+                        fontFamily="handwriting"
+                        fontSize="sm"
+                        color={inkLight}
+                        minW="24px"
+                      >
+                        {String(index + 1).padStart(2, '0')}
+                      </Text>
+                      <Heading
+                        as="h2"
+                        fontFamily="heading"
+                        fontSize={{ base: 'md', md: 'lg' }}
+                        fontWeight="500"
+                        color={inkColor}
+                      >
+                        {post.title}
+                      </Heading>
+                    </HStack>
+                  </Box>
+
                   <Text
                     fontFamily="handwriting"
                     fontSize="sm"
                     color={inkLight}
+                    flexShrink={0}
+                    ml={4}
                   >
                     {post.date}
                   </Text>
-                </Box>
+                </HStack>
               </Link>
             ))}
           </VStack>
