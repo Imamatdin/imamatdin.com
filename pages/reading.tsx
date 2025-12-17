@@ -172,28 +172,29 @@ export default function Reading({ books, booksByCategory }: PageProps) {
         description="Books I've read and my notes on them"
       />
 
-      <Container maxW="container.lg" py={{ base: 6, md: 10 }}>
-        <VStack align="stretch" spacing={6} mb={8}>
-          <Box>
-            <Heading fontFamily="heading" size="xl" mb={2}>
-              Library
-            </Heading>
-            <Text color="subtle">
-              Books I've read and my notes on them.
-            </Text>
-          </Box>
+      <Container maxW="container.lg" py={{ base: 6, md: 10 }} centerContent>
+        <Box w="100%" maxW="900px">
+          <VStack align="stretch" spacing={6} mb={8}>
+            <Box>
+              <Heading fontFamily="heading" size="xl" mb={2}>
+                Library
+              </Heading>
+              <Text color="subtle">
+                Books I've read and my notes on them.
+              </Text>
+            </Box>
 
-          <HStack spacing={8}>
-            <Box>
-              <Text fontSize="2xl" fontWeight="bold">{booksThisYear}</Text>
-              <Text fontSize="sm" color="subtle">this year</Text>
-            </Box>
-            <Box>
-              <Text fontSize="2xl" fontWeight="bold">{books.length}</Text>
-              <Text fontSize="sm" color="subtle">total volumes</Text>
-            </Box>
-          </HStack>
-        </VStack>
+            <HStack spacing={8}>
+              <Box>
+                <Text fontSize="2xl" fontWeight="bold">{booksThisYear}</Text>
+                <Text fontSize="sm" color="subtle">this year</Text>
+              </Box>
+              <Box>
+                <Text fontSize="2xl" fontWeight="bold">{books.length}</Text>
+                <Text fontSize="sm" color="subtle">total volumes</Text>
+              </Box>
+            </HStack>
+          </VStack>
 
         {categories.length > 0 ? (
           categories.map(category => (
@@ -206,6 +207,7 @@ export default function Reading({ books, booksByCategory }: PageProps) {
         ) : (
           <CategoryShelf name="All Books" books={books} />
         )}
+        </Box>
       </Container>
     </>
   );

@@ -1,11 +1,11 @@
 import {
   Heading,
   Link,
-  Flex,
   Text,
-  Stack,
-  HStack,
-  Divider,
+  VStack,
+  Box,
+  Container,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { getAllPostData, Post } from "../../lib/writing";
 import type { NextPageWithLayout } from "next";
@@ -17,27 +17,66 @@ interface WritingProps {
 }
 
 const Writing: NextPageWithLayout<WritingProps> = ({ posts }) => {
+  const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
+  const inkLight = useColorModeValue('#6b5c4a', '#a89060');
+  const borderColor = useColorModeValue('rgba(139, 90, 43, 0.3)', 'rgba(168, 144, 96, 0.3)');
+
   return (
     <>
       <NextSeo title="Writing | Imamatdin" />
-      <Flex direction="column" align="flex-start" width="100%" gap={3}>
-        <Divider width="100%" />
-        {posts.map((post) => (
-          <Stack key={post.url || post.title} width="100%" align="flex-start" spacing={1}>
-            <Link
-              href={post.url}
-              target={post.external ? "_blank" : "_self"}
-              color="accent"
-            >
-              <Text>{post.title}</Text>
-            </Link>
-            <Text fontSize="sm" textAlign={"right"} color="gray.500">
-              {post.date}
-            </Text>
-            <Divider width="100%" />
-          </Stack>
-        ))}
-      </Flex>
+      <Container maxW="container.md" px={4} centerContent>
+        <Box w="100%" maxW="600px">
+          <Heading
+            as="h1"
+            fontFamily="handwriting"
+            fontSize={{ base: '2xl', md: '3xl' }}
+            color={inkColor}
+            mb={2}
+          >
+            Writing
+          </Heading>
+
+          <Text fontFamily="body" fontSize="md" color={inkLight} mb={8}>
+            Essays and thoughts.
+          </Text>
+
+          <VStack align="stretch" spacing={0}>
+            {posts.map((post) => (
+              <Link
+                key={post.url || post.title}
+                href={post.url}
+                target={post.external ? "_blank" : "_self"}
+                _hover={{ textDecoration: 'none' }}
+              >
+                <Box
+                  py={4}
+                  borderBottom="1px dashed"
+                  borderColor={borderColor}
+                  transition="opacity 0.2s"
+                  _hover={{ opacity: 0.7 }}
+                >
+                  <Text
+                    fontFamily="body"
+                    fontSize="lg"
+                    fontWeight="medium"
+                    color={inkColor}
+                    mb={1}
+                  >
+                    {post.title}
+                  </Text>
+                  <Text
+                    fontFamily="handwriting"
+                    fontSize="sm"
+                    color={inkLight}
+                  >
+                    {post.date}
+                  </Text>
+                </Box>
+              </Link>
+            ))}
+          </VStack>
+        </Box>
+      </Container>
     </>
   );
 };

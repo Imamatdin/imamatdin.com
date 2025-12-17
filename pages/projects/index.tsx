@@ -30,7 +30,8 @@ const ProjectsPage = ({ projects }: PageProps) => {
         description="A collection of inventions and constructions."
       />
 
-      <Container maxW="container.md" px={4}>
+      <Container maxW="container.md" px={4} centerContent>
+        <Box w="100%" maxW="600px">
         <Heading
           as="h1"
           fontFamily="handwriting"
@@ -160,6 +161,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
             More inventions coming soon...
           </Text>
         )}
+        </Box>
       </Container>
     </>
   );
