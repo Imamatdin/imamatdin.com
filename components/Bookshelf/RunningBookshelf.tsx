@@ -2,80 +2,53 @@ import {
   Box,
   HStack,
   useColorModeValue,
-  keyframes,
 } from '@chakra-ui/react';
 import { BookCover } from './BookCover';
 import { Book } from '../../lib/books';
 
 interface RunningBookshelfProps {
   books: Book[];
-  speed?: number; // seconds per full cycle
 }
 
-export function RunningBookshelf({ books, speed = 60 }: RunningBookshelfProps) {
-  const bgColor = useColorModeValue('#f5f0e8', '#1a1612');
+export function RunningBookshelf({ books }: RunningBookshelfProps) {
   const shelfColor = useColorModeValue(
     'linear-gradient(to bottom, #8b7355, #5a4a3a)',
     'linear-gradient(to bottom, #5a4a3a, #3a2a1a)'
   );
 
-  // Duplicate books for seamless loop
-  const displayBooks = [...books, ...books];
-
-  // Calculate animation distance based on number of books
-  const bookWidth = 120; // px
-  const bookSpacing = 24; // gap in px (spacing={6} = 24px)
-  const totalWidth = books.length * (bookWidth + bookSpacing);
-
-  const scroll = keyframes`
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-${totalWidth}px);
-    }
-  `;
-
   return (
-    <Box position="relative" overflow="hidden">
-      {/* Fade edges */}
+    <Box position="relative">
+      {/* Scrollable container - manual scroll only */}
       <Box
-        position="absolute"
-        left={0}
-        top={0}
-        bottom={0}
-        w="100px"
-        bgGradient={`linear(to-r, ${bgColor}, transparent)`}
-        zIndex={2}
-        pointerEvents="none"
-      />
-      <Box
-        position="absolute"
-        right={0}
-        top={0}
-        bottom={0}
-        w="100px"
-        bgGradient={`linear(to-l, ${bgColor}, transparent)`}
-        zIndex={2}
-        pointerEvents="none"
-      />
-
-      {/* Animated container */}
-      <HStack
-        spacing={6}
+        overflowX="auto"
         pb={4}
-        animation={`${scroll} ${speed}s linear infinite`}
-        _hover={{ animationPlayState: 'paused' }}
+        css={{
+          '&::-webkit-scrollbar': {
+            height: '8px',
+          },
+          '&::-webkit-scrollbar-track': {
+            background: 'transparent',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: 'rgba(139, 90, 43, 0.3)',
+            borderRadius: '4px',
+          },
+          '&::-webkit-scrollbar-thumb:hover': {
+            background: 'rgba(139, 90, 43, 0.5)',
+          },
+        }}
       >
-        {displayBooks.map((book, i) => (
-          <BookCover
-            key={`${book.slug}-${i}`}
-            book={book}
-            width="120px"
-            height="180px"
-          />
-        ))}
-      </HStack>
+        <HStack spacing={6} minW="max-content">
+          {books.map((book) => (
+            <BookCover
+              key={book.slug}
+              book={book}
+              width="120px"
+              height="180px"
+            />
+          ))}
+        </HStack>
+      </Box>
 
       {/* Shelf base */}
       <Box

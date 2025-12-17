@@ -1,10 +1,10 @@
-import { Container, Heading, Text, VStack, Box, HStack } from "@chakra-ui/react";
+import { Container, Heading, Text, VStack, Box, useColorModeValue } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
+import Layout from "../../components/Layout";
 
 interface Tool {
   name: string;
-  description?: string;
-  badge?: string;
+  note?: string;
 }
 
 interface Category {
@@ -14,131 +14,131 @@ interface Category {
 
 const stack: Category[] = [
   {
-    title: "Hardware",
+    title: "HARDWARE",
     tools: [
-      { name: "HP Envy x360", description: "My daily driver. Versatile 2-in-1 that handles everything from coding to note-taking." },
-      { name: "Samsung A56", description: "Does what I need. No fancy flagship required." },
+      { name: "HP Envy x360", note: "daily driver" },
+      { name: "Samsung A56", note: "phone" },
     ]
   },
   {
-    title: "AI Arsenal",
+    title: "AI",
     tools: [
-      { name: "Claude", description: "Deep thinking, long-form writing, coding assistance.", badge: "Pro" },
-      { name: "Perplexity", description: "Research and fact-checking. Replaced Google for most searches.", badge: "Pro" },
-      { name: "Gemini", description: "Quick questions, integration with Google ecosystem.", badge: "Pro" },
-      { name: "GPT", description: "General tasks, image generation." },
-      { name: "DeepSeek", description: "Code generation and technical problems." },
-      { name: "Grok", description: "Real-time information, unfiltered responses." },
+      { name: "Claude Pro", note: "deep thinking, writing" },
+      { name: "Perplexity Pro", note: "research" },
+      { name: "Gemini Pro", note: "quick questions" },
+      { name: "GPT", note: "general tasks" },
+      { name: "DeepSeek", note: "code" },
+      { name: "Grok", note: "real-time" },
     ]
   },
   {
-    title: "Browsers",
+    title: "BROWSERS",
     tools: [
-      { name: "Comet", description: "Primary browser. Clean and fast." },
-      { name: "Chrome", description: "When I need extensions or compatibility." },
-      { name: "Edge", description: "PDF reading and Microsoft integrations." },
+      { name: "Comet", note: "primary" },
+      { name: "Chrome", note: "extensions" },
+      { name: "Edge", note: "PDFs" },
     ]
   },
   {
-    title: "Development",
+    title: "DEV",
     tools: [
-      { name: "VS Code", description: "The obvious choice. Extensions make it infinitely customizable." },
-      { name: "Default Terminal", description: "No fancy setup. It works." },
-      { name: "Python", description: "My go-to for everything from scripts to ML." },
-      { name: "C++", description: "Currently learning. Pain builds character." },
+      { name: "VS Code" },
+      { name: "Terminal" },
+      { name: "Python" },
+      { name: "C++", note: "learning" },
     ]
   },
   {
-    title: "Productivity",
+    title: "PRODUCTIVITY",
     tools: [
-      { name: "Obsidian", description: "Second brain for notes and writing. Markdown + local files = peace of mind." },
-      { name: "Physical Notebook", description: "Task management. Simple. No notifications. Can't be hacked." },
-      { name: "Google Calendar", description: "Tried alternatives. Nothing comes close. If it's not on the calendar, it doesn't exist." },
+      { name: "Obsidian", note: "notes" },
+      { name: "Physical notebook", note: "tasks" },
+      { name: "Google Calendar" },
     ]
   },
   {
-    title: "Creative",
+    title: "CREATIVE",
     tools: [
-      { name: "Figma", description: "UI design and prototyping.", badge: "Pro" },
-      { name: "Scribble", description: "The website that erases everything if you stop writing. Forces flow state." },
+      { name: "Figma Pro" },
+      { name: "Scribble", note: "flow state" },
     ]
   },
   {
-    title: "Infrastructure",
+    title: "INFRA",
     tools: [
-      { name: "Vercel", description: "Deploy and forget. This site runs on it." },
-      { name: "GitHub", description: "Code lives here. Version control is non-negotiable." },
-      { name: "Namecheap", description: "Where I buy domains. Cheap and reliable." },
-    ]
-  },
-  {
-    title: "What I Don't Use",
-    tools: [
-      { name: "Music while working", description: "Silence or nothing. Music is for full attention, not background noise." },
-      { name: "Headphones", description: "Don't own any. Probably should." },
-      { name: "Fancy task apps", description: "Tried Notion, Todoist, Things. Always came back to paper." },
+      { name: "Vercel" },
+      { name: "GitHub" },
+      { name: "Namecheap" },
     ]
   },
 ];
 
 export default function Stack() {
+  const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
+  const inkLight = useColorModeValue('#6b5c4a', '#a89060');
+  const borderColor = useColorModeValue('rgba(139, 90, 43, 0.3)', 'rgba(168, 144, 96, 0.3)');
+
   return (
-    <>
+    <Layout>
       <NextSeo
         title="Stack | Imamatdin"
         description="The tools, apps, and hardware I use daily"
       />
 
-      <Container maxW="4xl" py={12}>
-        <VStack align="stretch" spacing={8}>
-          <Box>
-            <Heading size="2xl" mb={2}>Stack</Heading>
-            <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }}>
-              Tools shape how we think. Here's what I use to build, write, and stay organized.
-            </Text>
-          </Box>
+      <Container maxW="container.md" px={4}>
+        <Heading
+          as="h1"
+          fontFamily="handwriting"
+          fontSize={{ base: '2xl', md: '3xl' }}
+          color={inkColor}
+          mb={2}
+        >
+          Stack
+        </Heading>
 
-          <VStack spacing={10} align="stretch">
-            {stack.map((category) => (
-              <Box key={category.title}>
-                <Heading size="sm" color="gray.500" _dark={{ color: "gray.400" }} mb={4} textTransform="uppercase" letterSpacing="wider">
-                  {category.title}
-                </Heading>
+        <Text fontFamily="body" fontSize="md" color={inkLight} mb={8}>
+          Tools shape how we think. Here's what I use.
+        </Text>
 
-                <VStack align="stretch" spacing={3}>
-                  {category.tools.map((tool) => (
-                    <HStack key={tool.name} justify="space-between" align="flex-start">
-                      <Box>
-                        <HStack spacing={2} align="center">
-                          <Text fontWeight="medium" color="accent">
-                            {tool.name}
-                          </Text>
-                          {tool.badge && (
-                            <Text fontSize="xs" color="gray.400">
-                              ({tool.badge})
-                            </Text>
-                          )}
-                        </HStack>
-                        {tool.description && (
-                          <Text fontSize="sm" color="gray.600" _dark={{ color: "gray.400" }} mt={0.5}>
-                            {tool.description}
-                          </Text>
-                        )}
-                      </Box>
-                    </HStack>
-                  ))}
-                </VStack>
-              </Box>
-            ))}
-          </VStack>
+        <VStack spacing={6} align="stretch">
+          {stack.map((category) => (
+            <Box key={category.title}>
+              <Text
+                fontFamily="body"
+                fontSize="xs"
+                fontWeight="bold"
+                color={inkLight}
+                letterSpacing="wider"
+                mb={2}
+              >
+                {category.title}
+              </Text>
 
-          <Box pt={4} borderTop="1px solid" borderColor="gray.200" _dark={{ borderColor: "gray.700" }}>
-            <Text fontSize="sm" color="gray.500" fontStyle="italic">
-              "The best tool is the one you'll actually use."
-            </Text>
-          </Box>
+              <VStack align="stretch" spacing={1} pl={4}>
+                {category.tools.map((tool) => (
+                  <Text
+                    key={tool.name}
+                    fontFamily="body"
+                    fontSize="sm"
+                    color={inkColor}
+                  >
+                    {tool.name}
+                    {tool.note && (
+                      <Text as="span" color={inkLight}> — {tool.note}</Text>
+                    )}
+                  </Text>
+                ))}
+              </VStack>
+            </Box>
+          ))}
         </VStack>
+
+        <Box pt={8} mt={8} borderTop="1px dashed" borderColor={borderColor}>
+          <Text fontFamily="handwriting" fontSize="sm" color={inkLight} fontStyle="italic">
+            "The best tool is the one you'll actually use."
+          </Text>
+        </Box>
       </Container>
-    </>
+    </Layout>
   );
 }

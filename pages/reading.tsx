@@ -137,7 +137,7 @@ export default function Reading({ books }: PageProps) {
 
               {/* Option B: Running Bookshelf */}
               <TabPanel px={0}>
-                <RunningBookshelf books={books} speed={40} />
+                <RunningBookshelf books={books} />
               </TabPanel>
             </TabPanels>
           </Tabs>
