@@ -85,7 +85,7 @@ const theme = extendTheme(
   withProse({
     baseStyle: {
       'h1, h2, h3, h4, h5, h6': { color: 'text', fontFamily: 'heading' },
-      a: { color: 'accent', textDecoration: 'none', borderBottom: '1px dashed', borderColor: 'accent' },
+      a: { color: 'accent', textDecoration: 'none', _hover: { opacity: 0.7 } },
       code: { fontFamily: 'mono', color: 'accent', bg: 'transparent' },
     },
   })

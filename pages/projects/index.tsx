@@ -12,7 +12,6 @@ import NextLink from 'next/link';
 import { NextSeo } from 'next-seo';
 import { GetStaticProps } from 'next';
 import { Project, getProjects } from '../../lib/projects';
-import Layout from '../../components/Layout';
 
 interface PageProps {
   projects: Project[];
@@ -25,7 +24,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
   const sepiaAccent = useColorModeValue('#704214', '#8b4513');
 
   return (
-    <Layout>
+    <>
       <NextSeo
         title="Projects | Imamatdin"
         description="A collection of inventions and constructions."
@@ -51,17 +50,59 @@ const ProjectsPage = ({ projects }: PageProps) => {
           Things I've built or am currently building.
         </Text>
 
-        <VStack align="stretch" spacing={6}>
-          {projects.map((project) => (
+        <VStack align="stretch" spacing={8}>
+          {projects.map((project, index) => (
             <NextLink href={`/projects/${project.slug}`} key={project.slug}>
               <Box
-                py={4}
+                py={6}
                 borderBottom="1px dashed"
                 borderColor={borderColor}
                 cursor="pointer"
                 transition="opacity 0.2s"
                 _hover={{ opacity: 0.7 }}
               >
+                {/* Sketch/thumbnail area */}
+                <Box
+                  h="120px"
+                  mb={4}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  border="1px dashed"
+                  borderColor={borderColor}
+                  position="relative"
+                >
+                  {project.thumbnail ? (
+                    <Box
+                      as="img"
+                      src={project.thumbnail}
+                      alt={project.title}
+                      maxH="100%"
+                      maxW="100%"
+                      objectFit="contain"
+                      filter="sepia(30%) contrast(90%)"
+                    />
+                  ) : (
+                    <Text
+                      fontFamily="handwriting"
+                      fontSize="sm"
+                      color={inkLight}
+                    >
+                      [sketch]
+                    </Text>
+                  )}
+                  <Text
+                    position="absolute"
+                    top={2}
+                    right={2}
+                    fontFamily="handwriting"
+                    fontSize="xs"
+                    color={inkLight}
+                  >
+                    fig. {index + 1}
+                  </Text>
+                </Box>
+
                 <HStack justify="space-between" align="flex-start" mb={1}>
                   <Text
                     fontFamily="body"
@@ -93,7 +134,14 @@ const ProjectsPage = ({ projects }: PageProps) => {
                 >
                   {project.description}
                 </Text>
-                <Text fontFamily="handwriting" fontSize="xs" color={inkLight}>
+                <Text
+                  fontFamily="handwriting"
+                  fontSize="xs"
+                  color={inkLight}
+                  borderBottom="1px dashed"
+                  borderColor={borderColor}
+                  display="inline-block"
+                >
                   {project.date}
                 </Text>
               </Box>
@@ -113,7 +161,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
           </Text>
         )}
       </Container>
-    </Layout>
+    </>
   );
 };
 

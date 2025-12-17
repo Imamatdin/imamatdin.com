@@ -1,6 +1,5 @@
 import { Container, Heading, Text, VStack, Box, useColorModeValue } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
-import Layout from "../../components/Layout";
 
 interface Tool {
   name: string;
@@ -79,7 +78,7 @@ export default function Stack() {
   const borderColor = useColorModeValue('rgba(139, 90, 43, 0.3)', 'rgba(168, 144, 96, 0.3)');
 
   return (
-    <Layout>
+    <>
       <NextSeo
         title="Stack | Imamatdin"
         description="The tools, apps, and hardware I use daily"
@@ -139,6 +138,6 @@ export default function Stack() {
           </Text>
         </Box>
       </Container>
-    </Layout>
+    </>
   );
 }

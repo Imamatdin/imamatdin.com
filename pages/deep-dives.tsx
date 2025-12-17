@@ -12,7 +12,6 @@ import NextLink from 'next/link';
 import { NextSeo } from 'next-seo';
 import { GetStaticProps } from 'next';
 import { DeepDive, getDeepDives } from '../lib/deep-dives';
-import Layout from '../components/Layout';
 
 interface PageProps {
   dives: DeepDive[];
@@ -24,7 +23,7 @@ const DeepDivesListPage = ({ dives }: PageProps) => {
   const borderColor = useColorModeValue('rgba(139, 90, 43, 0.3)', 'rgba(168, 144, 96, 0.3)');
 
   return (
-    <Layout>
+    <>
       <NextSeo
         title="Deep Dives | Imamatdin"
         description="A collection of independent research project proposals."
@@ -96,7 +95,7 @@ const DeepDivesListPage = ({ dives }: PageProps) => {
           ))}
         </VStack>
       </Container>
-    </Layout>
+    </>
   );
 };
 
