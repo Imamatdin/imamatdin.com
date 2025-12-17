@@ -223,18 +223,6 @@ const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
             <ReactMarkdown>{dive.content || ''}</ReactMarkdown>
           </Box>
 
-          {/* Page number */}
-          <Text
-            position="fixed"
-            bottom={4}
-            right={8}
-            fontFamily="handwriting"
-            fontSize="sm"
-            color={inkLight}
-            zIndex={10}
-          >
-            folio {pageNumber}
-          </Text>
         </Container>
       </Box>
     </>

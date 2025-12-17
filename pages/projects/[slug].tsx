@@ -213,18 +213,6 @@ const ProjectDetailPage = ({ project, pageNumber }: PageProps) => {
             <ReactMarkdown>{project.content || ''}</ReactMarkdown>
           </Box>
 
-          {/* Page number */}
-          <Text
-            position="fixed"
-            bottom={4}
-            right={8}
-            fontFamily="handwriting"
-            fontSize="sm"
-            color={inkLight}
-            zIndex={10}
-          >
-            folio {pageNumber + 10}
-          </Text>
         </Container>
       </Box>
     </>

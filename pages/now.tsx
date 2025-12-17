@@ -1,13 +1,10 @@
-import { Container, Heading, Text, VStack, Box, HStack, Badge, useColorModeValue } from "@chakra-ui/react";
+import { Container, Heading, Text, VStack, Box, useColorModeValue } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 
 export default function Now() {
-  const textColor = useColorModeValue("gray.600", "gray.400") as string;
-  const boxBg = useColorModeValue("orange.50", "gray.800") as string;
-  const boxBorderColor = useColorModeValue("orange.500", "orange.400") as string;
-  const urgentTextColor = useColorModeValue("red.600", "red.400") as string;
-  const footerBorderColor = useColorModeValue("gray.200", "gray.700") as string;
-  const footerTextColor = useColorModeValue("gray.600", "gray.400") as string;
+  const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
+  const inkLight = useColorModeValue('#6b5c4a', '#a89060');
+  const borderColor = useColorModeValue('rgba(139, 90, 43, 0.3)', 'rgba(168, 144, 96, 0.3)');
 
   return (
     <>
@@ -15,146 +12,104 @@ export default function Now() {
         title="Now | Imamatdin"
         description="What I'm working on right now"
       />
-      
-      <Container maxW="2xl" py={12}>
-        <VStack align="stretch" spacing={8}>
-          <Box>
-            <Heading size="2xl" mb={2}>Now</Heading>
-            <Text fontSize="md" color={textColor}>
-              Last updated: December 8, 2025
-            </Text>
-          </Box>
 
-          <Text fontSize="lg" lineHeight="tall">
-            I'm in crunch mode. University applications are due in January, and I'm 
+      <Container maxW="container.md" px={4}>
+        <Heading
+          as="h1"
+          fontFamily="handwriting"
+          fontSize={{ base: '2xl', md: '3xl' }}
+          color={inkColor}
+          mb={2}
+        >
+          Now
+        </Heading>
+
+        <Text fontFamily="body" fontSize="sm" color={inkLight} mb={8}>
+          Last updated: December 17, 2025
+        </Text>
+
+        <VStack align="stretch" spacing={8}>
+          <Text fontFamily="body" fontSize="lg" lineHeight="tall" color={inkColor}>
+            I'm in crunch mode. University applications are due in January, and I'm
             simultaneously building, researching, and writing at full speed.
           </Text>
 
-          {/* Current Focus Section */}
+          {/* Current Focus */}
           <Box>
-            <Heading size="lg" mb={4}>Current Focus</Heading>
+            <Heading
+              as="h2"
+              fontFamily="handwriting"
+              fontSize="xl"
+              color={inkColor}
+              mb={4}
+            >
+              Current Focus
+            </Heading>
+
             <VStack align="stretch" spacing={4}>
-              
-              {/* Deadline Item 1 */}
-              <Box 
-                p={4} 
-                borderLeft="3px solid" 
-                borderColor={boxBorderColor}
-                bg={boxBg}
+              <Box
+                p={4}
+                borderLeft="3px solid"
+                borderColor={borderColor}
               >
-                <HStack mb={2}>
-                  <Badge colorScheme="red" fontSize="xs">DUE TONIGHT</Badge>
-                  <Text fontSize="sm" fontWeight="bold" color={urgentTextColor}>
-                    December 13, 2025
-                  </Text>
-                </HStack>
-                <Text fontWeight="bold" fontSize="lg" mb={1}>
-                  AI & Environment Project
+                <Text fontFamily="body" fontWeight="bold" fontSize="lg" mb={1} color={inkColor}>
+                  University Applications
                 </Text>
-                <Text fontSize="md">
-                  Creating an AI-generated video/short film on the environmental effects 
-                  of overusing AI. The irony isn't lost on me.
+                <Text fontFamily="body" fontSize="md" color={inkLight}>
+                  Stanford, Harvard, Princeton, UPenn, and 7 others. 30 essays total, grinding through them.
                 </Text>
               </Box>
 
-              {/* Deadline Item 2 */}
-              <Box 
-                p={4} 
-                borderLeft="3px solid" 
-                borderColor={boxBorderColor}
-                bg={boxBg}
+              <Box
+                p={4}
+                borderLeft="3px solid"
+                borderColor={borderColor}
               >
-                <HStack mb={2}>
-                  <Badge colorScheme="red" fontSize="xs">DUE TONIGHT</Badge>
-                  <Text fontSize="sm" fontWeight="bold" color={urgentTextColor}>
-                    December 13, 2025
-                  </Text>
-                </HStack>
-                <Text fontWeight="bold" fontSize="lg" mb={1}>
-                  Deep Analysis Article
+                <Text fontFamily="body" fontWeight="bold" fontSize="lg" mb={1} color={inkColor}>
+                  ARCT Research
                 </Text>
-                <Text fontSize="md">
-                  Not a quick Medium piece—this is a full problem analysis with a real, 
-                  actionable solution proposal.
+                <Text fontFamily="body" fontSize="md" color={inkLight}>
+                  Proof-of-concept simulation for my Adaptive Radiative Cooling Tiles research.
                 </Text>
               </Box>
 
-              {/* Deadline Item 3 */}
-              <Box 
-                p={4} 
-                borderLeft="3px solid" 
-                borderColor={boxBorderColor}
-                bg={boxBg}
+              <Box
+                p={4}
+                borderLeft="3px solid"
+                borderColor={borderColor}
               >
-                <HStack mb={2}>
-                  <Badge colorScheme="red" fontSize="xs">DUE TONIGHT</Badge>
-                  <Text fontSize="sm" fontWeight="bold" color={urgentTextColor}>
-                    December 13, 2025
-                  </Text>
-                </HStack>
-                <Text fontWeight="bold" fontSize="lg" mb={1}>
-                  Personal Statement
+                <Text fontFamily="body" fontWeight="bold" fontSize="lg" mb={1} color={inkColor}>
+                  Agora Library
                 </Text>
-                <Text fontSize="md">
-                  The essay that ties everything together for my university applications.
+                <Text fontFamily="body" fontSize="md" color={inkLight}>
+                  Building a Telegram bot library system for knowledge sharing.
                 </Text>
               </Box>
-
-              {/* Deadline Item 4 */}
-              <Box 
-                p={4} 
-                borderLeft="3px solid" 
-                borderColor="orange.500"
-              >
-                <HStack mb={2}>
-                  <Badge colorScheme="orange" fontSize="xs">URGENT</Badge>
-                  <Text fontSize="sm" fontWeight="bold">
-                    December 13, 2025
-                  </Text>
-                </HStack>
-                <Text fontWeight="bold" fontSize="lg" mb={1}>
-                  ARCT Research Simulation
-                </Text>
-                <Text fontSize="md">
-                  Proof-of-concept simulation for my Adaptive Radiative Cooling Tiles research. 
-                  Can't submit completed work without starting today.
-                </Text>
-              </Box>
-
             </VStack>
           </Box>
 
-          {/* Ongoing Work */}
+          {/* Reading */}
           <Box>
-            <Heading size="lg" mb={4}>Ongoing</Heading>
-            <VStack align="stretch" spacing={3}>
-              <Text fontSize="md">
-                • <strong>TKS Pitch (Dec 13):</strong> Major presentation that will inform my essay narrative
-              </Text>
-              <Text fontSize="md">
-                • <strong>11 University Applications:</strong> Stanford, Harvard, Princeton, UPenn ED2, and 7 others—30 essays total, almost zero drafted
-              </Text>
-              <Text fontSize="md">
-                • <strong>Agora Writing:</strong> Content creation and technical projects, including the Telegram bot library system
-              </Text>
-            </VStack>
-          </Box>
-
-          {/* Reading/Thinking */}
-          <Box>
-            <Heading size="lg" mb={4}>Currently Reading</Heading>
-            <Text fontSize="md" lineHeight="tall">
-              Still working through Russian literature and philosophy—Dostoevsky, 
+            <Heading
+              as="h2"
+              fontFamily="handwriting"
+              fontSize="xl"
+              color={inkColor}
+              mb={4}
+            >
+              Currently Reading
+            </Heading>
+            <Text fontFamily="body" fontSize="md" lineHeight="tall" color={inkLight}>
+              Working through Russian literature and philosophy — Dostoevsky,
               Nietzsche, Camus. Trying to maintain intellectual routine despite deadline chaos.
             </Text>
           </Box>
 
-          <Box pt={4} borderTop="1px solid" borderColor={footerBorderColor}>
-            <Text fontSize="sm" color={footerTextColor}>
+          <Box pt={4} borderTop="1px dashed" borderColor={borderColor}>
+            <Text fontFamily="handwriting" fontSize="sm" color={inkLight} fontStyle="italic">
               This page is a snapshot of my life right now. It changes as I do.
             </Text>
           </Box>
-
         </VStack>
       </Container>
     </>
