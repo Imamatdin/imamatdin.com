@@ -29,7 +29,8 @@ const DeepDivesListPage = ({ dives }: PageProps) => {
         description="A collection of independent research project proposals."
       />
 
-      <Container maxW="container.md" px={4}>
+      <Container maxW="container.lg" px={{ base: 4, md: 8, lg: 12 }}>
+        <Box w="100%" maxW={{ base: "100%", md: "700px", lg: "800px" }} mx="auto">
         <Heading
           as="h1"
           fontFamily="handwriting"
@@ -94,6 +95,7 @@ const DeepDivesListPage = ({ dives }: PageProps) => {
             </NextLink>
           ))}
         </VStack>
+        </Box>
       </Container>
     </>
   );

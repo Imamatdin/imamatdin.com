@@ -172,8 +172,8 @@ export default function Reading({ books, booksByCategory }: PageProps) {
         description="Books I've read and my notes on them"
       />
 
-      <Container maxW="container.lg" py={{ base: 6, md: 10 }} centerContent>
-        <Box w="100%" maxW="900px">
+      <Container maxW="container.xl" py={{ base: 6, md: 10 }} px={{ base: 4, md: 8, lg: 12 }}>
+        <Box w="100%" maxW={{ base: "100%", lg: "1100px" }} mx="auto">
           <VStack align="stretch" spacing={6} mb={8}>
             <Box>
               <Heading fontFamily="heading" size="xl" mb={2}>

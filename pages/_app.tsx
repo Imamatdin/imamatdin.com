@@ -29,6 +29,19 @@ const styles = {
       bg: 'background',
       color: 'text',
     },
+    // Remove blue focus glow globally
+    '*:focus': {
+      boxShadow: 'none !important',
+      outline: 'none !important',
+    },
+    '*:focus-visible': {
+      boxShadow: 'none !important',
+      outline: 'none !important',
+    },
+    'a:focus, button:focus': {
+      boxShadow: 'none !important',
+      outline: 'none !important',
+    },
   },
 };
 

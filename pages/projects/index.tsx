@@ -30,8 +30,8 @@ const ProjectsPage = ({ projects }: PageProps) => {
         description="A collection of inventions and constructions."
       />
 
-      <Container maxW="container.md" px={4} centerContent>
-        <Box w="100%" maxW="600px">
+      <Container maxW="container.lg" px={{ base: 4, md: 8, lg: 12 }}>
+        <Box w="100%" maxW={{ base: "100%", md: "700px", lg: "800px" }} mx="auto">
         <Heading
           as="h1"
           fontFamily="handwriting"
