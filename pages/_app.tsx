@@ -4,6 +4,7 @@ import { Prose, withProse } from '@nikolovlazar/chakra-ui-prose';
 import Layout from '../components/Layout';
 import { ReactElement } from 'react';
 import { DefaultSeo } from 'next-seo';
+import { Analytics } from '@vercel/analytics/react';
 import '../styles/parchment.css';
 
 const config: ThemeConfig = {
@@ -130,6 +131,7 @@ export default function App({ Component, pageProps }: AppProps) {
         }}
       />
       {getDefaultLayout(<Component {...pageProps} />)}
+      <Analytics />
     </ChakraProvider>
   );
 }
