@@ -4,9 +4,7 @@ import {
   Text,
   Container,
   Box,
-  HStack,
   useColorModeValue,
-  Badge,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { NextSeo } from 'next-seo';
@@ -20,7 +18,7 @@ interface PageProps {
 const DeepDivesListPage = ({ dives }: PageProps) => {
   const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
   const inkLight = useColorModeValue('#6b5c4a', '#a89060');
-  const borderColor = useColorModeValue('rgba(139, 90, 43, 0.3)', 'rgba(168, 144, 96, 0.3)');
+  const borderColor = useColorModeValue('rgba(139, 90, 43, 0.2)', 'rgba(168, 144, 96, 0.15)');
 
   return (
     <>
@@ -29,12 +27,10 @@ const DeepDivesListPage = ({ dives }: PageProps) => {
         description="A collection of independent research project proposals."
       />
 
-      <Container maxW="container.lg" px={{ base: 4, md: 8, lg: 12 }}>
-        <Box w="100%" maxW={{ base: "100%", md: "700px", lg: "800px" }} mx="auto">
+      <Container maxW="650px" py={12}>
         <Heading
-          as="h1"
-          fontFamily="handwriting"
-          fontSize={{ base: '2xl', md: '3xl' }}
+          fontFamily="heading"
+          fontSize="3xl"
           color={inkColor}
           mb={2}
         >
@@ -61,32 +57,18 @@ const DeepDivesListPage = ({ dives }: PageProps) => {
                 transition="opacity 0.2s"
                 _hover={{ opacity: 0.7 }}
               >
-                <HStack justify="space-between" align="flex-start" mb={1}>
-                  <Text
-                    fontFamily="body"
-                    fontSize="lg"
-                    fontWeight="medium"
-                    color={inkColor}
-                  >
-                    {dive.title}
-                  </Text>
-                  <Badge
-                    bg="transparent"
-                    color={inkLight}
-                    fontFamily="handwriting"
-                    fontSize="xs"
-                    border="1px solid"
-                    borderColor={borderColor}
-                    borderRadius="none"
-                    textTransform="lowercase"
-                    flexShrink={0}
-                  >
-                    {dive.status}
-                  </Badge>
-                </HStack>
                 <Text
                   fontFamily="body"
-                  fontSize="sm"
+                  fontSize="lg"
+                  fontWeight="bold"
+                  color={inkColor}
+                  mb={1}
+                >
+                  {dive.title} ({dive.status})
+                </Text>
+                <Text
+                  fontFamily="body"
+                  fontSize="md"
                   color={inkLight}
                 >
                   {dive.question}
@@ -95,7 +77,6 @@ const DeepDivesListPage = ({ dives }: PageProps) => {
             </NextLink>
           ))}
         </VStack>
-        </Box>
       </Container>
     </>
   );

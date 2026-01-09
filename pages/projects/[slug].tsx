@@ -59,60 +59,44 @@ const ProjectDetailPage = ({ project, pageNumber }: PageProps) => {
         position="relative"
         className="parchment-bg"
       >
-        <Container maxW="800px" py={16}>
+        <Container maxW="650px" py={12}>
           {/* Back link */}
           <NextLink href="/projects">
             <Text
-              fontFamily="handwriting"
+              fontFamily="body"
               fontSize="sm"
-              color={inkLight}
+              color={inkColor}
               mb={8}
               cursor="pointer"
-              _hover={{ color: inkColor }}
+              borderBottom="1px dashed"
+              borderColor={inkLight}
+              display="inline-block"
+              _hover={{ borderStyle: 'solid' }}
             >
-              back to projects
+              ← Back to Projects
             </Text>
           </NextLink>
 
           {/* Title */}
           <Heading
             as="h1"
-            fontFamily="handwriting"
-            fontSize={{ base: '3xl', md: '4xl' }}
+            fontFamily="heading"
+            fontSize="3xl"
             color={inkColor}
-            mb={2}
-            transform="rotate(-1deg)"
+            mb={3}
           >
             {project.title}
           </Heading>
 
           {/* Date and status */}
-          <HStack spacing={4} mb={6}>
-            <Text
-              fontFamily="handwriting"
-              fontSize="sm"
-              color={inkLight}
-            >
-              {formatDate(project.date)}
-            </Text>
-            <Badge
-              bg="transparent"
-              color={sepiaAccent}
-              fontFamily="handwriting"
-              fontSize="sm"
-              border="1px solid"
-              borderColor={sepiaAccent}
-              borderRadius="none"
-              textTransform="lowercase"
-            >
-              {project.status}
-            </Badge>
-          </HStack>
+          <Text fontFamily="handwriting" fontSize="sm" color={inkLight} mb={6}>
+            {formatDate(project.date)} • ({project.status})
+          </Text>
 
           {/* Description */}
           <Text
             fontFamily="body"
-            fontSize="lg"
+            fontSize="md"
             color={inkLight}
             mb={8}
           >
@@ -122,13 +106,8 @@ const ProjectDetailPage = ({ project, pageNumber }: PageProps) => {
           {/* Links */}
           {project.links && project.links.length > 0 && (
             <Box mb={8}>
-              <Text
-                fontFamily="handwriting"
-                fontSize="sm"
-                color={inkLight}
-                mb={2}
-              >
-                links:
+              <Text fontFamily="body" fontSize="sm" color={inkLight} mb={2}>
+                Links:
               </Text>
               <VStack align="flex-start" spacing={1}>
                 {project.links.map((link, i) => (
@@ -138,9 +117,10 @@ const ProjectDetailPage = ({ project, pageNumber }: PageProps) => {
                     isExternal
                     fontFamily="body"
                     fontSize="sm"
-                    color={sepiaAccent}
+                    color={inkColor}
                     borderBottom="1px dashed"
-                    borderColor={sepiaAccent}
+                    borderColor={inkLight}
+                    textDecoration="none"
                     _hover={{ borderStyle: 'solid' }}
                   >
                     {link.label}
@@ -152,23 +132,9 @@ const ProjectDetailPage = ({ project, pageNumber }: PageProps) => {
 
           {/* Tags */}
           {project.tags && project.tags.length > 0 && (
-            <Wrap spacing={2} mb={8}>
-              {project.tags.map((tag) => (
-                <WrapItem key={tag}>
-                  <Text
-                    fontFamily="handwriting"
-                    fontSize="xs"
-                    color={inkLight}
-                    px={2}
-                    py={1}
-                    border="1px solid"
-                    borderColor={borderColor}
-                  >
-                    {tag}
-                  </Text>
-                </WrapItem>
-              ))}
-            </Wrap>
+            <Text fontFamily="body" fontSize="sm" color={inkLight} mb={8}>
+              Tags: {project.tags.join(', ')}
+            </Text>
           )}
 
           {/* Body content */}

@@ -12,32 +12,28 @@ import {
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
 import { ThemeToggleButton } from "./ThemeToggleButton";
-import Image from "next/image";
 import NextLink from "next/link";
 import {
   FaGithub,
-  FaLinkedin,
   FaEnvelope,
-  FaTelegram,
   FaXTwitter,
 } from "react-icons/fa6";
-import { SiSubstack } from "react-icons/si";
 
-// NavLink with Da Vinci colors
+// NavLink with terminal styling
 function NavLink({ href, children }: { href: string; children: string }) {
   const router = useRouter();
   const isActive = router.asPath === href || router.asPath.startsWith(href + '/');
-  const activeColor = useColorModeValue("#704214", "#8b4513");
-  const inactiveColor = useColorModeValue("#6b5c4a", "#a89060");
+  const activeColor = useColorModeValue("#1a1a1a", "#e0e0e0");
+  const inactiveColor = useColorModeValue("#666666", "#999999");
 
   return (
     <NextLink href={href} passHref>
       <Box
         as="span"
-        fontFamily="handwriting"
-        fontWeight={isActive ? "bold" : 500}
+        fontFamily="mono"
+        fontWeight={isActive ? "bold" : 400}
         color={isActive ? activeColor : inactiveColor}
-        fontSize="md"
+        fontSize="14px"
         cursor="pointer"
         transition="all 0.2s"
         _hover={{
@@ -50,98 +46,61 @@ function NavLink({ href, children }: { href: string; children: string }) {
   );
 }
 
-// Museum Icon with Da Vinci styling
-function MuseumIcon() {
+// Simple text logo
+function Logo() {
   const router = useRouter();
   const isActive = router.asPath === "/";
-  const filter = useColorModeValue(
-    "sepia(30%)",
-    "invert(1) brightness(0.9) sepia(20%)"
-  );
+  const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
 
   return (
     <NextLink href="/" passHref>
-      <Box
-        position="relative"
-        width="32px"
-        height="32px"
-        mr={2}
+      <Text
+        fontFamily="mono"
+        fontWeight="bold"
+        fontSize="14px"
+        color={textColor}
         cursor="pointer"
-        style={{
-          opacity: isActive ? 1 : 0.7,
-          transition: "opacity 0.2s, transform 0.2s",
-        }}
-        _hover={{ opacity: 1, transform: "scale(1.08)" }}
-      >
-        <Image
-          src="/icons/museum-savitsky.png"
-          alt="Home"
-          fill
-          style={{
-            objectFit: "contain",
-            filter: filter,
-            transition: "filter 0.3s ease",
-          }}
-        />
-      </Box>
-    </NextLink>
-  );
-}
-
-// Footer link with Da Vinci styling
-function FooterLink({ href, children }: { href: string; children: string }) {
-  const linkColor = useColorModeValue("#704214", "#8b4513");
-
-  return (
-    <NextLink href={href} passHref legacyBehavior>
-      <ChakraLink
-        fontSize="sm"
-        fontFamily="handwriting"
-        color={linkColor}
+        opacity={isActive ? 1 : 0.7}
         transition="opacity 0.2s"
-        _hover={{ opacity: 0.7 }}
+        _hover={{ opacity: 1 }}
       >
-        {children}
-      </ChakraLink>
+        IM
+      </Text>
     </NextLink>
   );
 }
 
 function Layout({ children }: PropsWithChildren) {
-  const borderColor = useColorModeValue(
-    "rgba(139, 90, 43, 0.2)",
-    "rgba(168, 144, 96, 0.15)"
-  );
-  const inkLight = useColorModeValue("#6b5c4a", "#a89060");
-  const inkColor = useColorModeValue("#3a2a1a", "#e8dfd0");
+  const borderColor = useColorModeValue("rgba(0, 0, 0, 0.1)", "rgba(255, 255, 255, 0.1)");
+  const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
+  const subtleColor = useColorModeValue("#666666", "#999999");
 
   return (
-    <Container maxW="container.md" centerContent>
+    <Container maxW="72ch" centerContent>
       <Box
         as="nav"
         display="flex"
         width="100%"
         px={6}
-        py={3}
-        mb={8}
+        py={4}
+        mb={12}
         alignItems="center"
         borderBottom={`1px solid`}
         borderColor={borderColor}
       >
         <HStack spacing={4} align="center">
-          <MuseumIcon />
+          <Logo />
         </HStack>
         <Spacer />
-        <HStack spacing={3} align="center">
-          <NavLink href="/about">About</NavLink>
-          <Box display={{ base: "none", md: "block" }}>
-            <NavLink href="/now">Now</NavLink>
-          </Box>
+        <HStack spacing={4} align="center">
+          <NavLink href="/about">about</NavLink>
+          <NavLink href="/writing">writing</NavLink>
+          <NavLink href="/now">now</NavLink>
           <ThemeToggleButton />
         </HStack>
       </Box>
 
-      <VStack width="100%" pb={16} align="flex-start" spacing={8}>
+      <VStack width="100%" py={12} align="flex-start" spacing={8}>
         {children}
       </VStack>
 
@@ -149,84 +108,43 @@ function Layout({ children }: PropsWithChildren) {
       <VStack
         width="100%"
         py={8}
-        spacing={3}
+        spacing={4}
         borderTop="1px solid"
         borderColor={borderColor}
         align="center"
       >
-        <HStack spacing={4} flexWrap="wrap" justify="center">
-          <FooterLink href="/about">About</FooterLink>
-          <FooterLink href="/writing">Writing</FooterLink>
-          <FooterLink href="/reading">Library</FooterLink>
-          <FooterLink href="/deep-dives">Deep Dives</FooterLink>
-          <FooterLink href="/projects">Projects</FooterLink>
-        </HStack>
-
         {/* Social Icons */}
-        <HStack spacing={5} pt={1}>
-          <ChakraLink href="https://twitter.com/Imamatdin_S" isExternal>
-            <Icon
-              as={FaXTwitter}
-              boxSize={5}
-              color={inkLight}
-              _hover={{ color: inkColor }}
-              transition="color 0.2s"
-            />
-          </ChakraLink>
+        <HStack spacing={4}>
           <ChakraLink href="https://github.com/Imamatdin" isExternal>
             <Icon
               as={FaGithub}
-              boxSize={5}
-              color={inkLight}
-              _hover={{ color: inkColor }}
+              boxSize={4}
+              color={subtleColor}
+              _hover={{ color: textColor }}
               transition="color 0.2s"
             />
           </ChakraLink>
-          <ChakraLink
-            href="https://www.linkedin.com/in/imamatdin-sultaniyazov"
-            isExternal
-          >
+          <ChakraLink href="https://twitter.com/Imamatdin_S" isExternal>
             <Icon
-              as={FaLinkedin}
-              boxSize={5}
-              color={inkLight}
-              _hover={{ color: inkColor }}
-              transition="color 0.2s"
-            />
-          </ChakraLink>
-          <ChakraLink
-            href="https://www.substack.com/@imamatdinsultaniyazov"
-            isExternal
-          >
-            <Icon
-              as={SiSubstack}
-              boxSize={5}
-              color={inkLight}
-              _hover={{ color: inkColor }}
-              transition="color 0.2s"
-            />
-          </ChakraLink>
-          <ChakraLink href="https://t.me/Imamatdin_Sultaniyazov" isExternal>
-            <Icon
-              as={FaTelegram}
-              boxSize={5}
-              color={inkLight}
-              _hover={{ color: inkColor }}
+              as={FaXTwitter}
+              boxSize={4}
+              color={subtleColor}
+              _hover={{ color: textColor }}
               transition="color 0.2s"
             />
           </ChakraLink>
           <ChakraLink href="mailto:imamatdinsultniyazov@gmail.com" isExternal>
             <Icon
               as={FaEnvelope}
-              boxSize={5}
-              color={inkLight}
-              _hover={{ color: inkColor }}
+              boxSize={4}
+              color={subtleColor}
+              _hover={{ color: textColor }}
               transition="color 0.2s"
             />
           </ChakraLink>
         </HStack>
 
-        <Text fontFamily="handwriting" fontSize="sm" color={inkLight}>
+        <Text fontFamily="mono" fontSize="12px" color={subtleColor}>
           {new Date().getFullYear()} Imamatdin Sultaniyazov
         </Text>
       </VStack>

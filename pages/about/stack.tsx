@@ -84,11 +84,10 @@ export default function Stack() {
         description="The tools, apps, and hardware I use daily"
       />
 
-      <Container maxW="container.md" px={4}>
+      <Container maxW="650px" py={12}>
         <Heading
-          as="h1"
-          fontFamily="handwriting"
-          fontSize={{ base: '2xl', md: '3xl' }}
+          fontFamily="heading"
+          fontSize="3xl"
           color={inkColor}
           mb={2}
         >
@@ -101,42 +100,32 @@ export default function Stack() {
 
         <VStack spacing={6} align="stretch">
           {stack.map((category) => (
-            <Box key={category.title}>
+            <VStack key={category.title} align="stretch" spacing={2}>
               <Text
-                fontFamily="body"
-                fontSize="xs"
+                fontFamily="handwriting"
+                fontSize="lg"
                 fontWeight="bold"
-                color={inkLight}
-                letterSpacing="wider"
-                mb={2}
+                color={inkColor}
               >
                 {category.title}
               </Text>
 
-              <VStack align="stretch" spacing={1} pl={4}>
-                {category.tools.map((tool) => (
-                  <Text
-                    key={tool.name}
-                    fontFamily="body"
-                    fontSize="sm"
-                    color={inkColor}
-                  >
-                    {tool.name}
-                    {tool.note && (
-                      <Text as="span" color={inkLight}> — {tool.note}</Text>
-                    )}
-                  </Text>
-                ))}
-              </VStack>
-            </Box>
+              {category.tools.map((tool) => (
+                <Text
+                  key={tool.name}
+                  fontFamily="body"
+                  fontSize="md"
+                  color={inkColor}
+                >
+                  {tool.name}
+                  {tool.note && (
+                    <Text as="span" color={inkLight}> — {tool.note}</Text>
+                  )}
+                </Text>
+              ))}
+            </VStack>
           ))}
         </VStack>
-
-        <Box pt={8} mt={8} borderTop="1px dashed" borderColor={borderColor}>
-          <Text fontFamily="handwriting" fontSize="sm" color={inkLight} fontStyle="italic">
-            "The best tool is the one you'll actually use."
-          </Text>
-        </Box>
       </Container>
     </>
   );

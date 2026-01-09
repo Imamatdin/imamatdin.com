@@ -58,120 +58,57 @@ const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
         position="relative"
         className="parchment-bg"
       >
-        <Container maxW="800px" py={16}>
+        <Container maxW="650px" py={12}>
           {/* Back link */}
           <NextLink href="/deep-dives">
             <Text
-              fontFamily="handwriting"
+              fontFamily="body"
               fontSize="sm"
-              color={inkLight}
+              color={inkColor}
               mb={8}
               cursor="pointer"
-              _hover={{ color: inkColor }}
+              borderBottom="1px dashed"
+              borderColor={inkLight}
+              display="inline-block"
+              _hover={{ borderStyle: 'solid' }}
             >
-              back to index
+              ← Back to Deep Dives
             </Text>
           </NextLink>
 
-          {/* Title as handwritten header */}
+          {/* Title */}
           <Heading
             as="h1"
-            fontFamily="handwriting"
-            fontSize={{ base: '3xl', md: '4xl' }}
+            fontFamily="heading"
+            fontSize="3xl"
             color={inkColor}
-            mb={2}
-            transform="rotate(-1deg)"
+            mb={3}
           >
             {dive.title}
           </Heading>
 
-          {/* Date and category notation */}
-          <HStack spacing={4} mb={6}>
-            <Text
-              fontFamily="handwriting"
-              fontSize="sm"
-              color={inkLight}
-            >
-              {formatDate(dive.date)}
-            </Text>
-            <Text fontFamily="handwriting" fontSize="sm" color={inkLight}>
-              |
-            </Text>
-            <Text
-              fontFamily="handwriting"
-              fontSize="sm"
-              color={inkLight}
-              textTransform="capitalize"
-            >
-              {dive.category}
-            </Text>
-          </HStack>
-
-          {/* Status badge */}
-          <Badge
-            bg="transparent"
-            color={sepiaAccent}
-            fontFamily="handwriting"
-            fontSize="sm"
-            border="1px solid"
-            borderColor={sepiaAccent}
-            borderRadius="none"
-            px={3}
-            py={1}
-            mb={8}
-            textTransform="lowercase"
-          >
-            {dive.status}
-          </Badge>
+          {/* Date, category, and status */}
+          <Text fontFamily="handwriting" fontSize="sm" color={inkLight} mb={6}>
+            {formatDate(dive.date)} • {dive.category} • ({dive.status})
+          </Text>
 
           {/* The Question */}
-          <Box
-            my={8}
-            p={6}
-            border="1px dashed"
-            borderColor={borderColor}
-            position="relative"
+          <Text
+            fontFamily="body"
+            fontSize="lg"
+            fontStyle="italic"
+            color={inkLight}
+            lineHeight="tall"
+            mb={8}
           >
-            <Text
-              fontFamily="handwriting"
-              fontSize="xs"
-              color={inkLight}
-              position="absolute"
-              top={2}
-              right={2}
-            >
-              the question
-            </Text>
-            <Text
-              fontFamily="body"
-              fontSize="lg"
-              fontStyle="italic"
-              color={inkColor}
-              lineHeight="tall"
-            >
-              {dive.question}
-            </Text>
-          </Box>
+            {dive.question}
+          </Text>
 
           {/* Tags */}
           {dive.tags && dive.tags.length > 0 && (
-            <Wrap spacing={2} mb={8}>
-              {dive.tags.map((tag) => (
-                <WrapItem key={tag}>
-                  <Text
-                    fontFamily="handwriting"
-                    fontSize="xs"
-                    color={inkLight}
-                    px={2}
-                    py={1}
-                    border="1px solid"
-                    borderColor={borderColor}
-                  >
-                    {tag}
-                  </Text>
-                </WrapItem>
-              ))}
-            </Wrap>
+            <Text fontFamily="body" fontSize="sm" color={inkLight} mb={8}>
+              Tags: {dive.tags.join(', ')}
+            </Text>
           )}
 
           {/* Body content - rendered MDX */}

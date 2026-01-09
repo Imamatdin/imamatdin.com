@@ -19,17 +19,15 @@ interface WritingProps {
 const Writing: NextPageWithLayout<WritingProps> = ({ posts }) => {
   const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
   const inkLight = useColorModeValue('#6b5c4a', '#a89060');
-  const borderColor = useColorModeValue('rgba(139, 90, 43, 0.3)', 'rgba(168, 144, 96, 0.3)');
+  const borderColor = useColorModeValue('rgba(139, 90, 43, 0.2)', 'rgba(168, 144, 96, 0.15)');
 
   return (
     <>
       <NextSeo title="Writing | Imamatdin" />
-      <Container maxW="container.lg" px={{ base: 4, md: 8, lg: 12 }}>
-        <Box w="100%" maxW={{ base: "100%", md: "700px", lg: "800px" }} mx="auto">
+      <Container maxW="650px" py={12}>
           <Heading
-            as="h1"
-            fontFamily="handwriting"
-            fontSize={{ base: '2xl', md: '3xl' }}
+            fontFamily="heading"
+            fontSize="3xl"
             color={inkColor}
             mb={2}
           >
@@ -75,7 +73,6 @@ const Writing: NextPageWithLayout<WritingProps> = ({ posts }) => {
               </Link>
             ))}
           </VStack>
-        </Box>
       </Container>
     </>
   );

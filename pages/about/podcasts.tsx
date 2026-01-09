@@ -1,4 +1,4 @@
-import { Container, Heading, Text, VStack, Box, Link as ChakraLink, HStack } from "@chakra-ui/react";
+import { Container, Heading, Text, VStack, Link as ChakraLink, useColorModeValue } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 
 interface Podcast {
@@ -45,6 +45,9 @@ const podcasts: Podcast[] = [
 ];
 
 export default function Podcasts() {
+  const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
+  const inkLight = useColorModeValue('#6b5c4a', '#a89060');
+
   return (
     <>
       <NextSeo
@@ -52,60 +55,55 @@ export default function Podcasts() {
         description="Podcasts that shape my thinking and keep me curious"
       />
 
-      <Container maxW="3xl" py={12}>
+      <Container maxW="650px" py={12}>
         <VStack align="stretch" spacing={8}>
-          <Box>
-            <Heading size="2xl" mb={2}>Podcasts</Heading>
-            <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }}>
-              Audio companions for long walks, gym sessions, and late-night coding. These shows have shaped how I think about technology, business, science, and life.
-            </Text>
-          </Box>
+          <Heading fontFamily="heading" fontSize="3xl" color={inkColor} mb={2}>
+            Podcasts
+          </Heading>
+
+          <Text fontFamily="body" fontSize="md" color={inkLight} mb={4}>
+            Audio companions for long walks, gym sessions, and late-night coding. These shows have shaped how I think about technology, business, science, and life.
+          </Text>
 
           <VStack spacing={6} align="stretch">
             {podcasts.map((podcast) => (
-              <Box
-                key={podcast.name}
-                p={5}
-                borderRadius="md"
-                border="1px solid"
-                borderColor="gray.200"
-                _dark={{ borderColor: "gray.700" }}
-              >
-                <HStack justify="space-between" align="flex-start" mb={2}>
-                  <Box>
-                    {podcast.link ? (
-                      <ChakraLink href={podcast.link} isExternal>
-                        <Heading size="md" color="accent" _hover={{ opacity: 0.8 }}>
-                          {podcast.name}
-                        </Heading>
-                      </ChakraLink>
-                    ) : (
-                      <Heading size="md">{podcast.name}</Heading>
-                    )}
-                    <Text fontSize="sm" color="gray.500">
-                      {podcast.host}
+              <VStack key={podcast.name} align="stretch" spacing={2}>
+                {podcast.link ? (
+                  <ChakraLink href={podcast.link} isExternal>
+                    <Text
+                      fontFamily="heading"
+                      fontSize="lg"
+                      fontWeight="bold"
+                      color={inkColor}
+                      borderBottom="1px dashed"
+                      borderColor={inkLight}
+                      display="inline-block"
+                      _hover={{ borderStyle: 'solid' }}
+                    >
+                      {podcast.name}
                     </Text>
-                  </Box>
-                </HStack>
+                  </ChakraLink>
+                ) : (
+                  <Text fontFamily="heading" fontSize="lg" fontWeight="bold" color={inkColor}>
+                    {podcast.name}
+                  </Text>
+                )}
+                <Text fontFamily="handwriting" fontSize="sm" color={inkLight}>
+                  {podcast.host}
+                </Text>
 
-                <Text fontSize="md" lineHeight="tall" mb={2}>
+                <Text fontFamily="body" fontSize="md" lineHeight="tall" color={inkColor}>
                   {podcast.description}
                 </Text>
 
                 {podcast.favoriteEpisode && (
-                  <Text fontSize="sm" color="gray.500" fontStyle="italic">
+                  <Text fontFamily="body" fontSize="sm" color={inkLight} fontStyle="italic">
                     Favorite episode: {podcast.favoriteEpisode}
                   </Text>
                 )}
-              </Box>
+              </VStack>
             ))}
           </VStack>
-
-          <Box pt={4} borderTop="1px solid" borderColor="gray.200" _dark={{ borderColor: "gray.700" }}>
-            <Text fontSize="sm" color="gray.500">
-              Always looking for recommendations. If you have a podcast that changed how you think, let me know.
-            </Text>
-          </Box>
         </VStack>
       </Container>
     </>

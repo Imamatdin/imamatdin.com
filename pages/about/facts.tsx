@@ -1,4 +1,4 @@
-import { Container, Heading, Text, VStack, Box, SimpleGrid } from "@chakra-ui/react";
+import { Container, Heading, Text, VStack, useColorModeValue } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 
 interface Fact {
@@ -58,6 +58,9 @@ const facts: Fact[] = [
 ];
 
 export default function Facts() {
+  const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
+  const inkLight = useColorModeValue('#6b5c4a', '#a89060');
+
   return (
     <>
       <NextSeo
@@ -65,46 +68,33 @@ export default function Facts() {
         description="Random facts and things you might not know about me"
       />
 
-      <Container maxW="4xl" py={12}>
+      <Container maxW="650px" py={12}>
         <VStack align="stretch" spacing={8}>
-          <Box>
-            <Heading size="2xl" mb={2}>Interesting Things</Heading>
-            <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }}>
-              Random facts, preferences, and pieces of who I am that don't fit anywhere else.
-            </Text>
-          </Box>
+          <Heading fontFamily="heading" fontSize="3xl" color={inkColor} mb={2}>
+            Interesting Things
+          </Heading>
 
-          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+          <Text fontFamily="body" fontSize="md" color={inkLight} mb={4}>
+            Random facts, preferences, and pieces of who I am that don't fit anywhere else.
+          </Text>
+
+          <VStack align="stretch" spacing={6}>
             {facts.map((fact, index) => (
-              <Box
-                key={index}
-                p={5}
-                borderRadius="md"
-                bg="gray.50"
-                _dark={{ bg: "gray.800" }}
-              >
+              <VStack key={index} align="stretch" spacing={1}>
                 <Text
-                  fontSize="xs"
+                  fontFamily="handwriting"
+                  fontSize="lg"
+                  color={inkColor}
                   fontWeight="bold"
-                  textTransform="uppercase"
-                  letterSpacing="wide"
-                  color="accent"
-                  mb={2}
                 >
                   {fact.category}
                 </Text>
-                <Text fontSize="md" lineHeight="tall">
+                <Text fontFamily="body" fontSize="md" lineHeight="tall" color={inkColor}>
                   {fact.content}
                 </Text>
-              </Box>
+              </VStack>
             ))}
-          </SimpleGrid>
-
-          <Box pt={4} borderTop="1px solid" borderColor="gray.200" _dark={{ borderColor: "gray.700" }}>
-            <Text fontSize="sm" color="gray.500" fontStyle="italic">
-              "The more you know about someone, the more interesting they become."
-            </Text>
-          </Box>
+          </VStack>
         </VStack>
       </Container>
     </>
