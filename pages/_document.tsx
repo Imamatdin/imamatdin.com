@@ -6,11 +6,17 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <meta name="view-transition" content="same-origin" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin="true"
+        />
+        <link
+          rel="preload"
+          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
+          as="style"
         />
 
         <Script

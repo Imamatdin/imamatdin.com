@@ -19,8 +19,8 @@ import {
   FaXTwitter,
 } from "react-icons/fa6";
 
-// NavLink with terminal styling
-function NavLink({ href, children }: { href: string; children: string }) {
+// NavLink with terminal styling and keyboard hint
+function NavLink({ href, children, shortcut }: { href: string; children: string; shortcut?: string }) {
   const router = useRouter();
   const isActive = router.asPath === href || router.asPath.startsWith(href + '/');
   const activeColor = useColorModeValue("#1a1a1a", "#e0e0e0");
@@ -28,20 +28,34 @@ function NavLink({ href, children }: { href: string; children: string }) {
 
   return (
     <NextLink href={href} passHref>
-      <Box
-        as="span"
-        fontFamily="mono"
-        fontWeight={isActive ? "bold" : 400}
-        color={isActive ? activeColor : inactiveColor}
-        fontSize="14px"
-        cursor="pointer"
-        transition="all 0.2s"
-        _hover={{
-          color: activeColor,
-        }}
-      >
-        {children}
-      </Box>
+      <HStack spacing={1} as="span">
+        <Box
+          as="span"
+          fontFamily="mono"
+          fontWeight={isActive ? "bold" : 400}
+          color={isActive ? activeColor : inactiveColor}
+          fontSize="14px"
+          cursor="pointer"
+          transition="all 0.2s"
+          _hover={{
+            color: activeColor,
+          }}
+        >
+          {children}
+        </Box>
+        {shortcut && (
+          <Box
+            as="span"
+            fontFamily="mono"
+            fontSize="11px"
+            color={inactiveColor}
+            opacity={0.5}
+            display={{ base: "none", md: "inline" }}
+          >
+            [{shortcut}]
+          </Box>
+        )}
+      </HStack>
     </NextLink>
   );
 }
@@ -93,9 +107,9 @@ function Layout({ children }: PropsWithChildren) {
         </HStack>
         <Spacer />
         <HStack spacing={4} align="center">
-          <NavLink href="/about">about</NavLink>
-          <NavLink href="/writing">writing</NavLink>
-          <NavLink href="/now">now</NavLink>
+          <NavLink href="/about" shortcut="g a">about</NavLink>
+          <NavLink href="/writing" shortcut="g w">writing</NavLink>
+          <NavLink href="/now" shortcut="g n">now</NavLink>
           <ThemeToggleButton />
         </HStack>
       </Box>

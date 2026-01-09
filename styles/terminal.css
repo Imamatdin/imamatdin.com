@@ -54,3 +54,62 @@ body::after {
     stroke-dashoffset: 0 !important;
   }
 }
+
+/* View Transitions */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: fade-out 150ms ease-out;
+}
+
+::view-transition-new(root) {
+  animation: fade-in 150ms ease-in;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Hacker Mode (Konami Code Easter Egg) */
+.hacker-mode {
+  --bg: #000000 !important;
+  --text: #00ff00 !important;
+  --accent: #00ff00 !important;
+  --subtle: #00aa00 !important;
+  --border: rgba(0, 255, 0, 0.2) !important;
+  --highlight: rgba(0, 255, 0, 0.1) !important;
+}
+
+.hacker-mode body {
+  background: #000000 !important;
+  color: #00ff00 !important;
+}
+
+.hacker-mode * {
+  color: inherit;
+}
+
+.hacker-mode a {
+  color: #00ff00 !important;
+}
+
+/* Keyboard shortcut hints */
+.shortcut-hint {
+  font-size: 12px;
+  opacity: 0.5;
+  margin-left: 4px;
+}
+
+@media (max-width: 768px) {
+  .shortcut-hint {
+    display: none;
+  }
+}
