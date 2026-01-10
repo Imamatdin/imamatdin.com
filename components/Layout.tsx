@@ -200,7 +200,7 @@ function Layout({ children }: PropsWithChildren) {
               transition="color 0.2s"
             />
           </ChakraLink>
-          <ChakraLink href="mailto:imamatdin.s@gmail.com">
+          <ChakraLink href="mailto:imamatdinsultaniyazov@gmail.com">
             <Icon
               as={FaEnvelope}
               boxSize={4}
