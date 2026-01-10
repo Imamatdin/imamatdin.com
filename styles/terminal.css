@@ -131,6 +131,11 @@ a, button, [role="button"], [tabindex] {
   color: #88ff88 !important;
 }
 
+/* Logo icon in konami mode */
+.konami-mode .logo-icon {
+  filter: invert(48%) sepia(99%) saturate(2000%) hue-rotate(85deg) brightness(118%) contrast(119%) !important;
+}
+
 /* Nav and borders in konami mode */
 .konami-mode nav,
 .konami-mode [class*="border"] {

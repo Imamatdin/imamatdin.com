@@ -19,6 +19,7 @@ import {
   FaXTwitter,
   FaLinkedin,
   FaTelegram,
+  FaEnvelope,
 } from "react-icons/fa6";
 import { SiSubstack } from "react-icons/si";
 
@@ -66,6 +67,7 @@ function NavLink({ href, children, shortcut }: { href: string; children: string;
 // Logo with icon and name
 function Logo() {
   const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
+  const iconFilter = useColorModeValue("none", "invert(1)");
 
   return (
     <NextLink href="/" passHref>
@@ -75,6 +77,8 @@ function Logo() {
           alt="Museum icon"
           boxSize="24px"
           objectFit="contain"
+          filter={iconFilter}
+          className="logo-icon"
         />
         <Text
           fontFamily="mono"
@@ -96,7 +100,7 @@ function Layout({ children }: PropsWithChildren) {
 
   return (
     <Container maxW="72ch" centerContent>
-      {/* Header: Logo + Theme Toggle */}
+      {/* Header: Logo + Now + Theme Toggle */}
       <Box
         display="flex"
         width="100%"
@@ -106,7 +110,10 @@ function Layout({ children }: PropsWithChildren) {
       >
         <Logo />
         <Spacer />
-        <ThemeToggleButton />
+        <HStack spacing={3}>
+          <NavLink href="/now" shortcut="g n">now</NavLink>
+          <ThemeToggleButton />
+        </HStack>
       </Box>
 
       {/* Divider */}
@@ -129,7 +136,6 @@ function Layout({ children }: PropsWithChildren) {
           <NavLink href="/writing" shortcut="g w">writing</NavLink>
           <NavLink href="/projects" shortcut="g p">projects</NavLink>
           <NavLink href="/deep-dives" shortcut="g d">deep-dives</NavLink>
-          <NavLink href="/now" shortcut="g n">now</NavLink>
         </HStack>
       </Box>
 
@@ -188,6 +194,15 @@ function Layout({ children }: PropsWithChildren) {
           <ChakraLink href="https://github.com/Imamatdin" isExternal>
             <Icon
               as={FaGithub}
+              boxSize={4}
+              color={subtleColor}
+              _hover={{ color: textColor }}
+              transition="color 0.2s"
+            />
+          </ChakraLink>
+          <ChakraLink href="mailto:imamatdin.s@gmail.com">
+            <Icon
+              as={FaEnvelope}
               boxSize={4}
               color={subtleColor}
               _hover={{ color: textColor }}
