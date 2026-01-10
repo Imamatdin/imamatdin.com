@@ -1,37 +1,14 @@
-import { GetStaticProps } from 'next';
 import { Box, Text, VStack, Link as ChakraLink, useColorModeValue } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import fs from 'fs';
-import path from 'path';
 import { Signature } from '../components/Signature';
 
-interface HomeProps {
-  asciiHeader: string;
-}
-
-export default function Home({ asciiHeader }: HomeProps) {
+export default function Home() {
   const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
   const subtleColor = useColorModeValue('#666666', '#999999');
   const accentColor = useColorModeValue('#0066cc', '#66b3ff');
 
   return (
     <VStack align="flex-start" spacing={8} width="100%">
-      {/* ASCII Header */}
-      <Box
-        as="pre"
-        fontFamily="mono"
-        fontSize={{ base: '6px', sm: '8px', md: '10px', lg: '12px' }}
-        lineHeight="1.2"
-        color={textColor}
-        overflowX="auto"
-        width="100%"
-        userSelect="none"
-        whiteSpace="pre"
-        pb={4}
-      >
-        {asciiHeader}
-      </Box>
-
       {/* Signature Animation */}
       <Box display="flex" alignItems="center" gap={3}>
         <Signature size={32} />
@@ -100,21 +77,3 @@ export default function Home({ asciiHeader }: HomeProps) {
     </VStack>
   );
 }
-
-export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  const asciiPath = path.join(process.cwd(), 'public', 'ascii-header.txt');
-  let asciiHeader = '';
-
-  try {
-    asciiHeader = fs.readFileSync(asciiPath, 'utf-8');
-  } catch (err) {
-    // Fallback if file doesn't exist
-    asciiHeader = 'IMAMATDIN';
-  }
-
-  return {
-    props: {
-      asciiHeader,
-    },
-  };
-};

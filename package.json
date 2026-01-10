@@ -7,8 +7,7 @@
     "build": "yarn generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "generate": "node scripts/generate-content.mjs && node scripts/generate-ascii.mjs",
-    "generate:ascii": "node scripts/generate-ascii.mjs",
+    "generate": "node scripts/generate-content.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs"
   },
   "dependencies": {

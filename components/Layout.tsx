@@ -8,17 +8,19 @@ import {
   Text,
   Link as ChakraLink,
   Icon,
+  Image,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
 import { ThemeToggleButton } from "./ThemeToggleButton";
-import { AnimatedLogo } from "./AnimatedLogo";
 import NextLink from "next/link";
 import {
   FaGithub,
-  FaEnvelope,
   FaXTwitter,
+  FaLinkedin,
+  FaTelegram,
 } from "react-icons/fa6";
+import { SiSubstack } from "react-icons/si";
 
 // NavLink with terminal styling and keyboard hint
 function NavLink({ href, children, shortcut }: { href: string; children: string; shortcut?: string }) {
@@ -61,6 +63,32 @@ function NavLink({ href, children, shortcut }: { href: string; children: string;
   );
 }
 
+// Logo with icon and name
+function Logo() {
+  const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
+
+  return (
+    <NextLink href="/" passHref>
+      <HStack spacing={2} cursor="pointer" _hover={{ opacity: 0.8 }} transition="opacity 0.2s">
+        <Image
+          src="/icons/museum-savitsky.png"
+          alt="Museum icon"
+          boxSize="24px"
+          objectFit="contain"
+        />
+        <Text
+          fontFamily="mono"
+          fontWeight="bold"
+          fontSize="14px"
+          color={textColor}
+        >
+          Imamatdin
+        </Text>
+      </HStack>
+    </NextLink>
+  );
+}
+
 function Layout({ children }: PropsWithChildren) {
   const borderColor = useColorModeValue("rgba(0, 0, 0, 0.1)", "rgba(255, 255, 255, 0.1)");
   const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
@@ -76,7 +104,7 @@ function Layout({ children }: PropsWithChildren) {
         py={4}
         alignItems="center"
       >
-        <AnimatedLogo />
+        <Logo />
         <Spacer />
         <ThemeToggleButton />
       </Box>
@@ -96,9 +124,11 @@ function Layout({ children }: PropsWithChildren) {
         py={3}
         mb={8}
       >
-        <HStack spacing={6} justify="center">
+        <HStack spacing={{ base: 4, md: 6 }} justify="center" flexWrap="wrap">
           <NavLink href="/about" shortcut="g a">about</NavLink>
           <NavLink href="/writing" shortcut="g w">writing</NavLink>
+          <NavLink href="/projects" shortcut="g p">projects</NavLink>
+          <NavLink href="/deep-dives" shortcut="g d">deep-dives</NavLink>
           <NavLink href="/now" shortcut="g n">now</NavLink>
         </HStack>
       </Box>
@@ -119,16 +149,7 @@ function Layout({ children }: PropsWithChildren) {
       >
         {/* Social Icons */}
         <HStack spacing={4}>
-          <ChakraLink href="https://github.com/Imamatdin" isExternal>
-            <Icon
-              as={FaGithub}
-              boxSize={4}
-              color={subtleColor}
-              _hover={{ color: textColor }}
-              transition="color 0.2s"
-            />
-          </ChakraLink>
-          <ChakraLink href="https://twitter.com/Imamatdin_S" isExternal>
+          <ChakraLink href="https://x.com/Imamatdin_S" isExternal>
             <Icon
               as={FaXTwitter}
               boxSize={4}
@@ -137,9 +158,36 @@ function Layout({ children }: PropsWithChildren) {
               transition="color 0.2s"
             />
           </ChakraLink>
-          <ChakraLink href="mailto:imamatdinsultniyazov@gmail.com" isExternal>
+          <ChakraLink href="https://www.substack.com/@imamatdinsultaniyazov" isExternal>
             <Icon
-              as={FaEnvelope}
+              as={SiSubstack}
+              boxSize={4}
+              color={subtleColor}
+              _hover={{ color: textColor }}
+              transition="color 0.2s"
+            />
+          </ChakraLink>
+          <ChakraLink href="https://www.linkedin.com/in/imamatdin-sultaniyazov" isExternal>
+            <Icon
+              as={FaLinkedin}
+              boxSize={4}
+              color={subtleColor}
+              _hover={{ color: textColor }}
+              transition="color 0.2s"
+            />
+          </ChakraLink>
+          <ChakraLink href="https://t.me/Imamatdin_Sultaniyazov" isExternal>
+            <Icon
+              as={FaTelegram}
+              boxSize={4}
+              color={subtleColor}
+              _hover={{ color: textColor }}
+              transition="color 0.2s"
+            />
+          </ChakraLink>
+          <ChakraLink href="https://github.com/Imamatdin" isExternal>
+            <Icon
+              as={FaGithub}
               boxSize={4}
               color={subtleColor}
               _hover={{ color: textColor }}
