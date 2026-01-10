@@ -10,11 +10,8 @@ export default function Home() {
   return (
     <VStack align="flex-start" spacing={8} width="100%">
       {/* Signature Animation */}
-      <Box display="flex" alignItems="center" gap={3}>
-        <Signature size={32} />
-        <Text fontFamily="mono" fontSize="14px" color={subtleColor}>
-          Imamatdin Sultaniyazov
-        </Text>
+      <Box>
+        <Signature size={16} />
       </Box>
 
       {/* Content */}
