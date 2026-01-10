@@ -12,12 +12,10 @@ interface BookPageProps {
 }
 
 export default function BookPage({ book, mdxSource }: BookPageProps) {
-  const inkColor = useColorModeValue("#3a2a1a", "#e8dfd0");
-  const inkLight = useColorModeValue("#6b5c4a", "#a89060");
-  const borderColor = useColorModeValue(
-    "rgba(139, 90, 43, 0.2)",
-    "rgba(168, 144, 96, 0.15)"
-  );
+  const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
+  const subtleColor = useColorModeValue("#666666", "#999999");
+  const borderColor = useColorModeValue("rgba(0,0,0,0.1)", "rgba(255,255,255,0.1)");
+  const accentColor = useColorModeValue("#0066cc", "#66b3ff");
 
   return (
     <>
@@ -26,26 +24,26 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
         description={`My notes and reflections on ${book.title} by ${book.author}`}
       />
 
-      <Container maxW="650px" py={12}>
-        <VStack align="stretch" spacing={8}>
+      <Container maxW="650px" py={8}>
+        <VStack align="stretch" spacing={6}>
           {/* Book Header */}
-          <VStack align="flex-start" spacing={3}>
+          <VStack align="flex-start" spacing={2}>
             <Heading
-              fontFamily="heading"
-              fontSize="3xl"
+              fontFamily="mono"
+              fontSize="xl"
               fontWeight="bold"
               lineHeight="1.3"
-              color={inkColor}
+              color={textColor}
             >
               {book.title}
             </Heading>
 
-            <Text fontFamily="body" fontSize="lg" color={inkLight}>
+            <Text fontFamily="mono" fontSize="14px" color={subtleColor}>
               by {book.author}
             </Text>
 
             {book.date && (
-              <Text fontFamily="handwriting" fontSize="sm" color={inkLight}>
+              <Text fontFamily="mono" fontSize="12px" color={subtleColor}>
                 Read in {new Date(book.date).toLocaleDateString('en-US', {
                   month: 'long',
                   year: 'numeric'
@@ -54,58 +52,56 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
             )}
 
             {book.rating && (
-              <Text fontFamily="body" fontSize="sm" color={inkLight}>
+              <Text fontFamily="mono" fontSize="12px" color={subtleColor}>
                 Rating: {book.rating}/10
               </Text>
             )}
 
             {book.category && (
-              <Text fontFamily="body" fontSize="sm" color={inkLight}>
+              <Text fontFamily="mono" fontSize="12px" color={subtleColor}>
                 {Array.isArray(book.category) ? book.category.join(', ') : book.category}
               </Text>
             )}
           </VStack>
 
-          <Divider borderColor={borderColor} borderStyle="dashed" />
+          <Divider borderColor={borderColor} />
 
           {/* Book Notes/Content */}
           <Box
-            fontFamily="body"
-            fontSize="md"
-            lineHeight="tall"
-            color={inkColor}
+            fontFamily="mono"
+            fontSize="14px"
+            lineHeight="1.8"
+            color={textColor}
             sx={{
               '& h1, & h2, & h3': {
-                fontFamily: 'heading',
-                color: inkColor,
+                fontFamily: 'mono',
+                color: textColor,
                 mt: 6,
                 mb: 3
               },
-              '& h1': { fontSize: '2xl', fontWeight: 'bold' },
-              '& h2': { fontSize: 'xl', fontWeight: 'bold' },
-              '& h3': { fontSize: 'lg', fontWeight: 'semibold' },
+              '& h1': { fontSize: 'lg', fontWeight: 'bold' },
+              '& h2': { fontSize: 'md', fontWeight: 'bold' },
+              '& h3': { fontSize: 'md', fontWeight: 'semibold' },
               '& p': { mb: 4, lineHeight: 1.8 },
-              '& ul, & ol': { pl: 6, mb: 4 },
-              '& li': { mb: 2 },
+              '& ul, & ol': { pl: 5, mb: 4 },
+              '& li': { mb: 1 },
               '& blockquote': {
                 borderLeft: '2px solid',
-                borderColor: inkLight,
+                borderColor: borderColor,
                 pl: 4,
-                py: 2,
+                py: 1,
                 fontStyle: 'italic',
-                color: inkLight
+                color: subtleColor
               },
               '& code': {
                 fontFamily: 'mono',
                 fontSize: 'sm',
-                color: inkColor
+                color: textColor
               },
               '& a': {
-                color: inkColor,
-                borderBottom: '1px dashed',
-                borderColor: inkLight,
-                textDecoration: 'none',
-                _hover: { borderStyle: 'solid' }
+                color: accentColor,
+                textDecoration: 'underline',
+                _hover: { opacity: 0.7 }
               }
             }}
           >
@@ -113,23 +109,13 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
           </Box>
 
           {/* Back to Library Link */}
-          <Box
-            mt={8}
-            pt={6}
-            borderTop="1px dashed"
-            borderColor={borderColor}
-          >
+          <Box pt={6} borderTop="1px solid" borderColor={borderColor}>
             <NextLink href="/reading" passHref legacyBehavior>
               <ChakraLink
-                fontFamily="body"
-                fontSize="md"
-                color={inkColor}
-                borderBottom="1px dashed"
-                borderColor={inkLight}
-                textDecoration="none"
-                _hover={{
-                  borderStyle: "solid"
-                }}
+                fontFamily="mono"
+                fontSize="sm"
+                color={subtleColor}
+                _hover={{ color: textColor }}
               >
                 ← Back to Library
               </ChakraLink>

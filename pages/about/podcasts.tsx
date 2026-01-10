@@ -45,8 +45,9 @@ const podcasts: Podcast[] = [
 ];
 
 export default function Podcasts() {
-  const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
-  const inkLight = useColorModeValue('#6b5c4a', '#a89060');
+  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
+  const subtleColor = useColorModeValue('#666666', '#999999');
+  const accentColor = useColorModeValue('#0066cc', '#66b3ff');
 
   return (
     <>
@@ -55,49 +56,47 @@ export default function Podcasts() {
         description="Podcasts that shape my thinking and keep me curious"
       />
 
-      <Container maxW="650px" py={12}>
-        <VStack align="stretch" spacing={8}>
-          <Heading fontFamily="heading" fontSize="3xl" color={inkColor} mb={2}>
+      <Container maxW="650px" py={8}>
+        <VStack align="stretch" spacing={6}>
+          <Heading fontFamily="mono" fontSize="xl" color={textColor} mb={2}>
             Podcasts
           </Heading>
 
-          <Text fontFamily="body" fontSize="md" color={inkLight} mb={4}>
+          <Text fontFamily="mono" fontSize="14px" color={subtleColor} mb={2}>
             Audio companions for long walks, gym sessions, and late-night coding. These shows have shaped how I think about technology, business, science, and life.
           </Text>
 
-          <VStack spacing={6} align="stretch">
+          <VStack spacing={4} align="stretch">
             {podcasts.map((podcast) => (
-              <VStack key={podcast.name} align="stretch" spacing={2}>
+              <VStack key={podcast.name} align="stretch" spacing={1}>
                 {podcast.link ? (
                   <ChakraLink href={podcast.link} isExternal>
                     <Text
-                      fontFamily="heading"
-                      fontSize="lg"
+                      fontFamily="mono"
+                      fontSize="14px"
                       fontWeight="bold"
-                      color={inkColor}
-                      borderBottom="1px dashed"
-                      borderColor={inkLight}
-                      display="inline-block"
-                      _hover={{ borderStyle: 'solid' }}
+                      color={accentColor}
+                      textDecoration="underline"
+                      _hover={{ opacity: 0.7 }}
                     >
                       {podcast.name}
                     </Text>
                   </ChakraLink>
                 ) : (
-                  <Text fontFamily="heading" fontSize="lg" fontWeight="bold" color={inkColor}>
+                  <Text fontFamily="mono" fontSize="14px" fontWeight="bold" color={textColor}>
                     {podcast.name}
                   </Text>
                 )}
-                <Text fontFamily="handwriting" fontSize="sm" color={inkLight}>
+                <Text fontFamily="mono" fontSize="12px" color={subtleColor}>
                   {podcast.host}
                 </Text>
 
-                <Text fontFamily="body" fontSize="md" lineHeight="tall" color={inkColor}>
+                <Text fontFamily="mono" fontSize="14px" lineHeight="1.8" color={textColor}>
                   {podcast.description}
                 </Text>
 
                 {podcast.favoriteEpisode && (
-                  <Text fontFamily="body" fontSize="sm" color={inkLight} fontStyle="italic">
+                  <Text fontFamily="mono" fontSize="12px" color={subtleColor} fontStyle="italic">
                     Favorite episode: {podcast.favoriteEpisode}
                   </Text>
                 )}

@@ -1,4 +1,4 @@
-import { Container, Heading, Text, VStack, Box, useColorModeValue } from "@chakra-ui/react";
+import { Container, Heading, Text, VStack, useColorModeValue } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 
 interface Tool {
@@ -73,9 +73,8 @@ const stack: Category[] = [
 ];
 
 export default function Stack() {
-  const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
-  const inkLight = useColorModeValue('#6b5c4a', '#a89060');
-  const borderColor = useColorModeValue('rgba(139, 90, 43, 0.3)', 'rgba(168, 144, 96, 0.3)');
+  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
+  const subtleColor = useColorModeValue('#666666', '#999999');
 
   return (
     <>
@@ -84,28 +83,28 @@ export default function Stack() {
         description="The tools, apps, and hardware I use daily"
       />
 
-      <Container maxW="650px" py={12}>
+      <Container maxW="650px" py={8}>
         <Heading
-          fontFamily="heading"
-          fontSize="3xl"
-          color={inkColor}
+          fontFamily="mono"
+          fontSize="xl"
+          color={textColor}
           mb={2}
         >
           Stack
         </Heading>
 
-        <Text fontFamily="body" fontSize="md" color={inkLight} mb={8}>
+        <Text fontFamily="mono" fontSize="14px" color={subtleColor} mb={6}>
           Tools shape how we think. Here's what I use.
         </Text>
 
-        <VStack spacing={6} align="stretch">
+        <VStack spacing={4} align="stretch">
           {stack.map((category) => (
-            <VStack key={category.title} align="stretch" spacing={2}>
+            <VStack key={category.title} align="stretch" spacing={1}>
               <Text
-                fontFamily="handwriting"
-                fontSize="lg"
+                fontFamily="mono"
+                fontSize="14px"
                 fontWeight="bold"
-                color={inkColor}
+                color={textColor}
               >
                 {category.title}
               </Text>
@@ -113,13 +112,13 @@ export default function Stack() {
               {category.tools.map((tool) => (
                 <Text
                   key={tool.name}
-                  fontFamily="body"
-                  fontSize="md"
-                  color={inkColor}
+                  fontFamily="mono"
+                  fontSize="14px"
+                  color={textColor}
                 >
                   {tool.name}
                   {tool.note && (
-                    <Text as="span" color={inkLight}> — {tool.note}</Text>
+                    <Text as="span" color={subtleColor}> — {tool.note}</Text>
                   )}
                 </Text>
               ))}
