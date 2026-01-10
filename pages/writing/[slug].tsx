@@ -19,18 +19,11 @@ interface PostProps {
 }
 
 const Post: NextPageWithLayout<PostProps> = ({ post }) => {
-  // Light mode: warm paper | Dark mode: dark but with subtle warmth
-  const pageBg = useColorModeValue("#FFFCF0", "#151413");
-  const inkColor = useColorModeValue("#2a1a0a", "#e8dfd0");
-  const dateColor = useColorModeValue("#6b5c4a", "#7a756d");
-  const borderColor = useColorModeValue(
-    "rgba(139, 90, 43, 0.25)",
-    "rgba(139, 90, 43, 0.15)"
-  );
-  const codeBg = useColorModeValue(
-    "rgba(139, 90, 43, 0.08)",
-    "rgba(139, 90, 43, 0.15)"
-  );
+  const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
+  const subtleColor = useColorModeValue("#666666", "#999999");
+  const borderColor = useColorModeValue("rgba(0,0,0,0.1)", "rgba(255,255,255,0.1)");
+  const accentColor = useColorModeValue("#0066cc", "#66b3ff");
+  const codeBg = useColorModeValue("rgba(0,0,0,0.05)", "rgba(255,255,255,0.05)");
 
   return (
     <>
@@ -43,136 +36,118 @@ const Post: NextPageWithLayout<PostProps> = ({ post }) => {
         }}
       />
 
-      <Box bg={pageBg} minH="100vh" py={{ base: 8, md: 12 }}>
-        <Container maxW="650px">
-          <VStack align="stretch" spacing={6}>
-
-            {/* Title - handwritten style */}
-            <Box>
-              <Heading
-                fontFamily="handwriting"
-                fontSize={{ base: "2xl", md: "3xl" }}
-                color={inkColor}
-                fontWeight="700"
-                lineHeight="1.3"
-                mb={2}
-              >
-                {post.metadata.title}
-              </Heading>
-
-              {post.metadata.date && (
-                <Text
-                  fontFamily="handwriting"
-                  fontSize="md"
-                  color={dateColor}
-                >
-                  {post.metadata.date}
-                </Text>
-              )}
-            </Box>
-
-            {/* Divider */}
-            <Box h="1px" bg={borderColor} w="40%" />
-
-            {/* Content */}
-            <Box
-              fontFamily="body"
-              color={inkColor}
-              lineHeight="1.85"
-              fontSize={{ base: "md", md: "lg" }}
-              sx={{
-                '& p': { mb: 5 },
-                '& h2': {
-                  fontFamily: 'handwriting',
-                  fontSize: 'xl',
-                  fontWeight: '700',
-                  mt: 10,
-                  mb: 4,
-                },
-                '& h3': {
-                  fontFamily: 'handwriting',
-                  fontSize: 'lg',
-                  fontWeight: '700',
-                  mt: 8,
-                  mb: 3,
-                },
-                '& blockquote': {
-                  borderLeft: '3px solid',
-                  borderColor: borderColor,
-                  pl: 4,
-                  ml: 0,
-                  fontStyle: 'italic',
-                  color: dateColor,
-                  my: 6,
-                },
-                '& code': {
-                  fontFamily: 'mono',
-                  bg: codeBg,
-                  px: 1.5,
-                  py: 0.5,
-                  borderRadius: 'sm',
-                  fontSize: '0.9em',
-                },
-                '& pre': {
-                  bg: codeBg,
-                  p: 4,
-                  borderRadius: 'md',
-                  overflow: 'auto',
-                  my: 6,
-                  '& code': {
-                    bg: 'transparent',
-                    p: 0,
-                  }
-                },
-                '& a': {
-                  color: 'accent',
-                  borderBottom: '1px dashed',
-                  borderColor: 'accent',
-                  _hover: { borderStyle: 'solid' }
-                },
-                '& ul, & ol': { pl: 6, mb: 5 },
-                '& li': { mb: 2 },
-                '& img': {
-                  maxW: '100%',
-                  my: 8,
-                  borderRadius: 'md',
-                  boxShadow: '0 4px 16px rgba(0,0,0,0.12)',
-                },
-                '& hr': {
-                  border: 'none',
-                  h: '1px',
-                  bg: borderColor,
-                  my: 10,
-                },
-                /* Poetry/verse styling for br tags */
-                '& br': {
-                  display: 'block',
-                  content: '""',
-                  mb: 1,
-                }
-              }}
+      <Container maxW="650px" py={8}>
+        <VStack align="stretch" spacing={4}>
+          {/* Title */}
+          <Box>
+            <Heading
+              fontFamily="mono"
+              fontSize={{ base: "xl", md: "2xl" }}
+              color={textColor}
+              fontWeight="700"
+              lineHeight="1.3"
+              mb={2}
             >
-              <MDXRemote {...post.source} />
-            </Box>
+              {post.metadata.title}
+            </Heading>
 
-            {/* Back link */}
-            <Box pt={10} borderTop="1px dashed" borderColor={borderColor}>
-              <NextLink href="/writing" passHref>
-                <Text
-                  as="a"
-                  fontFamily="handwriting"
-                  fontSize="md"
-                  color={dateColor}
-                  _hover={{ color: inkColor }}
-                  cursor="pointer"
-                >
-                  ← back to writing
-                </Text>
-              </NextLink>
-            </Box>
-          </VStack>
-        </Container>
-      </Box>
+            {post.metadata.date && (
+              <Text fontFamily="mono" fontSize="sm" color={subtleColor}>
+                {post.metadata.date}
+              </Text>
+            )}
+          </Box>
+
+          {/* Divider */}
+          <Box h="1px" bg={borderColor} w="100%" />
+
+          {/* Content */}
+          <Box
+            fontFamily="mono"
+            color={textColor}
+            lineHeight="1.8"
+            fontSize={{ base: "14px", md: "14px" }}
+            sx={{
+              '& p': { mb: 4 },
+              '& h2': {
+                fontFamily: 'mono',
+                fontSize: 'lg',
+                fontWeight: '700',
+                mt: 8,
+                mb: 3,
+              },
+              '& h3': {
+                fontFamily: 'mono',
+                fontSize: 'md',
+                fontWeight: '700',
+                mt: 6,
+                mb: 2,
+              },
+              '& blockquote': {
+                borderLeft: '2px solid',
+                borderColor: borderColor,
+                pl: 4,
+                ml: 0,
+                fontStyle: 'italic',
+                color: subtleColor,
+                my: 4,
+              },
+              '& code': {
+                fontFamily: 'mono',
+                bg: codeBg,
+                px: 1.5,
+                py: 0.5,
+                fontSize: '0.9em',
+              },
+              '& pre': {
+                bg: codeBg,
+                p: 4,
+                overflow: 'auto',
+                my: 4,
+                '& code': {
+                  bg: 'transparent',
+                  p: 0,
+                }
+              },
+              '& a': {
+                color: accentColor,
+                textDecoration: 'underline',
+                _hover: { opacity: 0.7 }
+              },
+              '& ul, & ol': { pl: 5, mb: 4 },
+              '& li': { mb: 1 },
+              '& img': {
+                maxW: '100%',
+                my: 6,
+              },
+              '& hr': {
+                border: 'none',
+                h: '1px',
+                bg: borderColor,
+                my: 8,
+              },
+            }}
+          >
+            <MDXRemote {...post.source} />
+          </Box>
+
+          {/* Back link */}
+          <Box pt={6} borderTop="1px solid" borderColor={borderColor}>
+            <NextLink href="/writing" passHref>
+              <Text
+                as="a"
+                fontFamily="mono"
+                fontSize="sm"
+                color={subtleColor}
+                _hover={{ color: textColor }}
+                cursor="pointer"
+              >
+                ← back to writing
+              </Text>
+            </NextLink>
+          </Box>
+        </VStack>
+      </Container>
     </>
   );
 };

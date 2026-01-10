@@ -23,11 +23,11 @@ export function useKonamiCode() {
   }, []);
 
   useEffect(() => {
-    // Check localStorage for persisted hacker mode
-    const hackerMode = localStorage.getItem('hacker-mode');
-    if (hackerMode === 'true') {
+    // Check localStorage for persisted konami mode
+    const konamiMode = localStorage.getItem('konami-mode');
+    if (konamiMode === 'true') {
       setIsActivated(true);
-      document.documentElement.classList.add('hacker-mode');
+      document.documentElement.classList.add('konami-mode');
     }
   }, []);
 
@@ -52,12 +52,12 @@ export function useKonamiCode() {
           setIsActivated(newState);
 
           if (newState) {
-            document.documentElement.classList.add('hacker-mode');
-            localStorage.setItem('hacker-mode', 'true');
+            document.documentElement.classList.add('konami-mode');
+            localStorage.setItem('konami-mode', 'true');
             console.log('%cWelcome, friend.', 'color: #0f0; font-size: 20px; font-family: monospace;');
           } else {
-            document.documentElement.classList.remove('hacker-mode');
-            localStorage.removeItem('hacker-mode');
+            document.documentElement.classList.remove('konami-mode');
+            localStorage.removeItem('konami-mode');
           }
 
           return [];

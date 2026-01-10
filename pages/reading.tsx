@@ -18,12 +18,10 @@ interface PageProps {
 }
 
 export default function Reading({ books, booksByCategory }: PageProps) {
-  const inkColor = useColorModeValue("#3a2a1a", "#e8dfd0");
-  const inkLight = useColorModeValue("#6b5c4a", "#a89060");
-  const borderColor = useColorModeValue(
-    "rgba(139, 90, 43, 0.2)",
-    "rgba(168, 144, 96, 0.15)"
-  );
+  const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
+  const subtleColor = useColorModeValue("#666666", "#999999");
+  const borderColor = useColorModeValue("rgba(0,0,0,0.1)", "rgba(255,255,255,0.1)");
+  const accentColor = useColorModeValue("#0066cc", "#66b3ff");
 
   const categories = Object.keys(booksByCategory);
 
@@ -34,13 +32,13 @@ export default function Reading({ books, booksByCategory }: PageProps) {
         description="Books I've read and my notes on them"
       />
 
-      <Container maxW="650px" py={12}>
-        <VStack align="stretch" spacing={8}>
+      <Container maxW="650px" py={8}>
+        <VStack align="stretch" spacing={6}>
           <Box>
-            <Heading fontFamily="heading" size="xl" mb={2} color={inkColor}>
+            <Heading fontFamily="mono" size="lg" mb={2} color={textColor}>
               Library
             </Heading>
-            <Text fontFamily="body" color={inkLight}>
+            <Text fontFamily="mono" fontSize="14px" color={subtleColor}>
               Books I've read.
             </Text>
           </Box>
@@ -49,17 +47,13 @@ export default function Reading({ books, booksByCategory }: PageProps) {
             categories.map((category, idx) => (
               <Box key={category}>
                 {idx > 0 && (
-                  <Divider
-                    borderColor={borderColor}
-                    borderStyle="dashed"
-                    mb={8}
-                  />
+                  <Divider borderColor={borderColor} mb={6} />
                 )}
-                <VStack align="stretch" spacing={3}>
+                <VStack align="stretch" spacing={2}>
                   <Heading
-                    fontFamily="handwriting"
-                    fontSize="2xl"
-                    color={inkColor}
+                    fontFamily="mono"
+                    fontSize="md"
+                    color={textColor}
                     mb={2}
                   >
                     {category}
@@ -72,25 +66,25 @@ export default function Reading({ books, booksByCategory }: PageProps) {
                     return (
                       <Text
                         key={book.slug}
-                        fontFamily="body"
-                        fontSize="md"
-                        color={inkColor}
+                        fontFamily="mono"
+                        fontSize="14px"
+                        color={textColor}
                       >
                         <NextLink href={`/reading/${book.slug}`} passHref>
                           <Text
                             as="span"
                             fontWeight="bold"
-                            borderBottom="1px dashed"
-                            borderColor={inkLight}
-                            _hover={{ borderStyle: "solid" }}
+                            color={accentColor}
+                            textDecoration="underline"
+                            _hover={{ opacity: 0.7 }}
                             cursor="pointer"
                           >
                             {book.title}
                           </Text>
                         </NextLink>
                         {" — "}
-                        {book.author}
-                        {year && `, ${year}`}
+                        <Text as="span" color={subtleColor}>{book.author}</Text>
+                        {year && <Text as="span" color={subtleColor}>, {year}</Text>}
                       </Text>
                     );
                   })}
@@ -98,7 +92,7 @@ export default function Reading({ books, booksByCategory }: PageProps) {
               </Box>
             ))
           ) : (
-            <VStack align="stretch" spacing={3}>
+            <VStack align="stretch" spacing={2}>
               {books.map((book) => {
                 const year = book.date
                   ? new Date(book.date).getFullYear()
@@ -106,25 +100,25 @@ export default function Reading({ books, booksByCategory }: PageProps) {
                 return (
                   <Text
                     key={book.slug}
-                    fontFamily="body"
-                    fontSize="md"
-                    color={inkColor}
+                    fontFamily="mono"
+                    fontSize="14px"
+                    color={textColor}
                   >
                     <NextLink href={`/reading/${book.slug}`} passHref>
                       <Text
                         as="span"
                         fontWeight="bold"
-                        borderBottom="1px dashed"
-                        borderColor={inkLight}
-                        _hover={{ borderStyle: "solid" }}
+                        color={accentColor}
+                        textDecoration="underline"
+                        _hover={{ opacity: 0.7 }}
                         cursor="pointer"
                       >
                         {book.title}
                       </Text>
                     </NextLink>
                     {" — "}
-                    {book.author}
-                    {year && `, ${year}`}
+                    <Text as="span" color={subtleColor}>{book.author}</Text>
+                    {year && <Text as="span" color={subtleColor}>, {year}</Text>}
                   </Text>
                 );
               })}

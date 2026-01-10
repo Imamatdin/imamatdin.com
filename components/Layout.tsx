@@ -12,6 +12,7 @@ import {
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
 import { ThemeToggleButton } from "./ThemeToggleButton";
+import { AnimatedLogo } from "./AnimatedLogo";
 import NextLink from "next/link";
 import {
   FaGithub,
@@ -60,30 +61,6 @@ function NavLink({ href, children, shortcut }: { href: string; children: string;
   );
 }
 
-// Simple text logo
-function Logo() {
-  const router = useRouter();
-  const isActive = router.asPath === "/";
-  const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
-
-  return (
-    <NextLink href="/" passHref>
-      <Text
-        fontFamily="mono"
-        fontWeight="bold"
-        fontSize="14px"
-        color={textColor}
-        cursor="pointer"
-        opacity={isActive ? 1 : 0.7}
-        transition="opacity 0.2s"
-        _hover={{ opacity: 1 }}
-      >
-        IM
-      </Text>
-    </NextLink>
-  );
-}
-
 function Layout({ children }: PropsWithChildren) {
   const borderColor = useColorModeValue("rgba(0, 0, 0, 0.1)", "rgba(255, 255, 255, 0.1)");
   const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
@@ -91,38 +68,51 @@ function Layout({ children }: PropsWithChildren) {
 
   return (
     <Container maxW="72ch" centerContent>
+      {/* Header: Logo + Theme Toggle */}
       <Box
-        as="nav"
         display="flex"
         width="100%"
         px={6}
         py={4}
-        mb={12}
         alignItems="center"
-        borderBottom={`1px solid`}
-        borderColor={borderColor}
       >
-        <HStack spacing={4} align="center">
-          <Logo />
-        </HStack>
+        <AnimatedLogo />
         <Spacer />
-        <HStack spacing={4} align="center">
+        <ThemeToggleButton />
+      </Box>
+
+      {/* Divider */}
+      <Box
+        width="100%"
+        borderBottom="1px solid"
+        borderColor={borderColor}
+      />
+
+      {/* Navigation below divider */}
+      <Box
+        as="nav"
+        width="100%"
+        px={6}
+        py={3}
+        mb={8}
+      >
+        <HStack spacing={6} justify="center">
           <NavLink href="/about" shortcut="g a">about</NavLink>
           <NavLink href="/writing" shortcut="g w">writing</NavLink>
           <NavLink href="/now" shortcut="g n">now</NavLink>
-          <ThemeToggleButton />
         </HStack>
       </Box>
 
-      <VStack width="100%" py={12} align="flex-start" spacing={8}>
+      {/* Main content - reduced spacing */}
+      <VStack width="100%" py={8} align="flex-start" spacing={4}>
         {children}
       </VStack>
 
       {/* Footer */}
       <VStack
         width="100%"
-        py={8}
-        spacing={4}
+        py={6}
+        spacing={3}
         borderTop="1px solid"
         borderColor={borderColor}
         align="center"

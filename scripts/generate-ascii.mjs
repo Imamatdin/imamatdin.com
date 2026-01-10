@@ -2,7 +2,7 @@ import figlet from 'figlet';
 import fs from 'fs';
 import path from 'path';
 
-const text = 'IMAMATDIN';
+const text = 'iko';
 
 // Generate ASCII art
 figlet.text(text, {

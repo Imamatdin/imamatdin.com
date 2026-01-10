@@ -17,62 +17,62 @@ interface WritingProps {
 }
 
 const Writing: NextPageWithLayout<WritingProps> = ({ posts }) => {
-  const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
-  const inkLight = useColorModeValue('#6b5c4a', '#a89060');
-  const borderColor = useColorModeValue('rgba(139, 90, 43, 0.2)', 'rgba(168, 144, 96, 0.15)');
+  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
+  const subtleColor = useColorModeValue('#666666', '#999999');
+  const borderColor = useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)');
 
   return (
     <>
       <NextSeo title="Writing | Imamatdin" />
-      <Container maxW="650px" py={12}>
-          <Heading
-            fontFamily="heading"
-            fontSize="3xl"
-            color={inkColor}
-            mb={2}
-          >
-            Writing
-          </Heading>
+      <Container maxW="650px" py={8}>
+        <Heading
+          fontFamily="mono"
+          fontSize="xl"
+          color={textColor}
+          mb={2}
+        >
+          Writing
+        </Heading>
 
-          <Text fontFamily="body" fontSize="md" color={inkLight} mb={8}>
-            Essays and thoughts.
-          </Text>
+        <Text fontFamily="mono" fontSize="14px" color={subtleColor} mb={6}>
+          Essays and thoughts.
+        </Text>
 
-          <VStack align="stretch" spacing={0}>
-            {posts.map((post) => (
-              <Link
-                key={post.url || post.title}
-                href={post.url}
-                target={post.external ? "_blank" : "_self"}
-                _hover={{ textDecoration: 'none' }}
+        <VStack align="stretch" spacing={0}>
+          {posts.map((post) => (
+            <Link
+              key={post.url || post.title}
+              href={post.url}
+              target={post.external ? "_blank" : "_self"}
+              _hover={{ textDecoration: 'none' }}
+            >
+              <Box
+                py={3}
+                borderBottom="1px solid"
+                borderColor={borderColor}
+                transition="opacity 0.2s"
+                _hover={{ opacity: 0.7 }}
               >
-                <Box
-                  py={4}
-                  borderBottom="1px dashed"
-                  borderColor={borderColor}
-                  transition="opacity 0.2s"
-                  _hover={{ opacity: 0.7 }}
+                <Text
+                  fontFamily="mono"
+                  fontSize="14px"
+                  fontWeight="medium"
+                  color={textColor}
+                  mb={1}
                 >
-                  <Text
-                    fontFamily="body"
-                    fontSize="lg"
-                    fontWeight="medium"
-                    color={inkColor}
-                    mb={1}
-                  >
-                    {post.title}
-                  </Text>
-                  <Text
-                    fontFamily="handwriting"
-                    fontSize="sm"
-                    color={inkLight}
-                  >
-                    {post.date}
-                  </Text>
-                </Box>
-              </Link>
-            ))}
-          </VStack>
+                  {post.title}
+                </Text>
+                <Text
+                  fontFamily="mono"
+                  fontSize="12px"
+                  color={subtleColor}
+                >
+                  {post.date}
+                </Text>
+              </Box>
+            </Link>
+          ))}
+        </VStack>
       </Container>
     </>
   );
