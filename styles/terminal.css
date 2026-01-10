@@ -54,3 +54,103 @@ body::after {
     stroke-dashoffset: 0 !important;
   }
 }
+
+/* View Transitions */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: fade-out 150ms ease-out;
+}
+
+::view-transition-new(root) {
+  animation: fade-in 150ms ease-in;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Remove tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+a, button, [role="button"], [tabindex] {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* Remove focus rings on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  *:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Konami/Hacker Mode - Complete override */
+.konami-mode {
+  --bg: #000000 !important;
+  --text: #00ff00 !important;
+  --accent: #00ff00 !important;
+  --subtle: #008800 !important;
+  --border: rgba(0, 255, 0, 0.3) !important;
+  --highlight: rgba(0, 255, 0, 0.1) !important;
+}
+
+.konami-mode body,
+.konami-mode .chakra-container,
+.konami-mode [class*="chakra"] {
+  background-color: #000 !important;
+  color: #0f0 !important;
+}
+
+/* Force all text elements in konami mode */
+.konami-mode h1, .konami-mode h2, .konami-mode h3, .konami-mode h4, .konami-mode h5, .konami-mode h6,
+.konami-mode p, .konami-mode span, .konami-mode a,
+.konami-mode li, .konami-mode text, .konami-mode pre, .konami-mode code {
+  color: #00ff00 !important;
+}
+
+/* Links in konami mode */
+.konami-mode a {
+  color: #00ff00 !important;
+  text-decoration: underline !important;
+}
+
+.konami-mode a:hover {
+  color: #88ff88 !important;
+}
+
+/* Logo icon in konami mode */
+.konami-mode .logo-icon {
+  filter: invert(48%) sepia(99%) saturate(2000%) hue-rotate(85deg) brightness(118%) contrast(119%) !important;
+}
+
+/* Nav and borders in konami mode */
+.konami-mode nav,
+.konami-mode [class*="border"] {
+  border-color: rgba(0, 255, 0, 0.3) !important;
+}
+
+/* Keyboard shortcut hints */
+.shortcut-hint {
+  font-size: 12px;
+  opacity: 0.5;
+  margin-left: 4px;
+}
+
+@media (max-width: 768px) {
+  .shortcut-hint {
+    display: none;
+  }
+}

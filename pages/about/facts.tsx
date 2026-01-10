@@ -58,8 +58,8 @@ const facts: Fact[] = [
 ];
 
 export default function Facts() {
-  const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
-  const inkLight = useColorModeValue('#6b5c4a', '#a89060');
+  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
+  const subtleColor = useColorModeValue('#666666', '#999999');
 
   return (
     <>
@@ -68,28 +68,28 @@ export default function Facts() {
         description="Random facts and things you might not know about me"
       />
 
-      <Container maxW="650px" py={12}>
-        <VStack align="stretch" spacing={8}>
-          <Heading fontFamily="heading" fontSize="3xl" color={inkColor} mb={2}>
+      <Container maxW="650px" py={8}>
+        <VStack align="stretch" spacing={6}>
+          <Heading fontFamily="mono" fontSize="xl" color={textColor} mb={2}>
             Interesting Things
           </Heading>
 
-          <Text fontFamily="body" fontSize="md" color={inkLight} mb={4}>
+          <Text fontFamily="mono" fontSize="14px" color={subtleColor} mb={2}>
             Random facts, preferences, and pieces of who I am that don't fit anywhere else.
           </Text>
 
-          <VStack align="stretch" spacing={6}>
+          <VStack align="stretch" spacing={4}>
             {facts.map((fact, index) => (
               <VStack key={index} align="stretch" spacing={1}>
                 <Text
-                  fontFamily="handwriting"
-                  fontSize="lg"
-                  color={inkColor}
+                  fontFamily="mono"
+                  fontSize="14px"
+                  color={textColor}
                   fontWeight="bold"
                 >
                   {fact.category}
                 </Text>
-                <Text fontFamily="body" fontSize="md" lineHeight="tall" color={inkColor}>
+                <Text fontFamily="mono" fontSize="14px" lineHeight="1.8" color={subtleColor}>
                   {fact.content}
                 </Text>
               </VStack>

@@ -1,16 +1,10 @@
-// FILE: pages/deep-dives/[slug].tsx
-
 import {
   VStack,
   Heading,
   Text,
   Box,
   Container,
-  Badge,
-  HStack,
   useColorModeValue,
-  Wrap,
-  WrapItem,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { GetStaticProps, GetStaticPaths } from 'next';
@@ -20,16 +14,14 @@ import ReactMarkdown from 'react-markdown';
 
 interface PageProps {
   dive: DeepDive;
-  pageNumber: number;
 }
 
-const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
-  const bgColor = useColorModeValue('#f5f0e8', '#1a1612');
-  const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
-  const inkLight = useColorModeValue('#6b5c4a', '#a89060');
-  const borderColor = useColorModeValue('rgba(139, 90, 43, 0.2)', 'rgba(168, 144, 96, 0.15)');
-  const sepiaAccent = useColorModeValue('#704214', '#8b4513');
-  const codeBg = useColorModeValue('#e8dfd0', '#2a1a0a');
+const DeepDiveDetailPage = ({ dive }: PageProps) => {
+  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
+  const subtleColor = useColorModeValue('#666666', '#999999');
+  const borderColor = useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)');
+  const accentColor = useColorModeValue('#0066cc', '#66b3ff');
+  const codeBg = useColorModeValue('rgba(0,0,0,0.05)', 'rgba(255,255,255,0.05)');
 
   if (!dive) {
     return <Text>Loading...</Text>;
@@ -52,116 +44,113 @@ const DeepDiveDetailPage = ({ dive, pageNumber }: PageProps) => {
         description={dive.question}
       />
 
-      <Box
-        minH="100vh"
-        bg={bgColor}
-        position="relative"
-        className="parchment-bg"
-      >
-        <Container maxW="650px" py={12}>
-          {/* Back link */}
-          <NextLink href="/deep-dives">
-            <Text
-              fontFamily="body"
-              fontSize="sm"
-              color={inkColor}
-              mb={8}
-              cursor="pointer"
-              borderBottom="1px dashed"
-              borderColor={inkLight}
-              display="inline-block"
-              _hover={{ borderStyle: 'solid' }}
-            >
-              ← Back to Deep Dives
-            </Text>
-          </NextLink>
-
-          {/* Title */}
-          <Heading
-            as="h1"
-            fontFamily="heading"
-            fontSize="3xl"
-            color={inkColor}
-            mb={3}
-          >
-            {dive.title}
-          </Heading>
-
-          {/* Date, category, and status */}
-          <Text fontFamily="handwriting" fontSize="sm" color={inkLight} mb={6}>
-            {formatDate(dive.date)} • {dive.category} • ({dive.status})
-          </Text>
-
-          {/* The Question */}
+      <Container maxW="650px" py={8}>
+        {/* Back link */}
+        <NextLink href="/deep-dives">
           <Text
-            fontFamily="body"
-            fontSize="lg"
-            fontStyle="italic"
-            color={inkLight}
-            lineHeight="tall"
-            mb={8}
+            fontFamily="mono"
+            fontSize="sm"
+            color={subtleColor}
+            mb={6}
+            cursor="pointer"
+            _hover={{ color: textColor }}
+            display="inline-block"
           >
-            {dive.question}
+            ← Back to Deep Dives
           </Text>
+        </NextLink>
 
-          {/* Tags */}
-          {dive.tags && dive.tags.length > 0 && (
-            <Text fontFamily="body" fontSize="sm" color={inkLight} mb={8}>
-              Tags: {dive.tags.join(', ')}
-            </Text>
-          )}
+        {/* Title */}
+        <Heading
+          as="h1"
+          fontFamily="mono"
+          fontSize="xl"
+          color={textColor}
+          mb={2}
+        >
+          {dive.title}
+        </Heading>
 
-          {/* Body content - rendered MDX */}
-          <Box
-            fontFamily="body"
-            color={inkColor}
-            lineHeight="tall"
-            sx={{
-              'h2': {
-                fontFamily: 'handwriting',
-                fontSize: '2xl',
-                color: inkColor,
-                mt: 8,
-                mb: 4,
-                transform: 'rotate(-0.5deg)',
-              },
-              'h3': {
-                fontFamily: 'handwriting',
-                fontSize: 'xl',
-                color: inkColor,
-                mt: 6,
-                mb: 3,
-              },
-              'p': {
-                mb: 4,
-              },
-              'blockquote': {
-                borderLeft: '2px solid',
-                borderColor: sepiaAccent,
-                fontStyle: 'italic',
-                pl: 4,
-                my: 4,
-              },
-              'code': {
-                fontFamily: 'mono',
-                bg: codeBg,
-                px: 1,
-                borderRadius: 'sm',
-              },
-              'ul, ol': {
-                pl: 6,
-                mb: 4,
-              },
-              'li': {
-                mb: 2,
-              },
-            }}
-          >
-            <ReactMarkdown>{dive.content || ''}</ReactMarkdown>
-          </Box>
+        {/* Date, category, and status */}
+        <Text fontFamily="mono" fontSize="12px" color={subtleColor} mb={4}>
+          {formatDate(dive.date)} • {dive.category} • [{dive.status}]
+        </Text>
 
-        </Container>
-      </Box>
+        {/* The Question */}
+        <Text
+          fontFamily="mono"
+          fontSize="14px"
+          fontStyle="italic"
+          color={subtleColor}
+          lineHeight="1.8"
+          mb={6}
+        >
+          {dive.question}
+        </Text>
+
+        {/* Tags */}
+        {dive.tags && dive.tags.length > 0 && (
+          <Text fontFamily="mono" fontSize="12px" color={subtleColor} mb={6}>
+            Tags: {dive.tags.join(', ')}
+          </Text>
+        )}
+
+        {/* Body content */}
+        <Box
+          fontFamily="mono"
+          fontSize="14px"
+          color={textColor}
+          lineHeight="1.8"
+          sx={{
+            'h2': {
+              fontFamily: 'mono',
+              fontSize: 'md',
+              fontWeight: 'bold',
+              color: textColor,
+              mt: 6,
+              mb: 3,
+            },
+            'h3': {
+              fontFamily: 'mono',
+              fontSize: 'md',
+              fontWeight: 'bold',
+              color: textColor,
+              mt: 4,
+              mb: 2,
+            },
+            'p': {
+              mb: 4,
+            },
+            'blockquote': {
+              borderLeft: '2px solid',
+              borderColor: borderColor,
+              fontStyle: 'italic',
+              pl: 4,
+              my: 4,
+              color: subtleColor,
+            },
+            'code': {
+              fontFamily: 'mono',
+              bg: codeBg,
+              px: 1,
+            },
+            'ul, ol': {
+              pl: 5,
+              mb: 4,
+            },
+            'li': {
+              mb: 1,
+            },
+            'a': {
+              color: accentColor,
+              textDecoration: 'underline',
+              _hover: { opacity: 0.7 }
+            }
+          }}
+        >
+          <ReactMarkdown>{dive.content || ''}</ReactMarkdown>
+        </Box>
+      </Container>
     </>
   );
 };
@@ -177,13 +166,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const dive = getDeepDiveBySlug(params?.slug as string);
-  const dives = getDeepDives();
-  const pageNumber = dives.findIndex((d) => d.slug === params?.slug) + 1;
 
   return {
     props: {
       dive,
-      pageNumber,
     },
   };
 };

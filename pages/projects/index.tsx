@@ -16,9 +16,9 @@ interface PageProps {
 }
 
 const ProjectsPage = ({ projects }: PageProps) => {
-  const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
-  const inkLight = useColorModeValue('#6b5c4a', '#a89060');
-  const borderColor = useColorModeValue('rgba(139, 90, 43, 0.2)', 'rgba(168, 144, 96, 0.15)');
+  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
+  const subtleColor = useColorModeValue('#666666', '#999999');
+  const borderColor = useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)');
 
   return (
     <>
@@ -27,49 +27,49 @@ const ProjectsPage = ({ projects }: PageProps) => {
         description="A collection of inventions and constructions."
       />
 
-      <Container maxW="650px" py={12}>
+      <Container maxW="650px" py={8}>
         <Heading
-          fontFamily="heading"
-          fontSize="3xl"
-          color={inkColor}
+          fontFamily="mono"
+          fontSize="xl"
+          color={textColor}
           mb={2}
         >
           Projects
         </Heading>
 
         <Text
-          fontFamily="body"
-          fontSize="md"
-          color={inkLight}
-          mb={8}
+          fontFamily="mono"
+          fontSize="14px"
+          color={subtleColor}
+          mb={6}
         >
           Things I've built or am currently building.
         </Text>
 
-        <VStack align="stretch" spacing={6}>
+        <VStack align="stretch" spacing={4}>
           {projects.map((project) => (
             <NextLink href={`/projects/${project.slug}`} key={project.slug}>
               <Box
-                py={4}
-                borderBottom="1px dashed"
+                py={3}
+                borderBottom="1px solid"
                 borderColor={borderColor}
                 cursor="pointer"
                 transition="opacity 0.2s"
                 _hover={{ opacity: 0.7 }}
               >
                 <Text
-                  fontFamily="body"
-                  fontSize="lg"
+                  fontFamily="mono"
+                  fontSize="14px"
                   fontWeight="bold"
-                  color={inkColor}
+                  color={textColor}
                   mb={1}
                 >
-                  {project.title} ({project.status})
+                  {project.title} [{project.status}]
                 </Text>
                 <Text
-                  fontFamily="body"
-                  fontSize="md"
-                  color={inkLight}
+                  fontFamily="mono"
+                  fontSize="14px"
+                  color={subtleColor}
                 >
                   {project.description}
                 </Text>
@@ -80,11 +80,11 @@ const ProjectsPage = ({ projects }: PageProps) => {
 
         {projects.length === 0 && (
           <Text
-            fontFamily="body"
-            fontSize="md"
-            color={inkLight}
+            fontFamily="mono"
+            fontSize="14px"
+            color={subtleColor}
             textAlign="center"
-            py={12}
+            py={8}
           >
             More projects coming soon...
           </Text>

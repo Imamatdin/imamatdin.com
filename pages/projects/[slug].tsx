@@ -1,15 +1,9 @@
-// FILE: pages/projects/[slug].tsx
-
 import {
   Heading,
   Text,
   Box,
   Container,
-  Badge,
-  HStack,
   useColorModeValue,
-  Wrap,
-  WrapItem,
   Link as ChakraLink,
   VStack,
 } from '@chakra-ui/react';
@@ -21,16 +15,14 @@ import ReactMarkdown from 'react-markdown';
 
 interface PageProps {
   project: Project;
-  pageNumber: number;
 }
 
-const ProjectDetailPage = ({ project, pageNumber }: PageProps) => {
-  const bgColor = useColorModeValue('#f5f0e8', '#1a1612');
-  const inkColor = useColorModeValue('#3a2a1a', '#e8dfd0');
-  const inkLight = useColorModeValue('#6b5c4a', '#a89060');
-  const borderColor = useColorModeValue('rgba(139, 90, 43, 0.2)', 'rgba(168, 144, 96, 0.15)');
-  const sepiaAccent = useColorModeValue('#704214', '#8b4513');
-  const codeBg = useColorModeValue('#e8dfd0', '#2a1a0a');
+const ProjectDetailPage = ({ project }: PageProps) => {
+  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
+  const subtleColor = useColorModeValue('#666666', '#999999');
+  const borderColor = useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)');
+  const accentColor = useColorModeValue('#0066cc', '#66b3ff');
+  const codeBg = useColorModeValue('rgba(0,0,0,0.05)', 'rgba(255,255,255,0.05)');
 
   if (!project) {
     return <Text>Loading...</Text>;
@@ -53,134 +45,128 @@ const ProjectDetailPage = ({ project, pageNumber }: PageProps) => {
         description={project.description}
       />
 
-      <Box
-        minH="100vh"
-        bg={bgColor}
-        position="relative"
-        className="parchment-bg"
-      >
-        <Container maxW="650px" py={12}>
-          {/* Back link */}
-          <NextLink href="/projects">
-            <Text
-              fontFamily="body"
-              fontSize="sm"
-              color={inkColor}
-              mb={8}
-              cursor="pointer"
-              borderBottom="1px dashed"
-              borderColor={inkLight}
-              display="inline-block"
-              _hover={{ borderStyle: 'solid' }}
-            >
-              ← Back to Projects
-            </Text>
-          </NextLink>
-
-          {/* Title */}
-          <Heading
-            as="h1"
-            fontFamily="heading"
-            fontSize="3xl"
-            color={inkColor}
-            mb={3}
-          >
-            {project.title}
-          </Heading>
-
-          {/* Date and status */}
-          <Text fontFamily="handwriting" fontSize="sm" color={inkLight} mb={6}>
-            {formatDate(project.date)} • ({project.status})
-          </Text>
-
-          {/* Description */}
+      <Container maxW="650px" py={8}>
+        {/* Back link */}
+        <NextLink href="/projects">
           <Text
-            fontFamily="body"
-            fontSize="md"
-            color={inkLight}
-            mb={8}
+            fontFamily="mono"
+            fontSize="sm"
+            color={subtleColor}
+            mb={6}
+            cursor="pointer"
+            _hover={{ color: textColor }}
+            display="inline-block"
           >
-            {project.description}
+            ← Back to Projects
           </Text>
+        </NextLink>
 
-          {/* Links */}
-          {project.links && project.links.length > 0 && (
-            <Box mb={8}>
-              <Text fontFamily="body" fontSize="sm" color={inkLight} mb={2}>
-                Links:
-              </Text>
-              <VStack align="flex-start" spacing={1}>
-                {project.links.map((link, i) => (
-                  <ChakraLink
-                    key={i}
-                    href={link.href}
-                    isExternal
-                    fontFamily="body"
-                    fontSize="sm"
-                    color={inkColor}
-                    borderBottom="1px dashed"
-                    borderColor={inkLight}
-                    textDecoration="none"
-                    _hover={{ borderStyle: 'solid' }}
-                  >
-                    {link.label}
-                  </ChakraLink>
-                ))}
-              </VStack>
-            </Box>
-          )}
+        {/* Title */}
+        <Heading
+          as="h1"
+          fontFamily="mono"
+          fontSize="xl"
+          color={textColor}
+          mb={2}
+        >
+          {project.title}
+        </Heading>
 
-          {/* Tags */}
-          {project.tags && project.tags.length > 0 && (
-            <Text fontFamily="body" fontSize="sm" color={inkLight} mb={8}>
-              Tags: {project.tags.join(', ')}
+        {/* Date and status */}
+        <Text fontFamily="mono" fontSize="12px" color={subtleColor} mb={4}>
+          {formatDate(project.date)} • [{project.status}]
+        </Text>
+
+        {/* Description */}
+        <Text
+          fontFamily="mono"
+          fontSize="14px"
+          color={subtleColor}
+          mb={6}
+        >
+          {project.description}
+        </Text>
+
+        {/* Links */}
+        {project.links && project.links.length > 0 && (
+          <Box mb={6}>
+            <Text fontFamily="mono" fontSize="12px" color={subtleColor} mb={2}>
+              Links:
             </Text>
-          )}
-
-          {/* Body content */}
-          <Box
-            fontFamily="body"
-            color={inkColor}
-            lineHeight="tall"
-            sx={{
-              'h2': {
-                fontFamily: 'handwriting',
-                fontSize: '2xl',
-                color: inkColor,
-                mt: 8,
-                mb: 4,
-                transform: 'rotate(-0.5deg)',
-              },
-              'h3': {
-                fontFamily: 'handwriting',
-                fontSize: 'xl',
-                color: inkColor,
-                mt: 6,
-                mb: 3,
-              },
-              'p': {
-                mb: 4,
-              },
-              'ul, ol': {
-                pl: 6,
-                mb: 4,
-              },
-              'li': {
-                mb: 2,
-              },
-              'code': {
-                fontFamily: 'mono',
-                bg: codeBg,
-                px: 1,
-                borderRadius: 'sm',
-              },
-            }}
-          >
-            <ReactMarkdown>{project.content || ''}</ReactMarkdown>
+            <VStack align="flex-start" spacing={1}>
+              {project.links.map((link, i) => (
+                <ChakraLink
+                  key={i}
+                  href={link.href}
+                  isExternal
+                  fontFamily="mono"
+                  fontSize="14px"
+                  color={accentColor}
+                  textDecoration="underline"
+                  _hover={{ opacity: 0.7 }}
+                >
+                  {link.label}
+                </ChakraLink>
+              ))}
+            </VStack>
           </Box>
+        )}
 
-        </Container>
-      </Box>
+        {/* Tags */}
+        {project.tags && project.tags.length > 0 && (
+          <Text fontFamily="mono" fontSize="12px" color={subtleColor} mb={6}>
+            Tags: {project.tags.join(', ')}
+          </Text>
+        )}
+
+        {/* Body content */}
+        <Box
+          fontFamily="mono"
+          fontSize="14px"
+          color={textColor}
+          lineHeight="1.8"
+          sx={{
+            'h2': {
+              fontFamily: 'mono',
+              fontSize: 'md',
+              fontWeight: 'bold',
+              color: textColor,
+              mt: 6,
+              mb: 3,
+            },
+            'h3': {
+              fontFamily: 'mono',
+              fontSize: 'md',
+              fontWeight: 'bold',
+              color: textColor,
+              mt: 4,
+              mb: 2,
+            },
+            'p': {
+              mb: 4,
+            },
+            'ul, ol': {
+              pl: 5,
+              mb: 4,
+            },
+            'li': {
+              mb: 1,
+            },
+            'code': {
+              fontFamily: 'mono',
+              bg: codeBg,
+              px: 1,
+            },
+            'a': {
+              color: accentColor,
+              textDecoration: 'underline',
+              _hover: { opacity: 0.7 }
+            }
+          }}
+        >
+          <ReactMarkdown>{project.content || ''}</ReactMarkdown>
+        </Box>
+      </Container>
     </>
   );
 };
@@ -196,13 +182,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const project = getProjectBySlug(params?.slug as string);
-  const projects = getProjects();
-  const pageNumber = projects.findIndex((p) => p.slug === params?.slug) + 1;
 
   return {
     props: {
       project,
-      pageNumber,
     },
   };
 };

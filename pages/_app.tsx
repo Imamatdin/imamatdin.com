@@ -3,8 +3,9 @@ import { ChakraProvider, extendTheme, type ThemeConfig } from '@chakra-ui/react'
 import { Prose, withProse } from '@nikolovlazar/chakra-ui-prose';
 import Layout from '../components/Layout';
 import { CommandPalette } from '../components/CommandPalette';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { DefaultSeo } from 'next-seo';
+import { useKonamiCode } from '../hooks/useKonamiCode';
 import '../styles/terminal.css';
 
 const config: ThemeConfig = {
@@ -87,6 +88,23 @@ const getDefaultLayout = (page: ReactElement) => (
 );
 
 export default function App({ Component, pageProps }: AppProps) {
+  // Enable Konami code easter egg
+  useKonamiCode();
+
+  // Console message for curious devs (only once)
+  useEffect(() => {
+    console.log(`
+╔═══════════════════════════════════════════╗
+║  Hey, you opened the console.             ║
+║                                           ║
+║  I'm Imamatdin. I build things.           ║
+║  If you're reading this, we should talk.  ║
+║                                           ║
+║  → imamatdinsultniyazov@gmail.com         ║
+╚═══════════════════════════════════════════╝
+    `);
+  }, []);
+
   return (
     <ChakraProvider theme={theme}>
       <DefaultSeo
@@ -105,6 +123,7 @@ export default function App({ Component, pageProps }: AppProps) {
           cardType: 'summary_large_image',
         }}
       />
+      <CommandPalette />
       {getDefaultLayout(<Component {...pageProps} />)}
     </ChakraProvider>
   );
