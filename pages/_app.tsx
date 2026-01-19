@@ -6,6 +6,7 @@ import { CommandPalette } from '../components/CommandPalette';
 import { ReactElement, useEffect } from 'react';
 import { DefaultSeo } from 'next-seo';
 import { useKonamiCode } from '../hooks/useKonamiCode';
+import { Analytics } from '@vercel/analytics/react';
 import '../styles/terminal.css';
 
 const config: ThemeConfig = {
@@ -124,6 +125,7 @@ export default function App({ Component, pageProps }: AppProps) {
         }}
       />
       <CommandPalette />
+      <Analytics />
       {getDefaultLayout(<Component {...pageProps} />)}
     </ChakraProvider>
   );
