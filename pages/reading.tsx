@@ -9,7 +9,7 @@ import {
   useColorModeValue
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { Book, getAllBooks } from "../lib/books";
+import { Book, getAllBooks } from "../lib/content";
 import { NextSeo } from "next-seo";
 
 interface PageProps {

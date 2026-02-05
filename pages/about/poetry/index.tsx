@@ -1,7 +1,7 @@
 import { GetStaticProps } from "next";
 import { Container, Heading, Text, VStack, HStack, Box } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { Poem, getAllPoems } from "../../../lib/poetry";
+import { Poem, getAllPoems } from "../../../lib/content";
 import { NextSeo } from "next-seo";
 
 interface PageProps {
