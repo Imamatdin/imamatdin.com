@@ -1,0 +1,39 @@
+---
+title: "SynCAD"
+description: "AI-powered CAD code generation with validation. Describe parts in plain English, get manufacturable STL files in seconds."
+date: "2025-01-01"
+status: "in-progress"
+tags: ["ai", "cad", "openscad", "3d-printing", "llm"]
+links:
+  - label: "GitHub"
+    href: "https://github.com/Imamatdin/benchmark"
+---
+
+## Overview
+
+SynCAD is an AI-powered CAD code generation tool with validation. Describe parts in plain English, get manufacturable STL files in seconds.
+
+## What it does
+
+1. **Natural language → OpenSCAD code** via LLM (Groq/Gemini)
+2. **Automatic validation** - compiles with OpenSCAD, catches errors
+3. **Retry on failure** - feeds error back to LLM for correction
+4. **Outputs STL** - ready for 3D printing or manufacturing
+
+## CADBench
+
+Included benchmark for evaluating LLM-generated CAD:
+
+- **Format compliance** - clean code output (no markdown, no preamble)
+- **Compilation** - OpenSCAD parses without errors
+- **Geometric accuracy** - bounds, volume, surface area match expected
+- **Parametric robustness** - CLI `-D` overrides work correctly
+
+## Examples
+
+| Prompt | Result |
+|--------|--------|
+| "A cube 30x30x30mm centered at origin" | ✓ Compiled |
+| "A plate 80x50x5mm with 10mm hole in center" | ✓ Compiled |
+| "L-bracket with mounting holes" | ✓ Compiled |
+| "Gear with 8 holes around perimeter" | ✓ Compiled |
