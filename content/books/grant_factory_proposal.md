@@ -1,8 +1,8 @@
 # Sovereign Grant Factory
 ## Partnership Proposal
 
-**Prepared for:** [Mentor's Name]  
-**Prepared by:** [Your Name]  
+**Prepared for:** 
+**Prepared by:** Imamatdin
 **Date:** January 27, 2026
 
 ---
@@ -16,7 +16,7 @@ I'm proposing to build and operate a **fully offline, AI-powered grant writing s
 - Keep all client data 100% private (air-gapped, encrypted)
 - Learn from your expertise over time (gets smarter with each application)
 
-**My ask:** $2,500 setup fee + $3,000/month retainer
+**My ask:** $5000 setup fee + $3,000/month retainer
 
 ---
 
