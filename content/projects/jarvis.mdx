@@ -1,0 +1,57 @@
+---
+title: "JARVIS"
+description: "Self-hosted AI agent system. Full-stack personal intelligence layer with meeting transcription, knowledge graphs, and autonomous workflows."
+date: "2026-02-01"
+status: "planned"
+tags: ["ai", "agent", "self-hosted", "voice", "automation", "knowledge-graph"]
+links: []
+---
+
+## The Vision
+
+A self-hosted personal AI agent that functions as a fractional Chief AI Officer's primary tool: it listens to meetings and writes transcripts in real-time, ingests every document and conversation into a temporal knowledge graph, executes multi-step workflows across 400+ services, browses the web autonomously, runs code in sandboxed environments, speaks and listens through voice interfaces, and communicates across WhatsApp, Telegram, Discord, and email through a unified messaging bus.
+
+## Architecture
+
+**Brain:** Kimi K2.5 (API now, self-hosted later)
+**Memory:** Qdrant + Graphiti (temporal knowledge graph)
+**Body:** Security-hardened OpenClaw fork with MCP tool orchestration
+**Infrastructure:** Self-hosted, nothing leaves your control
+
+### Key Components
+
+- **Interface Layer**: Open WebUI, Telegram, WhatsApp, Discord, Email, Voice (Speaches), Meeting Listener (LiveKit + VAD)
+- **Gateway Layer**: LiteLLM (routing + cost tracking), Lasso MCP Gateway (PII filtering), SOPS + age (secrets)
+- **Brain Layer**: Kimi K2.5 (primary reasoning), GLM 4.7-Flash (local fast routing), LangGraph (orchestration), PydanticAI (typed tool contracts)
+- **Memory Layer**: Qdrant (vectors), Graphiti (graph), FlagEmbedding/BGE
+- **Tool Layer**: ACI.dev (600+ tools), Playwright MCP, Browser Use, Crawl4AI, microsandbox
+- **Execution Layer**: OpenClaw fork, E2B / gVisor, Windmill (workflows), n8n (400+ apps)
+- **Ingestion Pipeline**: NuMarkdown-8B / OCRFlux (doc parsing), Chonkie (smart chunking), Cognee (entity extraction + KG build)
+- **Observability**: Langfuse (LLM traces + cost), OpenLLMetry (OTel instrumentation)
+
+## Key Features
+
+- **Meeting Listener**: Live transcription, speaker diarization, automatic action items and build plan generation
+- **Document Intelligence**: NuMarkdown-8B-Thinking for complex document OCR and understanding
+- **Voice Pipeline**: Silero VAD → Faster-Whisper → Kokoro TTS via Speaches server
+- **Autonomous Execution**: Multi-step workflows, web browsing, code execution in sandboxes
+- **Unified Messaging**: Telegram, WhatsApp, Discord, Email through a single interface
+- **Temporal Knowledge Graph**: Facts expire and update automatically - no stale information
+
+## Build Plan
+
+- **Phase 1 (Weeks 1-3)**: Working Brain - LiteLLM + LangGraph + Qdrant + basic tools
+- **Phase 2 (Weeks 4-8)**: The Senses - Voice pipeline, meeting listener, document intelligence, local models
+- **Phase 3 (Weeks 9-16)**: The Body - Secure execution, workflow automation, unified messaging
+- **Phase 4 (Weeks 17-24)**: The Soul - Fine-tuning, domain-specific capabilities, knowledge graph maturation
+
+## Portfolio Angle
+
+This system is simultaneously:
+- **Personal productivity multiplier**: Meeting transcription, automated scoping, cross-channel communication
+- **Fractional CAIO demonstration**: Real-time AI assistance in client meetings
+- **Technical portfolio centerpiece**: Self-hosted AI with production infrastructure
+
+## Status
+
+Architecture locked, ready to build. Phase 1 starting soon.
