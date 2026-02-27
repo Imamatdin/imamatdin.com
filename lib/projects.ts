@@ -47,8 +47,11 @@ export function getProjects(): Project[] {
       } as Project;
     });
 
-  // Sort by date (newest first)
+  // Sort: in-progress first, completed last, then by date descending
+  const statusOrder: Record<string, number> = { 'in-progress': 0, 'archived': 1, 'completed': 2 };
   return projects.sort((a, b) => {
+    const statusDiff = (statusOrder[a.status] ?? 1) - (statusOrder[b.status] ?? 1);
+    if (statusDiff !== 0) return statusDiff;
     if (a.date && b.date) {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     }

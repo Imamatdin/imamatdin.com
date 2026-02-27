@@ -36,7 +36,7 @@ const Post: NextPageWithLayout<PostProps> = ({ post }) => {
         }}
       />
 
-      <Container maxW="650px" py={8}>
+      <Container maxW="650px" py={4}>
         <VStack align="stretch" spacing={4}>
           {/* Title */}
           <Box>

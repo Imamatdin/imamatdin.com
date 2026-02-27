@@ -56,7 +56,7 @@ export default function Podcasts() {
         description="Podcasts that shape my thinking and keep me curious"
       />
 
-      <Container maxW="650px" py={8}>
+      <Container maxW="650px" py={4}>
         <VStack align="stretch" spacing={6}>
           <Heading fontFamily="mono" fontSize="xl" color={textColor} mb={2}>
             Podcasts

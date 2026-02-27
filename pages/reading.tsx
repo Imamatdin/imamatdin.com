@@ -32,7 +32,7 @@ export default function Reading({ books, booksByCategory }: PageProps) {
         description="Books I've read and my notes on them"
       />
 
-      <Container maxW="650px" py={8}>
+      <Container maxW="650px" py={4}>
         <VStack align="stretch" spacing={6}>
           <Box>
             <Heading fontFamily="mono" size="lg" mb={2} color={textColor}>
@@ -82,7 +82,7 @@ export default function Reading({ books, booksByCategory }: PageProps) {
                             {book.title}
                           </Text>
                         </NextLink>
-                        {" — "}
+                        {", "}
                         <Text as="span" color={subtleColor}>{book.author}</Text>
                         {year && <Text as="span" color={subtleColor}>, {year}</Text>}
                       </Text>
@@ -116,7 +116,7 @@ export default function Reading({ books, booksByCategory }: PageProps) {
                         {book.title}
                       </Text>
                     </NextLink>
-                    {" — "}
+                    {", "}
                     <Text as="span" color={subtleColor}>{book.author}</Text>
                     {year && <Text as="span" color={subtleColor}>, {year}</Text>}
                   </Text>

@@ -1,0 +1,38 @@
+---
+title: "Agentic OS"
+description: "Custom AI-integrated Linux workstation. Arch + Hyprland with AI tools wired into the desktop workflow."
+date: "2025-12-01"
+status: "in-progress"
+tags: ["linux", "arch", "hyprland", "ai", "tooling", "automation", "developer-experience"]
+links: []
+---
+
+Building a development environment designed for deep, locked-in engineering sessions.
+Arch Linux + Hyprland (tiling Wayland compositor) as the base. Cursor, Claude Code,
+Obsidian, vLLM, and custom automation tools wired into the desktop workflow. No Mac -
+need proper support for engineering tools (SolidWorks, ANSYS) and full control over
+the system.
+
+The goal is an environment where AI assistance is ambient, not app-switched. Terminal,
+editor, browser, notes - all connected through custom integrations and scripts.
+
+The intelligence layer absorbs what was originally a separate JARVIS project - features
+that only make sense as part of the OS, not standalone:
+
+- **Meeting listener**: live transcription, speaker diarization, automatic action items
+  via LiveKit + VAD
+- **Voice pipeline**: Silero VAD + Faster-Whisper + Kokoro TTS - speak to the system,
+  get spoken responses
+- **Temporal knowledge graph**: Qdrant + Graphiti - everything ingested into a graph
+  where facts expire and update automatically, no stale context
+- **Unified messaging bus**: Telegram, WhatsApp, Discord, email all routed through a
+  single interface
+- **Document intelligence**: NuMarkdown-8B for complex OCR and document understanding
+- **Autonomous execution**: microsandbox, Windmill for multi-step workflows
+
+**Status:** Designed, ready to deploy. Blocked on hardware (need a proper laptop).
+
+**Stack:** Arch Linux, Hyprland, Cursor, Claude Code, Obsidian, vLLM, LangGraph,
+Qdrant, Graphiti, LiveKit, Faster-Whisper, Kokoro TTS, Windmill, Runpod
+
+If you want to fund a laptop for this, I'll open-source the entire config.

@@ -83,7 +83,7 @@ export default function Stack() {
         description="The tools, apps, and hardware I use daily"
       />
 
-      <Container maxW="650px" py={8}>
+      <Container maxW="650px" py={4}>
         <Heading
           fontFamily="mono"
           fontSize="xl"
@@ -118,7 +118,7 @@ export default function Stack() {
                 >
                   {tool.name}
                   {tool.note && (
-                    <Text as="span" color={subtleColor}> — {tool.note}</Text>
+                    <Text as="span" color={subtleColor}>: {tool.note}</Text>
                   )}
                 </Text>
               ))}

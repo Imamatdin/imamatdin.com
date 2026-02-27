@@ -27,7 +27,7 @@ const DeepDivesListPage = ({ dives }: PageProps) => {
         description="A collection of independent research project proposals."
       />
 
-      <Container maxW="650px" py={8}>
+      <Container maxW="650px" py={4}>
         <Heading
           fontFamily="mono"
           fontSize="xl"

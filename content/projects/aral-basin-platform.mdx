@@ -1,71 +1,33 @@
 ---
-title: "Aral Basin Platform"
-description: "Comprehensive AI platform for environmental monitoring and agricultural optimization in the Aral Sea disaster zone."
+title: "Aral Basin Environmental Platform"
+description: "First modern ML pipeline for the Aral Sea disaster zone."
 date: "2026-01-01"
-status: "planned"
+status: "in-progress"
 tags: ["environment", "ai", "satellite", "agriculture", "water", "central-asia", "research"]
 links: []
 ---
 
-## Overview
+50+ years of satellite data - Landsat (1972-present), Sentinel-1/2, MODIS, VIIRS,
+GRACE-FO gravimetry, ERA5, MERRA-2, and 150+ years of Uzhydromet records from 87
+synoptic stations - all analyzed with methods from 2015 or earlier. Random Forest,
+SVM, Markov-Cellular Automata, traditional indices. No foundation models. No vision
+transformers. No deep learning. One DL paper exists (2023, Korean group, radiometric
+normalization only).
 
-An integrated system for monitoring and optimizing the Aral Basin ecosystem. The platform combines satellite data pipelines, foundation models, and practical applications to address one of the world's worst environmental disasters.
+Fine-tuning Prithvi-EO-2.0 (NASA/IBM's 600M param geospatial foundation model) and
+Chronos-2 for six application modules: dust storm early warning, irrigation optimization
+(deep RL on AquaCrop), water allocation optimization, crop yield prediction, salinity
+risk mapping, crop disease detection.
 
-## Infrastructure
+Targeting 200+ dust alert users and 10+ farmer pilots in Karakalpakstan by mid-2026.
+2-3 papers planned.
 
-**Satellite Data Pipeline:**
-- Sentinel-1/2 (SAR and optical)
-- MODIS and VIIRS (aerosol and nighttime lights)
-- Landsat (long-term archive)
+**Status:** In development (data pipeline and model fine-tuning phase)
 
-**Climate/Weather Pipeline:**
-- ERA5 reanalysis
-- MERRA-2 aerosol data
+**Stack:** Google Earth Engine, Prithvi-EO-2.0, Chronos-2, PyTorch, AquaCrop-OSPy,
+Gymnasium, SAC, FastAPI, Telegram Bot API
 
-**Ground Data Integration:**
-- UNDP air quality stations
-- Uzhydromet historical records
-- CA-discharge river measurements
+**Data:** Sentinel-1/2, Landsat, MODIS, VIIRS, GRACE-FO, ERA5, MERRA-2, CA-discharge,
+Uzhydromet archives
 
-## Foundation Models
-
-- **Prithvi-EO-2.0**: Fine-tuned for Central Asia land/water segmentation, salinity mapping
-- **Chronos-2**: Fine-tuned for environmental time-series forecasting
-
-## Applications
-
-1. **Dust Early Warning System**: Real-time alerts for dust storms affecting communities
-2. **Irrigation Scheduler**: RL-based optimization for cotton farming water use
-3. **Water Allocation Optimizer**: Basin-wide optimization for scarce water resources
-4. **Crop Yield Predictor**: Satellite-based yield forecasting
-5. **Salinity Risk Mapper**: Soil salinity prediction for agricultural planning
-6. **Crop Disease Detector**: Mobile-friendly disease identification
-
-## Research Papers (Planned)
-
-1. "Foundation Models for Aral Sea Environmental Monitoring"
-2. "Deep RL for Irrigation Optimization in Central Asia"
-3. "AI-Powered Water Allocation for the Aral Basin"
-4. "Glacier Monitoring and Water Supply Forecasting for Central Asia"
-5. "Groundwater Depletion Modeling with GRACE and Machine Learning"
-6. "Multi-Decadal Desertification Analysis with Temporal Deep Learning"
-
-## Timeline
-
-**January-June 2026**: Build platform, train models, deploy applications
-**July 2026**: Open source release, user acquisition, press coverage
-
-## Target Impact
-
-- 200+ dust alert users
-- 10+ farmer pilots for irrigation optimization
-- First AI-powered environmental monitoring platform for Central Asia
-- Open source models and datasets for the research community
-
-## The Story
-
-"18-year-old from Karakalpakstan built comprehensive AI platform for environmental monitoring and agricultural optimization in the Aral Sea disaster zone—deployed with real users—while simultaneously advancing datacenter cooling research."
-
-## Status
-
-Development starting January 2026. Master repo structure planned, compute credit applications pending.
+Needs GPU compute for foundation model fine-tuning. Looking for sponsorship.

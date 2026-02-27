@@ -27,7 +27,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
         description="A collection of inventions and constructions."
       />
 
-      <Container maxW="650px" py={8}>
+      <Container maxW="650px" py={4}>
         <Heading
           fontFamily="mono"
           fontSize="xl"
@@ -84,7 +84,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
             fontSize="14px"
             color={subtleColor}
             textAlign="center"
-            py={8}
+            py={4}
           >
             More projects coming soon...
           </Text>

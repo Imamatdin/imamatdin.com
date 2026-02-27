@@ -9,7 +9,7 @@ interface Fact {
 const facts: Fact[] = [
   {
     category: "Origin",
-    content: "I'm from Nukus, Karakalpakstan—a place most people have never heard of. It's home to the second-largest collection of Russian avant-garde art in the world, hidden in the middle of the desert."
+    content: "I'm from Nukus, Karakalpakstan - a place most people have never heard of. It's home to the second-largest collection of Russian avant-garde art in the world, hidden in the middle of the desert."
   },
   {
     category: "Languages",
@@ -17,7 +17,7 @@ const facts: Fact[] = [
   },
   {
     category: "Basketball",
-    content: "I've played basketball for 5+ years. It taught me that raw talent means nothing without discipline—and that the best players make everyone around them better."
+    content: "I've played basketball for 5+ years. It taught me that raw talent means nothing without discipline - and that the best players make everyone around them better."
   },
   {
     category: "Sleep",
@@ -29,7 +29,7 @@ const facts: Fact[] = [
   },
   {
     category: "Reading",
-    content: "I read multiple books at once—usually one fiction, one non-fiction, and something philosophical. Switching between them keeps my mind fresh."
+    content: "I read multiple books at once - usually one fiction, one non-fiction, and something philosophical. Switching between them keeps my mind fresh."
   },
   {
     category: "Music",
@@ -45,7 +45,7 @@ const facts: Fact[] = [
   },
   {
     category: "Aral Sea",
-    content: "I grew up near one of the world's worst environmental disasters—the Aral Sea dried up in my grandparents' lifetime. It shaped my interest in environmental engineering."
+    content: "I grew up near one of the world's worst environmental disasters - the Aral Sea dried up in my grandparents' lifetime. It shaped my interest in environmental engineering."
   },
   {
     category: "Name",
@@ -53,7 +53,7 @@ const facts: Fact[] = [
   },
   {
     category: "Fear",
-    content: "My biggest fear isn't failure—it's mediocrity. The thought of living a comfortable but unremarkable life terrifies me more than any risk."
+    content: "My biggest fear isn't failure - it's mediocrity. The thought of living a comfortable but unremarkable life terrifies me more than any risk."
   }
 ];
 
@@ -68,7 +68,7 @@ export default function Facts() {
         description="Random facts and things you might not know about me"
       />
 
-      <Container maxW="650px" py={8}>
+      <Container maxW="650px" py={4}>
         <VStack align="stretch" spacing={6}>
           <Heading fontFamily="mono" fontSize="xl" color={textColor} mb={2}>
             Interesting Things

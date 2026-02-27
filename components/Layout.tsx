@@ -129,7 +129,7 @@ function Layout({ children }: PropsWithChildren) {
         width="100%"
         px={6}
         py={3}
-        mb={8}
+        mb={0}
       >
         <HStack spacing={{ base: 4, md: 6 }} justify="center" flexWrap="wrap">
           <NavLink href="/about" shortcut="g a">about</NavLink>
@@ -139,8 +139,8 @@ function Layout({ children }: PropsWithChildren) {
         </HStack>
       </Box>
 
-      {/* Main content - reduced spacing */}
-      <VStack width="100%" py={8} align="flex-start" spacing={4}>
+      {/* Main content */}
+      <VStack width="100%" pt={0} pb={8} align="flex-start" spacing={4}>
         {children}
       </VStack>
 

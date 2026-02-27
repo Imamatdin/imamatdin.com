@@ -24,7 +24,7 @@ const Writing: NextPageWithLayout<WritingProps> = ({ posts }) => {
   return (
     <>
       <NextSeo title="Writing | Imamatdin" />
-      <Container maxW="650px" py={8}>
+      <Container maxW="650px" py={4}>
         <Heading
           fontFamily="mono"
           fontSize="xl"

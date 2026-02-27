@@ -1,29 +1,30 @@
 ---
 title: "SENTINEL"
-description: "Autonomous AI Pentesting Platform - Red Team attacks, Blue Team defends, in real-time. Powered by Cerebras."
+description: "Autonomous AI pentesting platform. Red team attacks, blue team defends, in real-time."
 date: "2025-01-01"
-status: "completed"
+status: "in-progress"
 tags: ["ai", "security", "pentesting", "cerebras", "red-team", "blue-team"]
 links:
   - label: "GitHub"
     href: "https://github.com/Imamatdin/sentinel"
+  - label: "Demo"
+    href: "https://sentinel-dev.lovable.app"
 ---
 
-## Overview
+Red team agents (ReconAgent, ExploitAgent, ReportAgent) attack web applications.
+Blue team agents (MonitorAgent, DefenderAgent, ForensicsAgent) defend in real-time.
+The thesis: speed is the difference between caught and breached. Cerebras inference
+at 1000-1700 tok/s means the blue team can actually react before attacks land.
 
-SENTINEL is an autonomous penetration testing platform where AI agents simultaneously attack and defend a target application. Red team agents discover and exploit vulnerabilities while blue team agents monitor traffic, detect attacks, and deploy countermeasures. Watch the battle unfold in real-time through a monochrome dashboard.
+The demo runs two scenarios - Cerebras-powered blue team blocks 70-80% of attacks;
+simulated slow inference (3-5s delay) catches only 10-20%.
 
-Built for the Cerebras "Need for Speed" hackathon. Cerebras inference speed (1000-1700 tok/s) enables sub-second defensive responses to attacks.
+Targets OWASP Juice Shop (100+ documented vulnerabilities). Event bus for real-time
+agent communication. Security Genome for cross-session learning with embeddings.
+Monochrome frontend for live attack/defense visualization.
 
-## How It Works
+Built for the Cerebras hackathon. 24-hour coding sprint.
 
-- **Red Team Agents**: Discover and exploit vulnerabilities autonomously
-- **Blue Team Agents**: Monitor traffic, detect attacks, deploy countermeasures
-- **Real-time Dashboard**: Watch the battle unfold live
-- **Sub-second Response**: Powered by Cerebras LLMs at 1000-1700 tok/s
+**Status:** Tier 4 in development (FastAPI + WebSocket backend). Shipping this month.
 
-## Tech Stack
-
-- Cerebras LLMs for inference
-- Real-time monitoring dashboard
-- Autonomous agent orchestration
+**Stack:** Python 3.11, Cerebras inference, FastAPI, WebSocket, Next.js, Docker

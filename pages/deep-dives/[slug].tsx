@@ -44,7 +44,7 @@ const DeepDiveDetailPage = ({ dive }: PageProps) => {
         description={dive.question}
       />
 
-      <Container maxW="650px" py={8}>
+      <Container maxW="650px" py={4}>
         {/* Back link */}
         <NextLink href="/deep-dives">
           <Text

@@ -24,7 +24,7 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
         description={`My notes and reflections on ${book.title} by ${book.author}`}
       />
 
-      <Container maxW="650px" py={8}>
+      <Container maxW="650px" py={4}>
         <VStack align="stretch" spacing={6}>
           {/* Book Header */}
           <VStack align="flex-start" spacing={2}>

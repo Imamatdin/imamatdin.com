@@ -45,7 +45,7 @@ const ProjectDetailPage = ({ project }: PageProps) => {
         description={project.description}
       />
 
-      <Container maxW="650px" py={8}>
+      <Container maxW="650px" py={4}>
         {/* Back link */}
         <NextLink href="/projects">
           <Text
