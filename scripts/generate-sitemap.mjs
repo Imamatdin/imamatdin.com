@@ -51,9 +51,6 @@ async function main() {
     <loc>https://imamatdin.com/reading</loc>
   </url>
   <url>
-    <loc>https://imamatdin.com/about</loc>
-  </url>
-  <url>
     <loc>https://imamatdin.com/deep-dives</loc>
   </url>${allSlugs
     .map((slug) => {

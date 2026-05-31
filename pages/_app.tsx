@@ -100,7 +100,7 @@ export default function App({ Component, pageProps }: AppProps) {
 ║  I'm Imamatdin. I build things.           ║
 ║  If you're reading this, we should talk.  ║
 ║                                           ║
-║  → imamatdinsultniyazov@gmail.com         ║
+║  → imamatdinsultaniyazov@gmail.com        ║
 ╚═══════════════════════════════════════════╝
     `);
   }, []);

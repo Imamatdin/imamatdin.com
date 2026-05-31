@@ -17,7 +17,6 @@ export function CommandPalette() {
 
   const commands: Command[] = [
     { id: 'home', name: 'Home', shortcut: 'g h', action: () => router.push('/') },
-    { id: 'about', name: 'About', shortcut: 'g a', action: () => router.push('/about') },
     { id: 'reading', name: 'Reading', shortcut: 'g r', action: () => router.push('/reading') },
     { id: 'writing', name: 'Writing', shortcut: 'g w', action: () => router.push('/writing') },
     { id: 'projects', name: 'Projects', shortcut: 'g p', action: () => router.push('/projects') },
@@ -72,7 +71,7 @@ export function CommandPalette() {
       if (!isOpen && e.key === 'g') {
         const handleSecondKey = (e2: KeyboardEvent) => {
           const shortcutMap: Record<string, string> = {
-            'h': '/', 'a': '/about', 'r': '/reading', 'w': '/writing',
+            'h': '/', 'r': '/reading', 'w': '/writing',
             'p': '/projects', 'd': '/deep-dives', 'n': '/now'
           };
           if (shortcutMap[e2.key]) {

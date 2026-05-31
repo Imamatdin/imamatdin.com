@@ -20,6 +20,11 @@ module.exports = withMDX({
         destination: "/reading/:slug*",
         permanent: true,
       },
+      {
+        source: "/about",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
   // Append the default value with md extensions

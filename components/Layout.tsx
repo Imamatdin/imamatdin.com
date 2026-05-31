@@ -132,7 +132,6 @@ function Layout({ children }: PropsWithChildren) {
         mb={0}
       >
         <HStack spacing={{ base: 4, md: 6 }} justify="center" flexWrap="wrap">
-          <NavLink href="/about" shortcut="g a">about</NavLink>
           <NavLink href="/writing" shortcut="g w">writing</NavLink>
           <NavLink href="/projects" shortcut="g p">projects</NavLink>
           <NavLink href="/deep-dives" shortcut="g d">deep-dives</NavLink>
