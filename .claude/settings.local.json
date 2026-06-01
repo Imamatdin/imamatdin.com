@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(grep -h \"^title:\" \"c:\\\\Users\\\\imama\\\\PW\\\\adammaj.com/content/projects\"/*.mdx)",
-      "Bash(sed 's/title: \"\"//')",
-      "Bash(sed 's/\"\"//')"
-    ]
-  }
-}
