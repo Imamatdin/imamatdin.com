@@ -31,14 +31,14 @@ export default function Poetry({ poems }: PageProps) {
       
       <Container maxW="4xl" py={12}>
         <Heading size="2xl" mb={2}>Poetry & Art</Heading>
-        <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }} mb={12}>
+        <Text fontSize="lg" color="subtle" mb={12}>
           Poems I've encountered and my reflections on them.
         </Text>
 
         <VStack spacing={10} align="stretch">
           {authors.map(author => (
             <Box key={author}>
-              <Heading size="md" mb={4} color="gray.500" _dark={{ color: "gray.400" }}>
+              <Heading size="md" mb={4} color="subtle">
                 {author}
               </Heading>
               <VStack spacing={3} align="stretch">
@@ -51,8 +51,7 @@ export default function Poetry({ poems }: PageProps) {
                         <Text
                           fontSize="lg"
                           fontWeight="medium"
-                          color="red.600"
-                          _dark={{ color: "red.400" }}
+                          color="accent"
                           cursor="pointer"
                           _hover={{ opacity: 0.7 }}
                           transition="opacity 0.2s"
@@ -60,7 +59,7 @@ export default function Poetry({ poems }: PageProps) {
                           {poem.title}
                         </Text>
                       </NextLink>
-                      <Text fontSize="sm" color="gray.500" flexShrink={0}>
+                      <Text fontSize="sm" color="subtle" flexShrink={0}>
                         {date}
                       </Text>
                     </HStack>
@@ -72,7 +71,7 @@ export default function Poetry({ poems }: PageProps) {
         </VStack>
 
         {poems.length === 0 && (
-          <Text color="gray.500">No poems added yet.</Text>
+          <Text color="subtle">No poems added yet.</Text>
         )}
       </Container>
     </>

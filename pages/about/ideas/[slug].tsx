@@ -28,7 +28,7 @@ export default function IdeaPage({ idea, mdxSource }: IdeaPageProps) {
             </Heading>
 
             {idea.date && (
-              <Text fontSize="sm" color="gray.500">
+              <Text fontSize="sm" color="subtle">
                 {new Date(idea.date).toLocaleDateString('en-US', { 
                   month: 'long', 
                   day: 'numeric',
@@ -40,8 +40,7 @@ export default function IdeaPage({ idea, mdxSource }: IdeaPageProps) {
 
           <Box 
             height="1px" 
-            bg="gray.200" 
-            _dark={{ bg: "gray.700" }}
+            bg="border"
             my={4}
           />
 
@@ -63,12 +62,10 @@ export default function IdeaPage({ idea, mdxSource }: IdeaPageProps) {
                 pl: 4,
                 py: 2,
                 fontStyle: 'italic',
-                color: 'gray.600',
-                _dark: { color: 'gray.400' }
+                color: 'subtle'
               },
               '& code': {
-                bg: 'gray.100',
-                _dark: { bg: 'gray.800' },
+                bg: 'highlight',
                 px: 2,
                 py: 1,
                 borderRadius: 'md',
@@ -89,8 +86,7 @@ export default function IdeaPage({ idea, mdxSource }: IdeaPageProps) {
             mt={12}
             pt={6}
             borderTop="1px solid"
-            borderColor="gray.200"
-            _dark={{ borderColor: "gray.700" }}
+            borderColor="border"
           >
             <NextLink href="/about/ideas" passHref legacyBehavior>
               <ChakraLink

@@ -13,7 +13,7 @@ export default function Culture() {
         <VStack align="stretch" spacing={8}>
           <Box>
             <Heading size="2xl" mb={4}>My Culture</Heading>
-            <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }}>
+            <Text fontSize="lg" color="subtle">
               My unique Karakalpak background
             </Text>
           </Box>
@@ -39,8 +39,7 @@ export default function Culture() {
             <Heading size="lg" mb={4}>The Two Poems I Shared</Heading>
             <Box
               p={6}
-              bg="gray.50"
-              _dark={{ bg: "gray.800" }}
+              bg="highlight"
               borderRadius="md"
               borderLeft="4px solid"
               borderColor="blue.500"
@@ -53,8 +52,7 @@ export default function Culture() {
 
             <Box
               p={6}
-              bg="gray.50"
-              _dark={{ bg: "gray.800" }}
+              bg="highlight"
               borderRadius="md"
               borderLeft="4px solid"
               borderColor="blue.500"

@@ -27,12 +27,12 @@ export default function PoemPage({ poem, mdxSource }: PoemPageProps) {
               {poem.title}
             </Heading>
             
-            <Text fontSize="xl" color="gray.600" _dark={{ color: "gray.400" }}>
+            <Text fontSize="xl" color="subtle">
               by {poem.author}
             </Text>
 
             {poem.date && (
-              <Text fontSize="sm" color="gray.500">
+              <Text fontSize="sm" color="subtle">
                 Encountered in {new Date(poem.date).toLocaleDateString('en-US', { 
                   month: 'long', 
                   year: 'numeric' 
@@ -43,8 +43,7 @@ export default function PoemPage({ poem, mdxSource }: PoemPageProps) {
 
           <Box 
             height="1px" 
-            bg="gray.200" 
-            _dark={{ bg: "gray.700" }}
+            bg="border"
             my={4}
           />
 
@@ -66,12 +65,10 @@ export default function PoemPage({ poem, mdxSource }: PoemPageProps) {
                 pl: 4,
                 py: 2,
                 fontStyle: 'italic',
-                color: 'gray.600',
-                _dark: { color: 'gray.400' }
+                color: 'subtle'
               },
               '& code': {
-                bg: 'gray.100',
-                _dark: { bg: 'gray.800' },
+                bg: 'highlight',
                 px: 2,
                 py: 1,
                 borderRadius: 'md',
@@ -92,8 +89,7 @@ export default function PoemPage({ poem, mdxSource }: PoemPageProps) {
             mt={12}
             pt={6}
             borderTop="1px solid"
-            borderColor="gray.200"
-            _dark={{ borderColor: "gray.700" }}
+            borderColor="border"
           >
             <NextLink href="/about/poetry" passHref legacyBehavior>
               <ChakraLink

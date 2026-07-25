@@ -34,14 +34,14 @@ export default function Ideas({ ideas }: PageProps) {
       
       <Container maxW="4xl" py={12}>
         <Heading size="2xl" mb={2}>Idea Diary</Heading>
-        <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }} mb={12}>
+        <Text fontSize="lg" color="subtle" mb={12}>
           Reflections on ideas I&apos;ve had and how I came to realize and learn about them.
         </Text>
 
         <VStack spacing={10} align="stretch">
           {years.map(year => (
             <Box key={year}>
-              <Heading size="md" mb={4} color="gray.500" _dark={{ color: "gray.400" }}>
+              <Heading size="md" mb={4} color="subtle">
                 {year}
               </Heading>
               <VStack spacing={3} align="stretch">
@@ -54,8 +54,7 @@ export default function Ideas({ ideas }: PageProps) {
                         <Text
                           fontSize="lg"
                           fontWeight="medium"
-                          color="red.600"
-                          _dark={{ color: "red.400" }}
+                          color="accent"
                           cursor="pointer"
                           transition="opacity 0.2s"
                           style={{ opacity: 1 }}
@@ -65,7 +64,7 @@ export default function Ideas({ ideas }: PageProps) {
                           {idea.title}
                         </Text>
                       </NextLink>
-                      <Text fontSize="sm" color="gray.500" flexShrink={0}>
+                      <Text fontSize="sm" color="subtle" flexShrink={0}>
                         {date}
                       </Text>
                     </HStack>
@@ -77,7 +76,7 @@ export default function Ideas({ ideas }: PageProps) {
         </VStack>
 
         {ideas.length === 0 && (
-          <Text color="gray.500">No ideas added yet.</Text>
+          <Text color="subtle">No ideas added yet.</Text>
         )}
       </Container>
     </>

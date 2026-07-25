@@ -37,7 +37,7 @@ export default function Academics({ academics }: PageProps) {
       
       <Container maxW="4xl" py={12}>
         <Heading size="2xl" mb={2}>Academic Influences</Heading>
-        <Text fontSize="lg" color="gray.600" _dark={{ color: "gray.400" }} mb={12}>
+        <Text fontSize="lg" color="subtle" mb={12}>
           People who have greatly contributed to society but didn&apos;t get the recognition they deserved, 
           and professors who shaped my academic journey.
         </Text>
@@ -48,7 +48,7 @@ export default function Academics({ academics }: PageProps) {
             
             return (
               <Box key={category}>
-                <Heading size="md" mb={4} color="gray.500" _dark={{ color: "gray.400" }}>
+                <Heading size="md" mb={4} color="subtle">
                   {categoryTitles[category]}
                 </Heading>
                 <VStack spacing={3} align="stretch">
@@ -59,16 +59,14 @@ export default function Academics({ academics }: PageProps) {
                         p={4}
                         borderRadius="md"
                         border="1px solid"
-                        borderColor="gray.200"
-                        _dark={{ borderColor: "gray.700" }}
+                        borderColor="border"
                         transition="all 0.2s"
                       >
                         <NextLink href={`/about/academics/${academic.slug}`}>
                           <Text
                             fontSize="lg"
                             fontWeight="medium"
-                            color="red.600"
-                            _dark={{ color: "red.400" }}
+                            color="accent"
                             cursor="pointer"
                             transition="opacity 0.2s"
                             mb={1}
@@ -80,7 +78,7 @@ export default function Academics({ academics }: PageProps) {
                           </Text>
                         </NextLink>
                         {academic.field && (
-                          <Text fontSize="sm" color="gray.500">
+                          <Text fontSize="sm" color="subtle">
                             {academic.field}
                           </Text>
                         )}
@@ -94,7 +92,7 @@ export default function Academics({ academics }: PageProps) {
         </VStack>
 
         {academics.length === 0 && (
-          <Text color="gray.500">No academic influences added yet.</Text>
+          <Text color="subtle">No academic influences added yet.</Text>
         )}
       </Container>
     </>
