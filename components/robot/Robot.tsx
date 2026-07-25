@@ -12,6 +12,8 @@ import { DjKit } from './parts/DjKit';
 
 interface RobotProps {
   state: RobotState;
+  /** The dock element. The game loop writes transforms to it directly. */
+  dockRef: React.RefObject<HTMLDivElement>;
   blink: boolean;
   /** False under prefers-reduced-motion — decorative motion is dropped, not the face. */
   animate: boolean;
@@ -27,13 +29,16 @@ interface RobotProps {
  * to add one — see behaviors/index.ts. Tray entries come from tray.ts.
  */
 export const Robot = forwardRef<HTMLButtonElement, RobotProps>(function Robot(
-  { state, blink, animate, compact, konami, onTap, onTraySelect },
+  { state, dockRef, blink, animate, compact, konami, onTap, onTraySelect },
   ref
 ) {
   const { asleep, bubble, dnd, pose, trayOpen } = state;
-  // Being asleep outranks whatever mood a line left behind, so a hold timer
-  // expiring can't snap a sleeping face back to neutral.
-  const ex = expressionFor(asleep ? 'sleepy' : state.mood);
+  const playing = state.game.status !== 'off';
+  // Sleeping and sulking outrank whatever mood a line left behind. Without
+  // this, the hold timer from the acknowledgement ("i'll be over here") expires
+  // a few seconds later and snaps the face back to neutral, so the robot sits
+  // in the corner looking perfectly cheerful about it.
+  const ex = expressionFor(asleep ? 'sleepy' : dnd ? 'sad' : state.mood);
   const isDj = state.prop === 'headphones';
 
   // On phones the bubble is opt-in: it only appears for something the visitor
@@ -42,12 +47,13 @@ export const Robot = forwardRef<HTMLButtonElement, RobotProps>(function Robot(
     bubble.visible &&
     !state.quiet &&
     !trayOpen &&
+    !playing &&
     (!compact || bubble.priority >= Priority.User);
 
-  const scale = (compact ? 0.72 : 1) * (pose === 'corner' ? 0.75 : 1);
-  const trayItems = visibleTrayItems(state, konami);
+  const scale = playing ? 0.6 : (compact ? 0.72 : 1) * (pose === 'corner' ? 0.75 : 1);
+  const trayItems = visibleTrayItems(state, konami, compact);
 
-  const animation = !animate
+  const animation = !animate || playing
     ? 'none'
     : state.hop
     ? 'robot-hop .35s ease-in-out 2'
@@ -59,11 +65,14 @@ export const Robot = forwardRef<HTMLButtonElement, RobotProps>(function Robot(
     ? 'none'
     : 'robot-float 3.2s ease-in-out infinite';
 
-  // The corner is the sulking spot. Phase 3 walks here instead of sliding.
-  const anchored: CSSProperties =
-    pose === 'corner'
-      ? { left: compact ? 8 : 18, right: 'auto', bottom: compact ? 8 : 14 }
-      : { right: compact ? 12 : 34, left: 'auto', bottom: compact ? 12 : 26 };
+  // While playing, the loop owns position: React pins the origin to the top
+  // left and writes nothing else, so the two never fight over the same
+  // properties. Otherwise the corner is the sulking spot.
+  const anchored: CSSProperties = playing
+    ? { left: 0, top: 0, right: 'auto', bottom: 'auto' }
+    : pose === 'corner'
+    ? { left: compact ? 8 : 18, right: 'auto', bottom: compact ? 8 : 14 }
+    : { right: compact ? 12 : 34, left: 'auto', bottom: compact ? 12 : 26 };
 
   const dock: CSSProperties = {
     position: 'fixed',
@@ -74,13 +83,19 @@ export const Robot = forwardRef<HTMLButtonElement, RobotProps>(function Robot(
     gap: 10,
     zIndex: 40,
     pointerEvents: 'none',
-    transform: `translateX(${state.nudge}px)`,
-    transition: animate ? 'left .9s ease, right .9s ease, bottom .9s ease, transform .5s ease' : 'none',
+    ...(playing
+      ? { willChange: 'transform', transition: 'none' }
+      : {
+          transform: `translateX(${state.nudge}px)`,
+          transition: animate
+            ? 'left .9s ease, right .9s ease, bottom .9s ease, transform .5s ease'
+            : 'none',
+        }),
     opacity: dnd ? 0.75 : 1,
   };
 
   return (
-    <div style={dock} data-robot-dock data-robot-pose={pose}>
+    <div ref={dockRef} style={dock} data-robot-dock data-robot-pose={pose}>
       <div
         style={{
           background: C.shell,
@@ -116,7 +131,7 @@ export const Robot = forwardRef<HTMLButtonElement, RobotProps>(function Robot(
         />
       </div>
 
-      {trayOpen && (
+      {trayOpen && !playing && (
         <div
           role="menu"
           aria-label="Robot commands"

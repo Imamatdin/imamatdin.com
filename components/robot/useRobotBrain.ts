@@ -21,6 +21,7 @@ const initialState = (): RobotState => ({
   hop: false,
   nudge: 0,
   trayOpen: false,
+  game: { status: 'off', collected: 0, total: 0 },
   bubble: { text: '', visible: false, priority: Priority.Idle },
   pupil: { x: 0, y: 0 },
 });
@@ -200,6 +201,8 @@ export function useRobotBrain(): Brain {
           storage.setDnd(on);
         },
         setTray: (open: boolean) => commit({ trayOpen: open }),
+        setGame: (patch: Partial<RobotState['game']>) =>
+          commit({ game: { ...stateRef.current.game, ...patch } }),
         hop: () => {
           commit({ hop: true });
           later(() => commit({ hop: false }), HOP_MS);

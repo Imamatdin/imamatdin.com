@@ -14,6 +14,9 @@ export const tapTray: Behavior = {
     return on('tap', () => {
       const state = api.getState();
 
+      // Mid-game the robot is the player character, not a menu.
+      if (state.game.status !== 'off') return;
+
       if (state.dnd) {
         emit('tray', { id: 'come-back' });
         return;

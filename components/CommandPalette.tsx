@@ -52,6 +52,7 @@ export function CommandPalette() {
       shortcut: '',
       action: () => botSetQuiet(!robotQuiet),
     },
+    { id: 'robot-play', name: 'Play with Robot', shortcut: '', action: () => botCommand('play') },
     // Only offered once the site is already in hacker mode.
     ...(konamiActive
       ? [

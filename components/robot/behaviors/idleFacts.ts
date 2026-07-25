@@ -22,7 +22,13 @@ export const idleFacts: Behavior = {
       const state = api.getState();
       const route = resolveRoute(path());
 
-      const canChatter = !state.asleep && !state.quiet && !state.dnd && !route.quiet && !route.thin;
+      const canChatter =
+        !state.asleep &&
+        !state.quiet &&
+        !state.dnd &&
+        state.game.status === 'off' &&
+        !route.quiet &&
+        !route.thin;
       if (canChatter) {
         // Route lines first; the fallback pool is only for pages with none.
         const line = pickFresh(linesForPath(path())) ?? pickFresh(FALLBACK_LINES);

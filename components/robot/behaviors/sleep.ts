@@ -16,8 +16,8 @@ export const sleep: Behavior = {
       if (armed) clearTimeout(armed);
       armed = timers.later(() => {
         const state = api.getState();
-        // Already asleep, or deliberately sent away — either way, leave it be.
-        if (state.asleep || state.dnd) return;
+        // Already asleep, sent away, or mid-game — either way, leave it be.
+        if (state.asleep || state.dnd || state.game.status !== 'off') return;
         api.speak(SLEEP_LINE, { priority: Priority.Reaction, holdMs: 4000 });
         timers.later(() => api.sleep(), 400);
       }, IDLE_MS);

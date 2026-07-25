@@ -45,6 +45,14 @@ export interface Bubble {
  */
 export type Pose = 'dock' | 'corner';
 
+export type GameStatus = 'off' | 'playing' | 'won' | 'lost';
+
+export interface GameState {
+  status: GameStatus;
+  collected: number;
+  total: number;
+}
+
 export interface RobotState {
   mood: Mood;
   prop: Prop;
@@ -57,6 +65,7 @@ export interface RobotState {
   /** Sideways shove, used by the tickle reaction. */
   nudge: number;
   trayOpen: boolean;
+  game: GameState;
   bubble: Bubble;
   pupil: { x: number; y: number };
 }
@@ -83,6 +92,7 @@ export interface RobotApi {
   setPose(pose: Pose): void;
   setDnd(on: boolean): void;
   setTray(open: boolean): void;
+  setGame(patch: Partial<GameState>): void;
   hop(): void;
   /** Shove sideways by px, decays back to zero. */
   nudge(px: number): void;

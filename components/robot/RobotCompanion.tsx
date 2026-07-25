@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Robot } from './Robot';
+import { GameLayer } from './GameLayer';
+import { useGame } from './useGame';
 import { useRobotBrain } from './useRobotBrain';
 import { BEHAVIORS } from './behaviors';
 import { announceQuiet, onBotCommand, onBotQuietRequest, onBotSay } from './bus';
@@ -32,6 +34,8 @@ export default function RobotCompanion() {
   const { state, api, internal } = useRobotBrain();
   const router = useRouter();
   const botRef = useRef<HTMLButtonElement>(null);
+  const dockRef = useRef<HTMLDivElement>(null);
+  const game = useGame(api, dockRef);
 
   const [blink, setBlink] = useState(false);
   const [animate, setAnimate] = useState(true);
@@ -305,16 +309,35 @@ export default function RobotCompanion() {
     return () => cleanups.forEach((fn) => fn());
   }, [api, bus]);
 
+  // The game is a mode rather than a behavior — it takes the robot out of its
+  // dock entirely — so it is started here rather than from behaviors/.
+  useEffect(() => {
+    const off = bus.on('tray', ({ id }) => {
+      if (id === 'play') game.start();
+    });
+    return off;
+  }, [bus, game]);
+
   return (
-    <Robot
-      ref={botRef}
-      state={state}
-      blink={blink}
-      animate={animate}
-      compact={compact}
-      konami={konami}
-      onTap={() => bus.emit('tap', { pointerType: pointerTypeRef.current })}
-      onTraySelect={(id) => bus.emit('tray', { id })}
-    />
+    <>
+      <Robot
+        ref={botRef}
+        dockRef={dockRef}
+        state={state}
+        blink={blink}
+        animate={animate}
+        compact={compact}
+        konami={konami}
+        onTap={() => bus.emit('tap', { pointerType: pointerTypeRef.current })}
+        onTraySelect={(id) => bus.emit('tray', { id })}
+      />
+      <GameLayer
+        game={state.game}
+        cellCount={game.cellCount}
+        registerCell={game.registerCell}
+        onRestart={game.restart}
+        onExit={game.stop}
+      />
+    </>
   );
 }
