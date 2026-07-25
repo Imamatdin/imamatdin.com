@@ -167,12 +167,11 @@ export const ROUTES: RouteEntry[] = [
     id: 'now',
     kind: 'meta',
     match: /^\/now\/?$/,
-    // src: pages/now.tsx — deliberately makes no freshness claim of its own,
-    // because the page carries its own "last updated" date and that is the
-    // honest thing to point at.
+    // src: pages/now.tsx — currently a single placeholder line, so the robot
+    // does not promise any detail the page does not have.
     lines: [
-      { text: 'what he is actually on right now. the date at the top tells you how fresh that is.', mood: 'neutral' },
-      { text: 'the honest version of a status page. including the parts that are blocked.', mood: 'wink' },
+      { text: 'one line. he ran out of time to write the long version, which is itself the update.', mood: 'wink' },
+      { text: 'AI and robotics. that is genuinely all this page says today.', mood: 'neutral' },
     ],
   },
   {
