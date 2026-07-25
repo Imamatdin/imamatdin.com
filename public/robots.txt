@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Preprints are linked from the site but kept out of search indexes until
+# they are published. Remove the line to let them be crawled.
+Disallow: /research/
+
+Sitemap: https://imamatdin.com/sitemap.xml

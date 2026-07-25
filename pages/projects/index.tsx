@@ -51,6 +51,9 @@ const ProjectsPage = ({ projects }: PageProps) => {
                 borderColor="border"
                 cursor="pointer"
                 transition="opacity 0.2s"
+                // The whole card is an anchor, so the underline has to be
+                // switched off here and put back on the title alone.
+                textDecoration="none"
                 _hover={{ opacity: 0.7 }}
               >
                 <Text
@@ -58,6 +61,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
                   fontSize="14px"
                   fontWeight="bold"
                   color="text"
+                  textDecoration="underline"
                   mb={1}
                 >
                   {project.title}
@@ -66,6 +70,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
                   fontFamily="mono"
                   fontSize="14px"
                   color="subtle"
+                  textDecoration="none"
                 >
                   {project.description}
                 </Text>

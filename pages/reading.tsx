@@ -31,6 +31,7 @@ export default function Reading({ books }: PageProps) {
             {books.map((book) => (
               <Text
                 key={book.slug}
+                as="div"
                 fontFamily="mono"
                 fontSize="14px"
                 color="text"

@@ -28,7 +28,10 @@ const DeepDivesListPage = ({ dives }: PageProps) => (
         <VStack align="stretch" spacing={3}>
           {dives.map((dive) => (
             <NextLink href={`/deep-dives/${dive.slug}`} key={dive.slug}>
+              {/* as="div": Prose puts vertical margins on <p>, which blows the
+                  list apart into paragraph-sized gaps. */}
               <Text
+                as="div"
                 fontFamily="mono"
                 fontSize="14px"
                 fontWeight="bold"

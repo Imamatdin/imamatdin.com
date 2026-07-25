@@ -34,11 +34,14 @@ export interface RouteEntry {
  * ------------------------------------------------------------------ */
 
 export const PROJECT_LINES: Record<string, Line[]> = {
-  // src: content/projects/radiative-cooling-control.mdx
+  // src: public/research/climate-adaptive-drl-radiative-cooling.pdf (abstract)
+  // and content/projects/radiative-cooling-control.mdx
   'radiative-cooling-control': [
     { text: '94.4% water savings in Seattle, ±0.5% across seeds. the variance is the part worth looking at.', mood: 'happy' },
-    { text: 'DDPG agents trained per climate zone, then made to generalize to Phoenix and Chicago.', mood: 'neutral' },
+    { text: 'SAC took Seattle, TD3 took Houston at 70.8%. three climate zones, three seeds each.', mood: 'neutral' },
+    { text: 'forecasts bought 10.2 points in Seattle and nothing in the humid regions. that ablation is the interesting bit.', mood: 'thinking' },
     { text: 'the expansion runs Decision Transformers and Dreamer-style world models on 1.2 billion observations.', mood: 'thinking' },
+    { text: 'the paper is on this page as a PDF. six pages. i have read it more times than anyone.', mood: 'wink' },
   ],
   // src: content/projects/aral-basin-platform.mdx
   'aral-basin-platform': [
@@ -69,17 +72,19 @@ export const PROJECT_LINES: Record<string, Line[]> = {
     { text: 'Next.js, MDX, and a colour palette with exactly four variables. i use all four.', mood: 'happy' },
     { text: 'the whole thing is modelled on a notebook. da Vinci had codices, he has a content directory.', mood: 'neutral' },
   ],
-  // src: content/projects/client-work.mdx
-  'client-work': [
-    { text: 'CRM pipelines and intake automation for a consulting firm, with human review gates on the drafting.', mood: 'neutral' },
+  // src: content/projects/flowcored.mdx
+  flowcored: [
+    { text: 'Flowcored is his automation business. CRM pipelines, intake, drafting with human review gates.', mood: 'neutral' },
   ],
   // src: content/projects/agora-library-bot.mdx
   'agora-library-bot': [
     { text: 'a Telegram bot for cataloguing and sharing books between communities.', mood: 'neutral' },
   ],
-  // src: content/projects/buildcored-mvp.mdx — the page itself says details are coming
-  'buildcored-mvp': [
-    { text: "he's CTO on this one. the page says details are coming, so i am not going to invent any.", mood: 'wink' },
+  // src: content/projects/buildcored.mdx and buildcored.com
+  buildcored: [
+    { text: 'a builder community, 1,500+ members, all of it open source and MIT licensed.', mood: 'happy' },
+    { text: 'four rules. my favourite is "if it runs, it counts". i barely run and i count.', mood: 'wink' },
+    { text: 'the next cohort is hardware, in person, in Tashkent this August.', mood: 'neutral' },
   ],
 };
 
@@ -211,13 +216,17 @@ export const ROUTES: RouteEntry[] = [
     kind: 'home',
     match: /^\/$/,
     // src: pages/index.tsx — every line below is about THIS page's content.
+    // Note there is no "and this is why he does it" line. He does not frame the
+    // work that way, so neither does the robot.
     lines: [
-      { text: 'gap year, spent building. that is the whole opening line and it is accurate.', mood: 'happy' },
-      { text: 'he grew up where the dried lakebed makes the dust storms. that is why the environmental work exists.', mood: 'neutral' },
+      { text: 'AI, robotics and mechanical engineering, where they overlap. that is the whole pitch.', mood: 'happy' },
+      { text: 'gap year, spent building. that is the opening line and it is accurate.', mood: 'happy' },
+      { text: 'four things on that list, and he is actively building all four. i checked.', mood: 'happy' },
+      { text: 'Nukus, Karakalpakstan. that is where this is being written from.', mood: 'neutral' },
       { text: 'Dostoevsky, Tolstoy, Chekhov, and Ibrayim Yusupov. the library is up in the nav.', mood: 'neutral' },
-      { text: 'mechanical engineering with a security focus, is the plan he is applying with.', mood: 'neutral' },
-      { text: 'he is looking for compute and research funding. the email is at the bottom of this page.', mood: 'happy' },
-      { text: 'skills and capital abroad, then back to Karakalpakstan. that is the long version of the plan.', mood: 'thinking' },
+      { text: 'five languages, Turkish still in progress. i manage one and it has semicolons.', mood: 'wink' },
+      { text: 'he writes to work out what he thinks. his words, not mine — mine are all curated.', mood: 'wink' },
+      { text: 'he is looking for compute and research funding. the email is in the footer.', mood: 'happy' },
     ],
   },
 ];

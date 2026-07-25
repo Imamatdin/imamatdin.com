@@ -111,7 +111,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <ChakraProvider theme={theme}>
       <DefaultSeo
         title="Imamatdin Sultaniyazov"
-        description="18-year-old passionate about emerging tech, engineering, and Karakalpak culture"
+        description="I build things, read a lot, and write to work out what I think."
         canonical="https://imamatdin.com"
         openGraph={{
           type: 'website',
