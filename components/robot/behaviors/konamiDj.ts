@@ -1,10 +1,11 @@
 import { Priority } from '../types';
 import type { Behavior } from '../types';
-import { DJ_END_LINES, DJ_LINES, KONAMI_LINES } from '../lines';
+import { DJ_END_LINES, DJ_LINES, DJ_SET_LINES, KONAMI_LINES } from '../lines';
 import { storage } from '../storage';
 import { createTimers, pick } from './util';
 
-const SET_LENGTH_MS = 20000;
+/** Long enough to get through the set below without rushing it. */
+const TRACK_MS = 4200;
 
 /**
  * Konami mode turns the whole site green, so the robot puts on headphones,
@@ -13,7 +14,7 @@ const SET_LENGTH_MS = 20000;
  */
 export const konamiDj: Behavior = {
   id: 'konami-dj',
-  setup({ api, on, reducedMotion }) {
+  setup({ api, on }) {
     const timers = createTimers();
     let playing = false;
 
@@ -31,15 +32,24 @@ export const konamiDj: Behavior = {
 
       api.setProp('headphones');
       api.setMood('dj');
-      api.speak(pick(DJ_LINES), { priority: Priority.User, holdMs: 5000 });
+      api.speak(pick(DJ_LINES), { priority: Priority.User, holdMs: TRACK_MS - 400 });
+
+      // Work through the set in order so it builds to the drop rather than
+      // repeating one line for twenty seconds.
+      DJ_SET_LINES.forEach((line, i) => {
+        timers.later(() => {
+          if (!playing) return;
+          api.speak(line, { priority: Priority.User, holdMs: TRACK_MS - 400 });
+        }, TRACK_MS * (i + 1));
+      });
 
       timers.later(() => {
+        if (!playing) return;
         api.setProp('none');
         api.setMood('happy', 2500);
-        api.speak(pick(DJ_END_LINES), { priority: Priority.Reaction, holdMs: 3500 });
+        api.speak(pick(DJ_END_LINES), { priority: Priority.Reaction, holdMs: 4000 });
         playing = false;
-        // Reduced motion still gets the bit, just without the bobbing.
-      }, reducedMotion() ? SET_LENGTH_MS / 2 : SET_LENGTH_MS);
+      }, TRACK_MS * (DJ_SET_LINES.length + 1));
     };
 
     const offKonami = on('konami', ({ on: enabled }) => {

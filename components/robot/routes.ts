@@ -205,7 +205,7 @@ export const ROUTES: RouteEntry[] = [
     // way and never points anyone here until they are written.
     id: 'about-unfinished',
     kind: 'meta',
-    match: /^\/about\/(culture|poetry|ideas|academics)/,
+    match: /^\/about\/(ideas|academics)/,
     thin: true,
     quiet: true,
     lines: [],
@@ -219,7 +219,7 @@ export const ROUTES: RouteEntry[] = [
       { text: 'gap year, spent building. that is the whole opening line and it is accurate.', mood: 'happy' },
       { text: 'he grew up where the dried lakebed makes the dust storms. that is why the environmental work exists.', mood: 'neutral' },
       { text: 'he still teaches taekwondo locally. i have no legs, so i mostly watch.', mood: 'wink' },
-      { text: 'Dostoevsky, Tolstoy, Chekhov, and Ibrayim Yusupov. the poetry is the part people miss.', mood: 'neutral' },
+      { text: 'Dostoevsky, Tolstoy, Chekhov, and Ibrayim Yusupov. the library is up in the nav.', mood: 'neutral' },
       { text: 'mechanical engineering with a security focus, is the plan he is applying with.', mood: 'neutral' },
       { text: 'he is looking for compute and research funding. the email is at the bottom of this page.', mood: 'happy' },
       { text: 'skills and capital abroad, then back to Karakalpakstan. that is the long version of the plan.', mood: 'thinking' },

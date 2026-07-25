@@ -51,6 +51,8 @@ export interface GameState {
   status: GameStatus;
   collected: number;
   total: number;
+  /** The robot's reaction to winning or falling, shown in the end panel. */
+  message?: string;
 }
 
 export interface RobotState {

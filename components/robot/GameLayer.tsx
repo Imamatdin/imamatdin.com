@@ -85,9 +85,9 @@ export function GameLayer({ game, cellCount, registerCell, onRestart, onExit }: 
 
       {game.status === 'lost' && (
         <div style={panel} role="alertdialog" aria-label="You fell">
-          <div style={{ marginBottom: 6 }}>you fell off the page</div>
+          <div style={{ marginBottom: 6, fontSize: 18 }}>you fell</div>
           <div style={{ color: C.subtle, fontSize: 12, marginBottom: 14 }}>
-            the text is the floor. mind the gaps.
+            {game.message ?? 'the text is the floor. mind the gaps.'}
           </div>
           <GameButton onClick={onRestart}>try again</GameButton>
           <GameButton onClick={onExit}>back to the dock</GameButton>
@@ -97,9 +97,9 @@ export function GameLayer({ game, cellCount, registerCell, onRestart, onExit }: 
 
       {game.status === 'won' && (
         <div style={panel} role="alertdialog" aria-label="You won">
-          <div style={{ marginBottom: 6 }}>all {game.total} collected</div>
+          <div style={{ marginBottom: 6, fontSize: 18 }}>all {game.total} collected</div>
           <div style={{ color: C.subtle, fontSize: 12, marginBottom: 14 }}>
-            you read the whole site sideways. genuinely impressive.
+            {game.message ?? 'genuinely impressive.'}
           </div>
           <GameButton onClick={onRestart}>play again</GameButton>
           <GameButton onClick={onExit}>back to the dock</GameButton>

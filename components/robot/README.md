@@ -161,8 +161,8 @@ flags drive the rest:
 
 - `quiet` — long-form reading. Present but silent.
 - `thin` — the page still contains placeholder copy. Never commented on, never
-  recommended. Pointing visitors at `[Replace this with your story]` is worse
-  than saying nothing.
+  recommended. Pointing visitors at `[Add a specific example…]` is worse than
+  saying nothing. Clear the flag once a page is actually written.
 - `until` on a line — an expiry date for time-bound claims.
 
 To teach it about a new page, add an entry to `ROUTES` with lines that are true
@@ -172,9 +172,10 @@ so a new project link anywhere on the site is picked up with no page edits.
 
 ## The game
 
-Tapping the robot and choosing *play* — or `Play with Robot` in the command
-palette — turns it into a platformer where the page's own text is the floor.
-Arrows or WASD, escape to stop.
+Tapping the robot and choosing *play a game* — or `Play with Robot` in the
+command palette — turns it into a platformer where the page's own text is the
+floor. Arrows or WASD, escape to stop. Falling off the bottom ends the run;
+winning needs all five collectibles.
 
 The approach is adapted from [gazijarin/Gazi-V2]'s `RobotGame`, which had the
 good idea of using DOM rects as level geometry. Two things are done

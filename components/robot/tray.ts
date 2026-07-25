@@ -13,14 +13,22 @@ export interface TrayItem {
   when?: (state: RobotState, ctx: { konami: boolean; compact: boolean }) => boolean;
 }
 
+/**
+ * Labels say what will happen, not how you'd shush a person. "shh" used to sit
+ * next to "go quiet" meaning two different things — one sends it to the corner,
+ * the other mutes it — which is exactly as confusing as it sounds.
+ */
 export const TRAY_ITEMS: TrayItem[] = [
   { id: 'say', label: 'say something' },
   // Needs a keyboard, so it is not offered where there isn't one.
-  { id: 'play', label: 'play', when: (_s, ctx) => !ctx.compact },
-  { id: 'shh', label: 'shh', when: (s) => !s.dnd },
+  { id: 'play', label: 'play a game', when: (_s, ctx) => !ctx.compact },
+  { id: 'dance', label: 'play a set', when: (_s, ctx) => ctx.konami },
+  { id: 'corner', label: 'go sit in the corner', when: (s) => !s.dnd },
   { id: 'come-back', label: 'come back', when: (s) => s.dnd },
-  { id: 'dance', label: 'dance', when: (_s, ctx) => ctx.konami },
-  { id: 'mute', label: 'go quiet', when: (s) => !s.quiet },
+  { id: 'mute', label: 'stop talking', when: (s) => !s.quiet },
+  // Without this there is no way back: muting hid the entry and left the robot
+  // silent forever, with "say something" quietly doing nothing.
+  { id: 'unmute', label: 'you can talk again', when: (s) => s.quiet },
 ];
 
 export const visibleTrayItems = (

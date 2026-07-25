@@ -3,6 +3,7 @@ import type { Behavior } from '../types';
 import {
   DND_LINES,
   DND_RETURN_LINES,
+  QUIET_OFF_LINES,
   QUIET_ON_LINE,
   TRAY_HINT,
 } from '../lines';
@@ -23,6 +24,10 @@ export const trayActions: Behavior = {
 
       switch (id) {
         case 'say': {
+          // Asking it to speak is an implicit request to un-mute. Without this
+          // the entry silently does nothing for anyone who muted it earlier.
+          if (api.getState().quiet) api.setQuiet(false);
+
           const route = resolveRoute(path());
           const line =
             (!route.thin ? pickFresh(linesForPath(path())) : null) ??
@@ -32,7 +37,13 @@ export const trayActions: Behavior = {
           break;
         }
 
-        case 'shh': {
+        case 'unmute': {
+          api.setQuiet(false);
+          api.speak(pick(QUIET_OFF_LINES), { priority: Priority.User, holdMs: 4000 });
+          break;
+        }
+
+        case 'corner': {
           // Sulks first, then trudges off. The pause is the whole joke.
           api.speak(pick(DND_LINES), { priority: Priority.User, holdMs: 3000 });
           api.setMood('sad');

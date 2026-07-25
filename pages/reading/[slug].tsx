@@ -37,26 +37,12 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
               by {book.author}
             </Text>
 
-            {book.date && (
-              <Text fontFamily="mono" fontSize="12px" color="subtle">
-                Read in {new Date(book.date).toLocaleDateString('en-US', {
-                  month: 'long',
-                  year: 'numeric'
-                })}
-              </Text>
-            )}
-
             {book.rating && (
               <Text fontFamily="mono" fontSize="12px" color="subtle">
                 Rating: {book.rating}/10
               </Text>
             )}
 
-            {book.category && (
-              <Text fontFamily="mono" fontSize="12px" color="subtle">
-                {Array.isArray(book.category) ? book.category.join(', ') : book.category}
-              </Text>
-            )}
           </VStack>
 
           <Divider borderColor="border" />

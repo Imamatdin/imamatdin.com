@@ -11,6 +11,8 @@ import {
 } from './motion';
 import type { Body, Collectible, Platform } from './motion';
 import type { RobotApi } from './types';
+import { FELL_LINES, WON_LINES } from './lines';
+import { pick } from './behaviors/util';
 
 const CELL_COUNT = 5;
 /** Platform geometry is re-read on this cadence rather than every frame. */
@@ -86,7 +88,7 @@ export function useGame(api: RobotApi, dockRef: RefObject<HTMLElement>): Game {
       dock.style.bottom = '';
     }
 
-    api.setGame({ status: 'off', collected: 0, total: CELL_COUNT });
+    api.setGame({ status: 'off', collected: 0, total: CELL_COUNT, message: undefined });
     api.setMood('neutral');
   }, [api, dockRef]);
 
@@ -112,7 +114,7 @@ export function useGame(api: RobotApi, dockRef: RefObject<HTMLElement>): Game {
       grounded: false,
     };
 
-    api.setGame({ status: 'playing', collected: 0, total: CELL_COUNT });
+    api.setGame({ status: 'playing', collected: 0, total: CELL_COUNT, message: undefined });
     api.setMood('surprised', 900);
     runningRef.current = true;
     lastScanRef.current = 0;
@@ -164,14 +166,16 @@ export function useGame(api: RobotApi, dockRef: RefObject<HTMLElement>): Game {
 
       if (cellsRef.current.every((c) => c.collected)) {
         runningRef.current = false;
-        api.setGame({ status: 'won' });
+        // The message goes in the panel rather than the bubble: mid-game the
+        // bubble is suppressed, and the robot may have fallen off screen.
+        api.setGame({ status: 'won', message: pick(WON_LINES).text });
         api.setMood('happy');
         return;
       }
 
       if (hasFallenOut(body)) {
         runningRef.current = false;
-        api.setGame({ status: 'lost' });
+        api.setGame({ status: 'lost', message: pick(FELL_LINES).text });
         api.setMood('surprised');
         return;
       }

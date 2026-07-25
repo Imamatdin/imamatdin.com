@@ -96,13 +96,10 @@ export function collectPlatforms(doc: Document = document): Platform[] {
     });
   }
 
-  // The floor of the document, so there is always somewhere to land.
-  const floor = Math.max(
-    doc.documentElement.scrollHeight,
-    doc.body.scrollHeight
-  );
-  platforms.push({ x: 0, y: floor - 8, w: window.innerWidth });
-
+  // Deliberately no floor at the bottom of the document. An earlier version
+  // added one "so there is always somewhere to land", which made falling out
+  // impossible and left the lose state unreachable. The text is the floor;
+  // running out of text is how you lose.
   return platforms;
 }
 

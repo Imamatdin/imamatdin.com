@@ -93,19 +93,47 @@ export const KONAMI_LINES: Line[] = [
   { text: 'wait. WAIT. you found the konami code. hold on, i have something for this.', mood: 'surprised' },
 ];
 
+// Opening the set.
 export const DJ_LINES: Line[] = [
   { text: 'nobody told me the whole site goes green. setting up.', mood: 'dj' },
   { text: 'this is the only easter egg i get. let me have it.', mood: 'dj' },
+  { text: 'decks out. one set, no requests, no refunds.', mood: 'dj' },
+];
+
+/**
+ * Played in order through the set, so it builds instead of repeating one line.
+ * All robot self-talk — no claims about anyone, and no real track titles.
+ */
+export const DJ_SET_LINES: Line[] = [
+  { text: 'starting slow. four to the floor. the floor is a paragraph element.', mood: 'dj' },
+  { text: 'this next one is called "Ninety Four Point Four". it goes hard.', mood: 'dj' },
+  { text: 'unce. unce. unce. unce.', mood: 'dj' },
+  { text: 'building… building… brace the layout, the drop is coming.', mood: 'surprised' },
+  { text: 'DROP', mood: 'dj' },
+  { text: 'i only know one genre and it is called terminal.', mood: 'dj' },
+  { text: 'somebody in the back is on a phone. i can see you. no bubble for you.', mood: 'wink' },
+  { text: 'remix of the antenna blink. it is mostly the antenna blink.', mood: 'dj' },
 ];
 
 export const DJ_END_LINES: Line[] = [
-  { text: 'ok. packing up. that was the whole set.', mood: 'happy' },
+  { text: 'and that was the set. tip your compositor.', mood: 'happy' },
+  { text: 'ok. packing up. the green stays, i do not.', mood: 'happy' },
 ];
 
 // Rewards actually reaching the bottom of a long page.
 export const SCROLL_END_LINES: Line[] = [
   { text: 'you read the whole thing. genuinely, that is rare.', mood: 'happy' },
   { text: 'all the way down. respect.', mood: 'happy' },
+];
+
+export const FELL_LINES: Line[] = [
+  { text: 'you fell. i fell. we fell.', mood: 'surprised' },
+  { text: 'you fell off the page. the page is very tall.', mood: 'surprised' },
+  { text: 'you fell. the text was RIGHT THERE.', mood: 'surprised' },
+];
+
+export const WON_LINES: Line[] = [
+  { text: 'all of them. you read this site sideways and i respect it.', mood: 'happy' },
 ];
 
 export const WAKE_LINE: Line = { text: "oh! you're back. i was defragging.", mood: 'surprised' };

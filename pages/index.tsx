@@ -56,10 +56,6 @@ export default function Home() {
       <Box>
         <Text color="subtle" fontSize="12px">
           Also:{' '}
-          <Link as={NextLink} href="/about/culture" color="accent">culture</Link>
-          {', '}
-          <Link as={NextLink} href="/about/poetry" color="accent">poetry</Link>
-          {', '}
           <Link as={NextLink} href="/about/ideas" color="accent">ideas</Link>
           {', '}
           <Link as={NextLink} href="/about/stack" color="accent">stack</Link>
