@@ -17,10 +17,9 @@ import type { Line } from './types';
  * Page-specific lines live in routes.ts. This file holds the lines that are
  * about interacting with the robot rather than about the site.
  *
- * Four prototype lines were cut for failing rule 2: "40+ taekwondo medals"
- * (the site says he teaches taekwondo, and about/facts lists basketball),
- * "first laptop at 17", the nickname "iko", and ranking the Aral Sea as the
- * world's 4th-largest lake.
+ * Four prototype lines were cut for failing rule 2: a sports medal count, a
+ * claim about his first laptop, a nickname, and ranking the Aral Sea as the
+ * world's 4th-largest lake. None of them were true of the site's content.
  */
 
 export type TimeBucket = 'morning' | 'afternoon' | 'evening' | 'night';

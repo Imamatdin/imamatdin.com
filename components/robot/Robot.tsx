@@ -80,11 +80,16 @@ export const Robot = forwardRef<HTMLButtonElement, RobotProps>(function Robot(
     display: 'flex',
     flexDirection: 'column',
     alignItems: pose === 'corner' ? 'flex-start' : 'flex-end',
-    gap: 10,
+    // During play the dock must be exactly the robot and nothing else. The
+    // bubble is 260px wide, and while it was still in the layout the game was
+    // positioning a 260x170 box whose robot sat in the bottom-right corner —
+    // so collisions were computed ~200px left and ~110px above where the robot
+    // actually appeared.
+    gap: playing ? 0 : 10,
     zIndex: 40,
     pointerEvents: 'none',
     ...(playing
-      ? { willChange: 'transform', transition: 'none' }
+      ? { willChange: 'transform', transition: 'none', width: 'fit-content' }
       : {
           transform: `translateX(${state.nudge}px)`,
           transition: animate
@@ -112,6 +117,9 @@ export const Robot = forwardRef<HTMLButtonElement, RobotProps>(function Robot(
           transition: 'opacity .35s, transform .35s',
           pointerEvents: 'none',
           visibility: showBubble ? 'visible' : 'hidden',
+          // display:none, not just hidden — mid-game it must leave the layout
+          // entirely so the dock's box is the robot's box.
+          ...(playing ? { display: 'none' } : null),
         }}
         aria-hidden={!showBubble}
       >

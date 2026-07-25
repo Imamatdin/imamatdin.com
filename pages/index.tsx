@@ -16,7 +16,6 @@ export default function Home() {
 
       <Text color="text" lineHeight="1.8">
         Applying to study mechanical engineering with a focus on security engineering.
-        I still teach taekwondo locally.
       </Text>
 
       <Box>

@@ -38,7 +38,11 @@ export interface Game {
  * written straight to the DOM. React state carries only what the HUD shows, so
  * a 60fps game costs zero re-renders of the robot's SVG.
  */
-export function useGame(api: RobotApi, dockRef: RefObject<HTMLElement>): Game {
+export function useGame(
+  api: RobotApi,
+  dockRef: RefObject<HTMLElement>,
+  robotRef: RefObject<HTMLElement>
+): Game {
   const bodyRef = useRef<Body | null>(null);
   const cellsRef = useRef<Collectible[]>([]);
   const cellNodes = useRef<(HTMLElement | null)[]>([]);
@@ -58,8 +62,14 @@ export function useGame(api: RobotApi, dockRef: RefObject<HTMLElement>): Game {
     const body = bodyRef.current;
     if (!dock || !body) return;
 
+    // Position goes on the dock, facing goes on the robot itself. Mirroring the
+    // dock would flip it about the centre of its own box and visibly teleport
+    // the robot sideways every time it turned around.
     const y = body.docY - window.scrollY;
-    dock.style.transform = `translate3d(${body.x}px, ${y}px, 0) scaleX(${body.facing})`;
+    dock.style.transform = `translate3d(${body.x}px, ${y}px, 0)`;
+    if (robotRef.current) {
+      robotRef.current.style.transform = `scaleX(${body.facing})`;
+    }
 
     cellsRef.current.forEach((cell, i) => {
       const node = cellNodes.current[i];
@@ -71,7 +81,7 @@ export function useGame(api: RobotApi, dockRef: RefObject<HTMLElement>): Game {
       node.style.display = 'block';
       node.style.transform = `translate3d(${cell.x}px, ${cell.docY - window.scrollY}px, 0)`;
     });
-  }, [dockRef]);
+  }, [dockRef, robotRef]);
 
   const stop = useCallback(() => {
     runningRef.current = false;
@@ -87,10 +97,11 @@ export function useGame(api: RobotApi, dockRef: RefObject<HTMLElement>): Game {
       dock.style.right = '';
       dock.style.bottom = '';
     }
+    if (robotRef.current) robotRef.current.style.transform = '';
 
     api.setGame({ status: 'off', collected: 0, total: CELL_COUNT, message: undefined });
     api.setMood('neutral');
-  }, [api, dockRef]);
+  }, [api, dockRef, robotRef]);
 
   const begin = useCallback(() => {
     const dock = dockRef.current;

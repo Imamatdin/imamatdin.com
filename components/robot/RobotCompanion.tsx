@@ -35,7 +35,7 @@ export default function RobotCompanion() {
   const router = useRouter();
   const botRef = useRef<HTMLButtonElement>(null);
   const dockRef = useRef<HTMLDivElement>(null);
-  const game = useGame(api, dockRef);
+  const game = useGame(api, dockRef, botRef);
 
   const [blink, setBlink] = useState(false);
   const [animate, setAnimate] = useState(true);

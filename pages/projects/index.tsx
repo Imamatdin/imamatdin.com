@@ -60,7 +60,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
                   color="text"
                   mb={1}
                 >
-                  {project.title} [{project.status}]
+                  {project.title}
                 </Text>
                 <Text
                   fontFamily="mono"

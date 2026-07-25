@@ -29,7 +29,8 @@ export interface RouteEntry {
 }
 
 /* ------------------------------------------------------------------ *
- * Per-project lines, keyed by the slug in content/projects/
+ * Per-item lines, keyed by slug. Covers content/projects/ and
+ * content/deep-dives/ — slugs are unique across both.
  * ------------------------------------------------------------------ */
 
 export const PROJECT_LINES: Record<string, Line[]> = {
@@ -56,11 +57,6 @@ export const PROJECT_LINES: Record<string, Line[]> = {
     { text: 'melting paraffin does the cooling. no electricity on the cold side at all.', mood: 'happy' },
     { text: 'under 5g per actuator against 50g for Peltier. 2W against 125W.', mood: 'surprised' },
     { text: 'cooling in 5-10ms, heating in 250ms — matched to how much more sensitive we are to cold.', mood: 'thinking' },
-  ],
-  // src: content/projects/syn-cad.mdx
-  'syn-cad': [
-    { text: 'describe a part in English, get OpenSCAD back, compiled and checked. errors go back to the model.', mood: 'neutral' },
-    { text: 'CADBench grades the output on compilation, geometry and parametric robustness.', mood: 'thinking' },
   ],
   // src: content/projects/agentic-os.mdx
   'agentic-os': [
@@ -218,7 +214,6 @@ export const ROUTES: RouteEntry[] = [
     lines: [
       { text: 'gap year, spent building. that is the whole opening line and it is accurate.', mood: 'happy' },
       { text: 'he grew up where the dried lakebed makes the dust storms. that is why the environmental work exists.', mood: 'neutral' },
-      { text: 'he still teaches taekwondo locally. i have no legs, so i mostly watch.', mood: 'wink' },
       { text: 'Dostoevsky, Tolstoy, Chekhov, and Ibrayim Yusupov. the library is up in the nav.', mood: 'neutral' },
       { text: 'mechanical engineering with a security focus, is the plan he is applying with.', mood: 'neutral' },
       { text: 'he is looking for compute and research funding. the email is at the bottom of this page.', mood: 'happy' },

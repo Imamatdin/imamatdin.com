@@ -23,7 +23,7 @@ export const linkHover: Behavior = {
 
     const slugFrom = (target: EventTarget | null): string | null => {
       if (!(target instanceof Element)) return null;
-      const anchor = target.closest('a[href^="/projects/"]');
+      const anchor = target.closest('a[href^="/projects/"], a[href^="/deep-dives/"]');
       const href = anchor?.getAttribute('href');
       if (!href) return null;
       const slug = href.split('/')[2]?.split(/[?#]/)[0];
@@ -35,7 +35,8 @@ export const linkHover: Behavior = {
       if (!slug) return;
 
       // Don't narrate the page you're already on.
-      if (resolveRoute(path()).kind === 'project') return;
+      const kind = resolveRoute(path()).kind;
+      if (kind === 'project' || kind === 'article') return;
 
       const now = Date.now();
       if (slug === lastSlug && now - lastAt < COOLDOWN_MS) return;
