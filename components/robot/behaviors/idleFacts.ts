@@ -1,31 +1,38 @@
 import { Priority } from '../types';
 import type { Behavior } from '../types';
-import { FACTS } from '../lines';
-import { createTimers } from './util';
+import { FALLBACK_LINES, linesForPath, resolveRoute } from '../routes';
+import { createTimers, pickFresh } from './util';
 
-const FIRST_MS = 8000;
-const EVERY_MS = 9500;
+const FIRST_MS = 9000;
+const EVERY_MS = 11000;
 const THINK_MS = 900;
 
-/** Rotates curated facts at the lowest priority — anything else outranks it. */
+/**
+ * Rotates lines that are true of the page you are currently on. Silent on
+ * long-form reading routes and on pages that aren't finished yet.
+ */
 export const idleFacts: Behavior = {
   id: 'idle-facts',
-  setup({ api }) {
+  setup({ api, path }) {
     const timers = createTimers();
     let alive = true;
-    // Start somewhere random so a second visit doesn't replay the same order.
-    let i = Math.floor(Math.random() * FACTS.length);
 
     const next = () => {
       if (!alive) return;
       const state = api.getState();
+      const route = resolveRoute(path());
 
-      if (!state.asleep && !state.quiet) {
-        api.setMood('thinking');
-        timers.later(() => {
-          api.speak(FACTS[i % FACTS.length], { priority: Priority.Idle, holdMs: 7000 });
-          i += 1;
-        }, THINK_MS);
+      const canChatter = !state.asleep && !state.quiet && !state.dnd && !route.quiet && !route.thin;
+      if (canChatter) {
+        // Route lines first; the fallback pool is only for pages with none.
+        const line = pickFresh(linesForPath(path())) ?? pickFresh(FALLBACK_LINES);
+        if (line) {
+          api.setMood('thinking');
+          timers.later(
+            () => api.speak(line, { priority: Priority.Idle, holdMs: 7000 }),
+            THINK_MS
+          );
+        }
       }
 
       timers.later(next, EVERY_MS);

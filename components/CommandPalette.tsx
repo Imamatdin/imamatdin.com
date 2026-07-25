@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useColorMode } from '@chakra-ui/react';
+import { botCommand, botSetQuiet, onQuietChanged } from './robot/bus';
 
 interface Command {
   id: string;
@@ -16,6 +17,16 @@ export function CommandPalette() {
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const { toggleColorMode } = useColorMode();
+  const [robotQuiet, setRobotQuiet] = useState(false);
+  const [konamiActive, setKonamiActive] = useState(false);
+
+  // The robot announces its own state; the palette never imports the brain.
+  useEffect(() => onQuietChanged(setRobotQuiet), []);
+
+  // Re-checked each time the palette opens rather than observed continuously.
+  useEffect(() => {
+    if (isOpen) setKonamiActive(document.documentElement.classList.contains('konami-mode'));
+  }, [isOpen]);
 
   const commands: Command[] = [
     { id: 'home', name: 'Home', shortcut: 'g h', action: () => router.push('/') },
@@ -25,6 +36,33 @@ export function CommandPalette() {
     { id: 'deep-dives', name: 'Deep Dives', shortcut: 'g d', action: () => router.push('/deep-dives') },
     { id: 'now', name: 'Now', shortcut: 'g n', action: () => router.push('/now') },
     { id: 'theme', name: 'Toggle Theme', shortcut: 't', action: toggleColorMode },
+    {
+      id: 'robot-talk',
+      name: 'Talk to Robot',
+      shortcut: '',
+      action: () => {
+        // Unmute first, otherwise the request lands on a robot that can't answer.
+        if (robotQuiet) botSetQuiet(false);
+        botCommand('say');
+      },
+    },
+    {
+      id: 'robot-quiet',
+      name: robotQuiet ? 'Unmute Robot' : 'Mute Robot',
+      shortcut: '',
+      action: () => botSetQuiet(!robotQuiet),
+    },
+    // Only offered once the site is already in hacker mode.
+    ...(konamiActive
+      ? [
+          {
+            id: 'robot-dance',
+            name: 'Make the Robot Dance',
+            shortcut: '',
+            action: () => botCommand('dance'),
+          },
+        ]
+      : []),
   ];
 
   // Fuzzy search

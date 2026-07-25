@@ -10,11 +10,17 @@ import type { Line } from './types';
  *     does not go in.
  *  3. Lines the robot makes about ITSELF are jokes and need no source — but
  *     they must not smuggle in a claim about him.
+ *  4. No counts, versions or dates baked into prose. Those rot, and a robot
+ *     confidently reciting a stale number is worse than one saying nothing.
+ *     If a line must make a time-bound claim, give it an `until` date.
  *
- * Four lines from the original prototype were cut for failing rule 2:
- * "40+ taekwondo medals" (the site says he teaches taekwondo, and about/facts
- * lists basketball, not medals), "first laptop at 17", the nickname "iko", and
- * "the world's 4th-largest lake" (the site never ranks it).
+ * Page-specific lines live in routes.ts. This file holds the lines that are
+ * about interacting with the robot rather than about the site.
+ *
+ * Four prototype lines were cut for failing rule 2: "40+ taekwondo medals"
+ * (the site says he teaches taekwondo, and about/facts lists basketball),
+ * "first laptop at 17", the nickname "iko", and ranking the Aral Sea as the
+ * world's 4th-largest lake.
  */
 
 export type TimeBucket = 'morning' | 'afternoon' | 'evening' | 'night';
@@ -27,24 +33,15 @@ export const timeBucket = (): TimeBucket => {
   return 'evening';
 };
 
-// src: pages/about/facts.tsx (Sleep), pages/index.tsx (Karakalpakstan)
+// src: pages/about/facts.tsx (Sleep) for the night-owl reference.
 export const GREETINGS: Record<TimeBucket, Line> = {
   morning: {
     text: "morning. he's a night owl forcing himself into mornings. i just run on requestAnimationFrame.",
     mood: 'happy',
   },
-  afternoon: {
-    text: 'afternoon. he builds, i mind the front desk. look around.',
-    mood: 'happy',
-  },
-  evening: {
-    text: 'evening. good hours for this kind of thing.',
-    mood: 'neutral',
-  },
-  night: {
-    text: "it's late. he works these hours too — night owl, on the record.",
-    mood: 'sleepy',
-  },
+  afternoon: { text: 'afternoon. he builds, i mind the front desk. look around.', mood: 'happy' },
+  evening: { text: 'evening. good hours for this kind of thing.', mood: 'neutral' },
+  night: { text: "it's late. he works these hours too — night owl, on the record.", mood: 'sleepy' },
 };
 
 // Robot talking about itself — no factual claims, no source needed.
@@ -54,74 +51,61 @@ export const RETURN_GREETINGS: Line[] = [
   { text: "oh good, it's you again.", mood: 'wink' },
 ];
 
-export const FACTS: Line[] = [
-  // src: content/projects/radiative-cooling-control.mdx
-  {
-    text: 'his cooling agents hit 94.4% water savings in Seattle. ±0.5% across seeds — the boring kind of number you can trust.',
-    mood: 'happy',
-  },
-  // src: content/projects/radiative-cooling-control.mdx
-  {
-    text: 'the next phase trains world models on 1.2 billion observations. i am roughly forty rectangles.',
-    mood: 'thinking',
-  },
-  // src: content/projects/aral-basin-platform.mdx
-  {
-    text: 'the Aral Basin pipeline reads satellites back to Landsat, 1972. older than most languages you used today.',
-    mood: 'neutral',
-  },
-  // src: content/projects/aral-basin-platform.mdx
-  {
-    text: '150+ years of records from 87 synoptic stations, and nobody had pointed deep learning at them.',
-    mood: 'surprised',
-  },
-  // src: content/projects/aral-basin-platform.mdx
-  {
-    text: "he's fine-tuning a 600M-parameter geospatial model so farmers get dust-storm warnings early.",
-    mood: 'happy',
-  },
-  // src: content/projects/sentinel.mdx
-  {
-    text: 'SENTINEL runs red agents attacking and blue agents defending. the whole thesis is that speed decides it.',
-    mood: 'neutral',
-  },
-  // src: content/projects/thermotouch.mdx
-  {
-    text: 'ThermoTouch cools in 5-10ms with melting paraffin. no electricity at all on the cold side.',
-    mood: 'thinking',
-  },
-  // src: content/projects/syn-cad.mdx
-  {
-    text: 'SynCAD turns plain English into STL files, compiles them, and feeds the errors back until they build.',
-    mood: 'neutral',
-  },
-  // src: pages/about/facts.tsx (Languages)
-  {
-    text: 'Karakalpak, Russian, Uzbek, English, Turkish in progress. i speak one language and it has semicolons.',
-    mood: 'wink',
-  },
-  // src: pages/about/facts.tsx (Origin)
-  {
-    text: "Nukus holds the world's second-largest collection of Russian avant-garde art. in the middle of a desert.",
-    mood: 'surprised',
-  },
-  // src: pages/about/facts.tsx (Name)
-  {
-    text: "Imamatdin means 'pillar of faith'. mine is more of a load-bearing div.",
-    mood: 'wink',
-  },
-  // src: pages/index.tsx
-  {
-    text: "he grew up where the dried lakebed makes the dust storms. that's why the environmental work exists.",
-    mood: 'neutral',
-  },
-];
-
 export const CLICK_LINES: Line[] = [
   { text: 'boop acknowledged.', mood: 'surprised' },
   { text: 'careful, the chassis is load-bearing.', mood: 'surprised' },
   { text: 'that tickled the cold plate.', mood: 'happy' },
-  { text: 'you could click the projects instead. just saying.', mood: 'wink' },
+  { text: 'you could read the page instead. just saying.', mood: 'wink' },
+];
+
+export const TICKLE_LINES: Line[] = [
+  { text: 'hey — hey! that is my chassis.', mood: 'happy' },
+  { text: 'haha — no — stop, my joints are not rated for this.', mood: 'happy' },
+  { text: 'this is not in the spec. this is NOT in the spec.', mood: 'happy' },
+];
+
+export const TICKLE_STOP_LINES: Line[] = [
+  { text: 'ok ok ok. stop. please. i yield.', mood: 'surprised' },
+  { text: 'enough! i am going to stand over here now.', mood: 'surprised' },
+];
+
+export const TRAY_HINT: Line = {
+  text: 'need something? shh puts me in the corner, and i can go quiet entirely.',
+  mood: 'neutral',
+};
+
+export const DND_LINES: Line[] = [
+  { text: 'oh. ok. i will be over here if you need me.', mood: 'sad' },
+];
+
+export const DND_RETURN_LINES: Line[] = [
+  { text: 'back? good. i was counting the pixels.', mood: 'happy' },
+  { text: 'oh thank goodness. the corner is boring.', mood: 'happy' },
+];
+
+export const QUIET_ON_LINE: Line = { text: 'understood. going quiet.', mood: 'neutral' };
+export const QUIET_OFF_LINES: Line[] = [
+  { text: 'sound is back. i will keep it relevant.', mood: 'happy' },
+];
+
+// Fires when konami mode turns on. Robot talking about itself.
+export const KONAMI_LINES: Line[] = [
+  { text: 'wait. WAIT. you found the konami code. hold on, i have something for this.', mood: 'surprised' },
+];
+
+export const DJ_LINES: Line[] = [
+  { text: 'nobody told me the whole site goes green. setting up.', mood: 'dj' },
+  { text: 'this is the only easter egg i get. let me have it.', mood: 'dj' },
+];
+
+export const DJ_END_LINES: Line[] = [
+  { text: 'ok. packing up. that was the whole set.', mood: 'happy' },
+];
+
+// Rewards actually reaching the bottom of a long page.
+export const SCROLL_END_LINES: Line[] = [
+  { text: 'you read the whole thing. genuinely, that is rare.', mood: 'happy' },
+  { text: 'all the way down. respect.', mood: 'happy' },
 ];
 
 export const WAKE_LINE: Line = { text: "oh! you're back. i was defragging.", mood: 'surprised' };

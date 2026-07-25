@@ -15,16 +15,19 @@ export const sleep: Behavior = {
     const arm = () => {
       if (armed) clearTimeout(armed);
       armed = timers.later(() => {
-        if (api.getState().asleep) return;
+        const state = api.getState();
+        // Already asleep, or deliberately sent away — either way, leave it be.
+        if (state.asleep || state.dnd) return;
         api.speak(SLEEP_LINE, { priority: Priority.Reaction, holdMs: 4000 });
         timers.later(() => api.sleep(), 400);
       }, IDLE_MS);
     };
 
     const stir = () => {
-      if (api.getState().asleep) {
+      const state = api.getState();
+      if (state.asleep) {
         api.wake();
-        api.speak(WAKE_LINE, { priority: Priority.Reaction, holdMs: 3000 });
+        if (!state.dnd) api.speak(WAKE_LINE, { priority: Priority.Reaction, holdMs: 3000 });
       }
       arm();
     };

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Robot } from './Robot';
 import { useRobotBrain } from './useRobotBrain';
 import { BEHAVIORS } from './behaviors';
-import { announceQuiet, onBotQuietRequest, onBotSay } from './bus';
+import { announceQuiet, onBotCommand, onBotQuietRequest, onBotSay } from './bus';
 import { storage } from './storage';
 import type { BehaviorCtx, RobotEvents, Unsubscribe } from './types';
 
@@ -36,6 +36,7 @@ export default function RobotCompanion() {
   const [blink, setBlink] = useState(false);
   const [animate, setAnimate] = useState(true);
   const [compact, setCompact] = useState(false);
+  const [konami, setKonami] = useState(false);
 
   // Ref mirrors so the animation loop and behavior context can read current
   // values without being torn down and rebuilt on every change.
@@ -83,12 +84,60 @@ export default function RobotCompanion() {
     };
   }, []);
 
-  // Restore quiet mode, and tell the rest of the UI what it is.
+  // Restore persisted state, and tell the rest of the UI what it is.
   useEffect(() => {
     const quiet = storage.isQuiet();
-    if (quiet) internal.hydrateQuiet(true);
+    const dnd = storage.isDnd();
+    if (quiet || dnd) {
+      internal.hydrate({
+        quiet,
+        dnd,
+        pose: dnd ? 'corner' : 'dock',
+        mood: dnd ? 'sad' : 'neutral',
+      });
+    }
     announceQuiet(quiet);
   }, [internal]);
+
+  // Konami mode is a class on <html>, toggled by useKonamiCode. Watching the
+  // attribute keeps the robot decoupled from that hook entirely.
+  useEffect(() => {
+    const root = document.documentElement;
+    const read = () => root.classList.contains('konami-mode');
+
+    let last = read();
+    setKonami(last);
+
+    const observer = new MutationObserver(() => {
+      const now = read();
+      if (now === last) return;
+      last = now;
+      setKonami(now);
+      bus.emit('konami', { on: now });
+    });
+
+    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, [bus]);
+
+  // Scroll depth, sampled on scroll rather than per frame.
+  useEffect(() => {
+    let queued = false;
+    const measure = () => {
+      queued = false;
+      const doc = document.documentElement;
+      const scrollable = doc.scrollHeight - window.innerHeight;
+      const depth = scrollable <= 0 ? 1 : Math.min(1, window.scrollY / scrollable);
+      bus.emit('scroll', { depth });
+    };
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(measure);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [bus]);
 
   // Anything on the site can make the robot talk without importing the brain.
   useEffect(() => {
@@ -98,11 +147,13 @@ export default function RobotCompanion() {
     const offQuiet = onBotQuietRequest((on) =>
       api.setQuiet(on === null ? !api.getState().quiet : on)
     );
+    const offCommand = onBotCommand((id) => bus.emit('tray', { id }));
     return () => {
       offSay();
       offQuiet();
+      offCommand();
     };
-  }, [api]);
+  }, [api, bus]);
 
   // Blink loop
   useEffect(() => {
@@ -207,6 +258,25 @@ export default function RobotCompanion() {
     return () => cancelAnimationFrame(raf);
   }, [api, internal, bus]);
 
+  // Clicking away, or pressing escape, closes the tray.
+  useEffect(() => {
+    const onDown = (e: PointerEvent) => {
+      if (!api.getState().trayOpen) return;
+      const target = e.target;
+      if (target instanceof Element && target.closest('[data-robot-dock]')) return;
+      api.setTray(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && api.getState().trayOpen) api.setTray(false);
+    };
+    document.addEventListener('pointerdown', onDown, true);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onDown, true);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [api]);
+
   // Route changes
   useEffect(() => {
     pathRef.current = router.asPath;
@@ -242,7 +312,9 @@ export default function RobotCompanion() {
       blink={blink}
       animate={animate}
       compact={compact}
+      konami={konami}
       onTap={() => bus.emit('tap', { pointerType: pointerTypeRef.current })}
+      onTraySelect={(id) => bus.emit('tray', { id })}
     />
   );
 }

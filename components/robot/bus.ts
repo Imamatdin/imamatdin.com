@@ -10,6 +10,7 @@ import type { Mood } from './types';
 const SAY = 'robot:say';
 const QUIET = 'robot:quiet';
 const QUIET_CHANGED = 'robot:quiet-changed';
+const COMMAND = 'robot:command';
 
 /** Bubbles are small. Anything longer is a bug in the caller, not a scroll. */
 export const MAX_TEXT = 160;
@@ -60,6 +61,22 @@ export function onBotQuietRequest(handler: (on: boolean | null) => void): () => 
   const listener = (e: Event) => handler((e as CustomEvent<{ on: boolean | null }>).detail.on);
   window.addEventListener(QUIET, listener);
   return () => window.removeEventListener(QUIET, listener);
+}
+
+/**
+ * Triggers a tray action from outside the robot — the command palette uses
+ * this. Ids are the ones defined in tray.ts.
+ */
+export function botCommand(id: string): void {
+  if (typeof window === 'undefined') return;
+  window.dispatchEvent(new CustomEvent<{ id: string }>(COMMAND, { detail: { id } }));
+}
+
+export function onBotCommand(handler: (id: string) => void): () => void {
+  if (typeof window === 'undefined') return () => undefined;
+  const listener = (e: Event) => handler((e as CustomEvent<{ id: string }>).detail.id);
+  window.addEventListener(COMMAND, listener);
+  return () => window.removeEventListener(COMMAND, listener);
 }
 
 /** Fired by the robot so UI elsewhere (the command palette) can label itself. */

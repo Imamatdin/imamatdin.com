@@ -22,6 +22,14 @@ export type Priority = (typeof Priority)[keyof typeof Priority];
 export interface Line {
   text: string;
   mood: Mood;
+  /**
+   * ISO date after which the line stops being used. For anything that makes a
+   * time-bound claim ("shipping this month", "targeting X by mid-2026") so it
+   * retires itself instead of quietly going stale.
+   */
+  until?: string;
+  /** ISO date before which the line is not used. For seasonal lines. */
+  from?: string;
 }
 
 export interface Bubble {
@@ -30,12 +38,25 @@ export interface Bubble {
   priority: Priority;
 }
 
+/**
+ * Where the robot is standing. Phase 2 moves between these with a CSS
+ * transition; the movement engine replaces that with an actual walk without
+ * behaviors having to change.
+ */
+export type Pose = 'dock' | 'corner';
+
 export interface RobotState {
   mood: Mood;
   prop: Prop;
+  pose: Pose;
   asleep: boolean;
   quiet: boolean;
+  /** Sent to the corner by the visitor. Sulks, says nothing, stays put. */
+  dnd: boolean;
   hop: boolean;
+  /** Sideways shove, used by the tickle reaction. */
+  nudge: number;
+  trayOpen: boolean;
   bubble: Bubble;
   pupil: { x: number; y: number };
 }
@@ -59,7 +80,12 @@ export interface RobotApi {
   wake(): void;
   setProp(prop: Prop): void;
   setQuiet(on: boolean): void;
+  setPose(pose: Pose): void;
+  setDnd(on: boolean): void;
+  setTray(open: boolean): void;
   hop(): void;
+  /** Shove sideways by px, decays back to zero. */
+  nudge(px: number): void;
   getState(): Readonly<RobotState>;
 }
 
@@ -72,6 +98,10 @@ export interface RobotEvents {
   quiet: { on: boolean };
   idle: { ms: number };
   wake: Record<string, never>;
+  /** A tray entry was chosen. Payload is the entry id. */
+  tray: { id: string };
+  /** 0 at the top of the document, 1 when the bottom is on screen. */
+  scroll: { depth: number };
 }
 
 export type Unsubscribe = () => void;

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useReducer, useRef } from 'react';
 import type { MutableRefObject } from 'react';
 import { Priority } from './types';
-import type { EmoteStep, Line, Mood, Prop, RobotApi, RobotState, SpeakOptions } from './types';
+import type { EmoteStep, Line, Mood, Pose, Prop, RobotApi, RobotState, SpeakOptions } from './types';
 import { storage } from './storage';
 import { announceQuiet } from './bus';
 
@@ -9,12 +9,18 @@ const FADE_MS = 300;
 const DEFAULT_HOLD_MS = 6000;
 const HOP_MS = 700;
 
+const NUDGE_MS = 900;
+
 const initialState = (): RobotState => ({
   mood: 'neutral',
   prop: 'none',
+  pose: 'dock',
   asleep: false,
   quiet: false,
+  dnd: false,
   hop: false,
+  nudge: 0,
+  trayOpen: false,
   bubble: { text: '', visible: false, priority: Priority.Idle },
   pupil: { x: 0, y: 0 },
 });
@@ -25,7 +31,8 @@ export interface Brain {
   /** Provider-only. Not part of the behavior-facing surface. */
   internal: {
     setPupil(x: number, y: number): void;
-    hydrateQuiet(on: boolean): void;
+    /** Restore persisted state on mount without firing side effects. */
+    hydrate(patch: Partial<RobotState>): void;
   };
 }
 
@@ -102,7 +109,9 @@ export function useRobotBrain(): Brain {
       const state = stateRef.current;
 
       // Quiet mode silences the bubble entirely; the robot stays present.
+      // Do-not-disturb is stronger: only the visitor bringing it back speaks.
       if (state.quiet) return;
+      if (state.dnd && priority < Priority.User) return;
 
       // A sleeping robot doesn't recite facts. Anything more deliberate than
       // idle chatter wakes it first.
@@ -135,7 +144,16 @@ export function useRobotBrain(): Brain {
           bubble: { text: line.text, visible: true, priority },
           mood: line.mood,
         });
-        moodTimer.current = later(() => commit({ mood: 'neutral' }), holdMs);
+        // The bubble retires with the mood. Without this the last thing said
+        // stays on screen forever on any page where the robot then goes quiet.
+        moodTimer.current = later(
+          () =>
+            commit({
+              mood: 'neutral',
+              bubble: { ...stateRef.current.bubble, visible: false },
+            }),
+          holdMs
+        );
       }, FADE_MS);
     };
 
@@ -171,15 +189,30 @@ export function useRobotBrain(): Brain {
         sleep: () => commit({ asleep: true, mood: 'sleepy' }),
         setProp: (prop: Prop) => commit({ prop }),
         setQuiet,
+        setPose: (pose: Pose) => commit({ pose }),
+        setDnd: (on: boolean) => {
+          commit({
+            dnd: on,
+            pose: on ? 'corner' : 'dock',
+            mood: on ? 'sad' : 'happy',
+            trayOpen: false,
+          });
+          storage.setDnd(on);
+        },
+        setTray: (open: boolean) => commit({ trayOpen: open }),
         hop: () => {
           commit({ hop: true });
           later(() => commit({ hop: false }), HOP_MS);
+        },
+        nudge: (px: number) => {
+          commit({ nudge: px });
+          later(() => commit({ nudge: 0 }), NUDGE_MS);
         },
         getState: () => stateRef.current,
       },
       internal: {
         setPupil: (x: number, y: number) => commit({ pupil: { x, y } }),
-        hydrateQuiet: (on: boolean) => commit({ quiet: on }),
+        hydrate: (patch: Partial<RobotState>) => commit(patch),
       },
     };
   }, []);
