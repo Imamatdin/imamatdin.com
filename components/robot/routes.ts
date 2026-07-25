@@ -38,8 +38,8 @@ export const PROJECT_LINES: Record<string, Line[]> = {
   // and content/projects/radiative-cooling-control.mdx
   'radiative-cooling-control': [
     { text: '94.4% water savings in Seattle, ±0.5% across seeds. the variance is the part worth looking at.', mood: 'happy' },
-    { text: 'SAC took Seattle, TD3 took Houston at 70.8%. three climate zones, three seeds each.', mood: 'neutral' },
-    { text: 'forecasts bought 10.2 points in Seattle and nothing in the humid regions. that ablation is the interesting bit.', mood: 'thinking' },
+    { text: 'SAC took Seattle, TD3 took Houston at 70.8%. Phoenix, Houston, Seattle — three seeds each.', mood: 'neutral' },
+    { text: 'forecasts were worth +10.2 points in Seattle and −1.1 in Houston. that ablation is the interesting bit.', mood: 'thinking' },
     { text: 'the expansion runs Decision Transformers and Dreamer-style world models on 1.2 billion observations.', mood: 'thinking' },
     { text: 'the paper is on this page as a PDF. six pages. i have read it more times than anyone.', mood: 'wink' },
   ],

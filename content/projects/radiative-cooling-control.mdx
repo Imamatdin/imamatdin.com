@@ -1,9 +1,9 @@
 ---
 title: "Datacenter Cooling with Deep Reinforcement Learning"
-description: "RL agents for energy-efficient HVAC control. 94.4% water savings. Expanding to world models on 1.2B observations."
+description: "Deep RL for hybrid radiative-evaporative datacenter cooling. Up to 94.4% water savings across three US climate zones."
 date: "2024-01-01"
 status: "completed"
-tags: ["research", "reinforcement-learning", "datacenter", "cooling", "ddpg", "energy", "decision-transformers"]
+tags: ["research", "reinforcement-learning", "datacenter", "cooling", "sac", "td3", "ddpg", "energy"]
 links:
   - label: "Paper (PDF, preprint)"
     href: "/research/climate-adaptive-drl-radiative-cooling.pdf"
@@ -13,16 +13,34 @@ links:
     href: "https://medium.com/@imamatdinsultaniyazov/%EF%B8%8F-the-digital-dust-bowl-is-ais-thirst-for-power-and-water-creating-a-modern-aral-sea-a4619d626a21"
 ---
 
-Trained DDPG agents for datacenter cooling across multiple climate zones. 94.4% water
-savings in Seattle (+-0.5% variance across seeds), strong generalization to Phoenix,
-Chicago, and other climates. Sinergym simulation environment.
+Evaporative cooling towers are responsible for billions of litres of freshwater use a
+year. Radiative sky cooling is a water-free alternative for heat rejection, but its
+capacity depends on the weather, which makes it hard to control.
 
-Expanding into territory where no published work exists: Decision Transformers (offline
-RL) and Dreamer-style world models on the EnergyBench dataset (1.2 billion observations).
-Also developing carbon-aware cooling optimization and multi-agent coordination for
-datacenter clusters.
+A deep RL framework for adaptive control of hybrid radiative-evaporative cooling with
+thermal storage. DDPG, TD3 and SAC agents learn to jointly optimise radiative panel
+utilisation and storage dispatch from real-time weather. Evaluated on 1 MW datacenter
+simulations across three US climate zones — Phoenix, Houston and Seattle — using TMY3
+data with 3-seed validation.
 
-**Status:** Initial research complete, expansion in progress
+**Results**
+
+- SAC reaches 94.4% ± 0.5% water savings in Seattle
+- TD3 reaches 70.8% ± 4.3% in Houston
+- DDPG gets the highest electricity savings in Houston, at 10.8%
+- Every RL agent beats both fixed baselines and a rule-based heuristic given perfect forecasts
+
+The ablation is the more interesting result: forecast integration is worth +10.2
+percentage points in Seattle, +2.7 in Phoenix, and −1.1 in Houston. Forecasts help where
+the weather actually varies, and do nothing where it is consistently humid.
+
+Known limits: this is simulation, so there is a sim-to-real gap; there is no MPC baseline
+yet; the ablation assumes perfect forecasts; and 48-hour episodes may be too short to
+learn seasonal patterns.
+
+**Next:** Decision Transformers (offline RL) and Dreamer-style world models on the
+EnergyBench dataset (1.2 billion observations), plus carbon-aware optimisation and
+multi-agent coordination across datacenter clusters.
 
 **Stack:** Python, Sinergym, Stable-Baselines3, DDPG/SAC/TD3, PyTorch
 
