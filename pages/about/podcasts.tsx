@@ -1,4 +1,4 @@
-import { Container, Heading, Text, VStack, Link as ChakraLink, useColorModeValue } from "@chakra-ui/react";
+import { Container, Heading, Text, VStack, Link as ChakraLink } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 
 interface Podcast {
@@ -45,10 +45,6 @@ const podcasts: Podcast[] = [
 ];
 
 export default function Podcasts() {
-  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
-  const subtleColor = useColorModeValue('#666666', '#999999');
-  const accentColor = useColorModeValue('#0066cc', '#66b3ff');
-
   return (
     <>
       <NextSeo
@@ -58,11 +54,11 @@ export default function Podcasts() {
 
       <Container maxW="650px" py={4}>
         <VStack align="stretch" spacing={6}>
-          <Heading fontFamily="mono" fontSize="xl" color={textColor} mb={2}>
+          <Heading fontFamily="mono" fontSize="xl" color="text" mb={2}>
             Podcasts
           </Heading>
 
-          <Text fontFamily="mono" fontSize="14px" color={subtleColor} mb={2}>
+          <Text fontFamily="mono" fontSize="14px" color="subtle" mb={2}>
             Audio companions for long walks, gym sessions, and late-night coding. These shows have shaped how I think about technology, business, science, and life.
           </Text>
 
@@ -75,7 +71,7 @@ export default function Podcasts() {
                       fontFamily="mono"
                       fontSize="14px"
                       fontWeight="bold"
-                      color={accentColor}
+                      color="accent"
                       textDecoration="underline"
                       _hover={{ opacity: 0.7 }}
                     >
@@ -83,20 +79,20 @@ export default function Podcasts() {
                     </Text>
                   </ChakraLink>
                 ) : (
-                  <Text fontFamily="mono" fontSize="14px" fontWeight="bold" color={textColor}>
+                  <Text fontFamily="mono" fontSize="14px" fontWeight="bold" color="text">
                     {podcast.name}
                   </Text>
                 )}
-                <Text fontFamily="mono" fontSize="12px" color={subtleColor}>
+                <Text fontFamily="mono" fontSize="12px" color="subtle">
                   {podcast.host}
                 </Text>
 
-                <Text fontFamily="mono" fontSize="14px" lineHeight="1.8" color={textColor}>
+                <Text fontFamily="mono" fontSize="14px" lineHeight="1.8" color="text">
                   {podcast.description}
                 </Text>
 
                 {podcast.favoriteEpisode && (
-                  <Text fontFamily="mono" fontSize="12px" color={subtleColor} fontStyle="italic">
+                  <Text fontFamily="mono" fontSize="12px" color="subtle" fontStyle="italic">
                     Favorite episode: {podcast.favoriteEpisode}
                   </Text>
                 )}

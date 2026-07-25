@@ -5,8 +5,7 @@ import {
   Heading,
   Text,
   VStack,
-  Divider,
-  useColorModeValue
+  Divider
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Book, getAllBooks } from "../lib/books";
@@ -18,11 +17,6 @@ interface PageProps {
 }
 
 export default function Reading({ books, booksByCategory }: PageProps) {
-  const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
-  const subtleColor = useColorModeValue("#666666", "#999999");
-  const borderColor = useColorModeValue("rgba(0,0,0,0.1)", "rgba(255,255,255,0.1)");
-  const accentColor = useColorModeValue("#0066cc", "#66b3ff");
-
   const categories = Object.keys(booksByCategory);
 
   return (
@@ -35,10 +29,10 @@ export default function Reading({ books, booksByCategory }: PageProps) {
       <Container maxW="650px" py={4}>
         <VStack align="stretch" spacing={6}>
           <Box>
-            <Heading fontFamily="mono" size="lg" mb={2} color={textColor}>
+            <Heading fontFamily="mono" size="lg" mb={2} color="text">
               Library
             </Heading>
-            <Text fontFamily="mono" fontSize="14px" color={subtleColor}>
+            <Text fontFamily="mono" fontSize="14px" color="subtle">
               Books I've read.
             </Text>
           </Box>
@@ -47,13 +41,13 @@ export default function Reading({ books, booksByCategory }: PageProps) {
             categories.map((category, idx) => (
               <Box key={category}>
                 {idx > 0 && (
-                  <Divider borderColor={borderColor} mb={6} />
+                  <Divider borderColor="border" mb={6} />
                 )}
                 <VStack align="stretch" spacing={2}>
                   <Heading
                     fontFamily="mono"
                     fontSize="md"
-                    color={textColor}
+                    color="text"
                     mb={2}
                   >
                     {category}
@@ -68,13 +62,13 @@ export default function Reading({ books, booksByCategory }: PageProps) {
                         key={book.slug}
                         fontFamily="mono"
                         fontSize="14px"
-                        color={textColor}
+                        color="text"
                       >
                         <NextLink href={`/reading/${book.slug}`} passHref>
                           <Text
                             as="span"
                             fontWeight="bold"
-                            color={accentColor}
+                            color="accent"
                             textDecoration="underline"
                             _hover={{ opacity: 0.7 }}
                             cursor="pointer"
@@ -83,8 +77,8 @@ export default function Reading({ books, booksByCategory }: PageProps) {
                           </Text>
                         </NextLink>
                         {", "}
-                        <Text as="span" color={subtleColor}>{book.author}</Text>
-                        {year && <Text as="span" color={subtleColor}>, {year}</Text>}
+                        <Text as="span" color="subtle">{book.author}</Text>
+                        {year && <Text as="span" color="subtle">, {year}</Text>}
                       </Text>
                     );
                   })}
@@ -102,13 +96,13 @@ export default function Reading({ books, booksByCategory }: PageProps) {
                     key={book.slug}
                     fontFamily="mono"
                     fontSize="14px"
-                    color={textColor}
+                    color="text"
                   >
                     <NextLink href={`/reading/${book.slug}`} passHref>
                       <Text
                         as="span"
                         fontWeight="bold"
-                        color={accentColor}
+                        color="accent"
                         textDecoration="underline"
                         _hover={{ opacity: 0.7 }}
                         cursor="pointer"
@@ -117,8 +111,8 @@ export default function Reading({ books, booksByCategory }: PageProps) {
                       </Text>
                     </NextLink>
                     {", "}
-                    <Text as="span" color={subtleColor}>{book.author}</Text>
-                    {year && <Text as="span" color={subtleColor}>, {year}</Text>}
+                    <Text as="span" color="subtle">{book.author}</Text>
+                    {year && <Text as="span" color="subtle">, {year}</Text>}
                   </Text>
                 );
               })}

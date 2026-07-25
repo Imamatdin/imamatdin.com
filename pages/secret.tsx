@@ -1,18 +1,14 @@
 import { Box, Text, VStack, Container } from '@chakra-ui/react';
-import { useColorModeValue } from '@chakra-ui/react';
 
 export default function Secret() {
-  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
-  const subtleColor = useColorModeValue('#666666', '#999999');
-
   return (
     <Container maxW="72ch" py={16}>
       <VStack spacing={8} align="flex-start">
-        <Text fontFamily="mono" fontSize="14px" color={subtleColor}>
+        <Text fontFamily="mono" fontSize="14px" color="subtle">
           {'// You found the secret page'}
         </Text>
 
-        <Box fontFamily="mono" fontSize="14px" color={textColor} lineHeight="1.8">
+        <Box fontFamily="mono" fontSize="14px" color="text" lineHeight="1.8">
           <Text mb={6}>
             If you're here, you're probably someone who explores.
             Someone who looks under the hood. I like that.
@@ -25,14 +21,14 @@ export default function Secret() {
           <Box
             pl={4}
             borderLeft="2px solid"
-            borderColor={subtleColor}
+            borderColor="subtle"
             fontStyle="italic"
             mb={6}
           >
             <Text mb={4}>
               "The best way to predict the future is to create it."
             </Text>
-            <Text fontSize="12px" color={subtleColor}>
+            <Text fontSize="12px" color="subtle">
               - This isn't just a quote to me. It's a daily reminder.
             </Text>
           </Box>
@@ -55,12 +51,12 @@ export default function Secret() {
             talk about ideas, technology, or the future - reach out.
           </Text>
 
-          <Text color={subtleColor}>
+          <Text color="subtle">
             → imamatdinsultniyazov@gmail.com
           </Text>
         </Box>
 
-        <Text fontFamily="mono" fontSize="12px" color={subtleColor} mt={8}>
+        <Text fontFamily="mono" fontSize="12px" color="subtle" mt={8}>
           {'// Press [g h] to go home'}
         </Text>
       </VStack>

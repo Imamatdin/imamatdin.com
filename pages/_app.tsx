@@ -13,15 +13,17 @@ const config: ThemeConfig = {
   useSystemColorMode: false,
 };
 
-// Colors (Terminal / Monospace Palette)
+// Every token resolves to a CSS variable defined in styles/terminal.css, so
+// there is no _dark pair here — the variable itself carries the mode, and
+// konami mode overrides the same variables.
 const semanticTokens = {
   colors: {
-    background: { default: '#fafafa', _dark: '#0a0a0a' },
-    text: { default: '#1a1a1a', _dark: '#e0e0e0' },
-    accent: { default: '#0066cc', _dark: '#66b3ff' },
-    subtle: { default: '#666666', _dark: '#999999' },
-    border: { default: 'rgba(0, 0, 0, 0.1)', _dark: 'rgba(255, 255, 255, 0.1)' },
-    highlight: { default: 'rgba(0, 0, 0, 0.05)', _dark: 'rgba(255, 255, 255, 0.05)' },
+    background: 'var(--bg)',
+    text: 'var(--text)',
+    accent: 'var(--accent)',
+    subtle: 'var(--subtle)',
+    border: 'var(--border)',
+    highlight: 'var(--highlight)',
   },
 };
 

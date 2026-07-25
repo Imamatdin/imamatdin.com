@@ -5,7 +5,6 @@ import {
   VStack,
   Box,
   Container,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { getAllPostData, Post } from "../../lib/writing";
 import type { NextPageWithLayout } from "next";
@@ -17,9 +16,6 @@ interface WritingProps {
 }
 
 const Writing: NextPageWithLayout<WritingProps> = ({ posts }) => {
-  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
-  const subtleColor = useColorModeValue('#666666', '#999999');
-  const borderColor = useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)');
 
   return (
     <>
@@ -28,13 +24,13 @@ const Writing: NextPageWithLayout<WritingProps> = ({ posts }) => {
         <Heading
           fontFamily="mono"
           fontSize="xl"
-          color={textColor}
+          color="text"
           mb={2}
         >
           Writing
         </Heading>
 
-        <Text fontFamily="mono" fontSize="14px" color={subtleColor} mb={6}>
+        <Text fontFamily="mono" fontSize="14px" color="subtle" mb={6}>
           Essays and thoughts.
         </Text>
 
@@ -49,7 +45,7 @@ const Writing: NextPageWithLayout<WritingProps> = ({ posts }) => {
               <Box
                 py={3}
                 borderBottom="1px solid"
-                borderColor={borderColor}
+                borderColor="border"
                 transition="opacity 0.2s"
                 _hover={{ opacity: 0.7 }}
               >
@@ -57,7 +53,7 @@ const Writing: NextPageWithLayout<WritingProps> = ({ posts }) => {
                   fontFamily="mono"
                   fontSize="14px"
                   fontWeight="medium"
-                  color={textColor}
+                  color="text"
                   mb={1}
                 >
                   {post.title}
@@ -65,7 +61,7 @@ const Writing: NextPageWithLayout<WritingProps> = ({ posts }) => {
                 <Text
                   fontFamily="mono"
                   fontSize="12px"
-                  color={subtleColor}
+                  color="subtle"
                 >
                   {post.date}
                 </Text>

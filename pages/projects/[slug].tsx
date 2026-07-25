@@ -3,7 +3,6 @@ import {
   Text,
   Box,
   Container,
-  useColorModeValue,
   Link as ChakraLink,
   VStack,
 } from '@chakra-ui/react';
@@ -18,11 +17,6 @@ interface PageProps {
 }
 
 const ProjectDetailPage = ({ project }: PageProps) => {
-  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
-  const subtleColor = useColorModeValue('#666666', '#999999');
-  const borderColor = useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)');
-  const accentColor = useColorModeValue('#0066cc', '#66b3ff');
-  const codeBg = useColorModeValue('rgba(0,0,0,0.05)', 'rgba(255,255,255,0.05)');
 
   if (!project) {
     return <Text>Loading...</Text>;
@@ -51,10 +45,10 @@ const ProjectDetailPage = ({ project }: PageProps) => {
           <Text
             fontFamily="mono"
             fontSize="sm"
-            color={subtleColor}
+            color="subtle"
             mb={6}
             cursor="pointer"
-            _hover={{ color: textColor }}
+            _hover={{ color: "text" }}
             display="inline-block"
           >
             ← Back to Projects
@@ -66,14 +60,14 @@ const ProjectDetailPage = ({ project }: PageProps) => {
           as="h1"
           fontFamily="mono"
           fontSize="xl"
-          color={textColor}
+          color="text"
           mb={2}
         >
           {project.title}
         </Heading>
 
         {/* Date and status */}
-        <Text fontFamily="mono" fontSize="12px" color={subtleColor} mb={4}>
+        <Text fontFamily="mono" fontSize="12px" color="subtle" mb={4}>
           {formatDate(project.date)} • [{project.status}]
         </Text>
 
@@ -81,7 +75,7 @@ const ProjectDetailPage = ({ project }: PageProps) => {
         <Text
           fontFamily="mono"
           fontSize="14px"
-          color={subtleColor}
+          color="subtle"
           mb={6}
         >
           {project.description}
@@ -90,7 +84,7 @@ const ProjectDetailPage = ({ project }: PageProps) => {
         {/* Links */}
         {project.links && project.links.length > 0 && (
           <Box mb={6}>
-            <Text fontFamily="mono" fontSize="12px" color={subtleColor} mb={2}>
+            <Text fontFamily="mono" fontSize="12px" color="subtle" mb={2}>
               Links:
             </Text>
             <VStack align="flex-start" spacing={1}>
@@ -101,7 +95,7 @@ const ProjectDetailPage = ({ project }: PageProps) => {
                   isExternal
                   fontFamily="mono"
                   fontSize="14px"
-                  color={accentColor}
+                  color="accent"
                   textDecoration="underline"
                   _hover={{ opacity: 0.7 }}
                 >
@@ -114,7 +108,7 @@ const ProjectDetailPage = ({ project }: PageProps) => {
 
         {/* Tags */}
         {project.tags && project.tags.length > 0 && (
-          <Text fontFamily="mono" fontSize="12px" color={subtleColor} mb={6}>
+          <Text fontFamily="mono" fontSize="12px" color="subtle" mb={6}>
             Tags: {project.tags.join(', ')}
           </Text>
         )}
@@ -123,14 +117,14 @@ const ProjectDetailPage = ({ project }: PageProps) => {
         <Box
           fontFamily="mono"
           fontSize="14px"
-          color={textColor}
+          color="text"
           lineHeight="1.8"
           sx={{
             'h2': {
               fontFamily: 'mono',
               fontSize: 'md',
               fontWeight: 'bold',
-              color: textColor,
+              color: "text",
               mt: 6,
               mb: 3,
             },
@@ -138,7 +132,7 @@ const ProjectDetailPage = ({ project }: PageProps) => {
               fontFamily: 'mono',
               fontSize: 'md',
               fontWeight: 'bold',
-              color: textColor,
+              color: "text",
               mt: 4,
               mb: 2,
             },
@@ -154,11 +148,11 @@ const ProjectDetailPage = ({ project }: PageProps) => {
             },
             'code': {
               fontFamily: 'mono',
-              bg: codeBg,
+              bg: "highlight",
               px: 1,
             },
             'a': {
-              color: accentColor,
+              color: "accent",
               textDecoration: 'underline',
               _hover: { opacity: 0.7 }
             }

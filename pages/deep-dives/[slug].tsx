@@ -4,7 +4,6 @@ import {
   Text,
   Box,
   Container,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { GetStaticProps, GetStaticPaths } from 'next';
@@ -17,11 +16,6 @@ interface PageProps {
 }
 
 const DeepDiveDetailPage = ({ dive }: PageProps) => {
-  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
-  const subtleColor = useColorModeValue('#666666', '#999999');
-  const borderColor = useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)');
-  const accentColor = useColorModeValue('#0066cc', '#66b3ff');
-  const codeBg = useColorModeValue('rgba(0,0,0,0.05)', 'rgba(255,255,255,0.05)');
 
   if (!dive) {
     return <Text>Loading...</Text>;
@@ -50,10 +44,10 @@ const DeepDiveDetailPage = ({ dive }: PageProps) => {
           <Text
             fontFamily="mono"
             fontSize="sm"
-            color={subtleColor}
+            color="subtle"
             mb={6}
             cursor="pointer"
-            _hover={{ color: textColor }}
+            _hover={{ color: "text" }}
             display="inline-block"
           >
             ← Back to Deep Dives
@@ -65,14 +59,14 @@ const DeepDiveDetailPage = ({ dive }: PageProps) => {
           as="h1"
           fontFamily="mono"
           fontSize="xl"
-          color={textColor}
+          color="text"
           mb={2}
         >
           {dive.title}
         </Heading>
 
         {/* Date, category, and status */}
-        <Text fontFamily="mono" fontSize="12px" color={subtleColor} mb={4}>
+        <Text fontFamily="mono" fontSize="12px" color="subtle" mb={4}>
           {formatDate(dive.date)} • {dive.category} • [{dive.status}]
         </Text>
 
@@ -81,7 +75,7 @@ const DeepDiveDetailPage = ({ dive }: PageProps) => {
           fontFamily="mono"
           fontSize="14px"
           fontStyle="italic"
-          color={subtleColor}
+          color="subtle"
           lineHeight="1.8"
           mb={6}
         >
@@ -90,7 +84,7 @@ const DeepDiveDetailPage = ({ dive }: PageProps) => {
 
         {/* Tags */}
         {dive.tags && dive.tags.length > 0 && (
-          <Text fontFamily="mono" fontSize="12px" color={subtleColor} mb={6}>
+          <Text fontFamily="mono" fontSize="12px" color="subtle" mb={6}>
             Tags: {dive.tags.join(', ')}
           </Text>
         )}
@@ -99,14 +93,14 @@ const DeepDiveDetailPage = ({ dive }: PageProps) => {
         <Box
           fontFamily="mono"
           fontSize="14px"
-          color={textColor}
+          color="text"
           lineHeight="1.8"
           sx={{
             'h2': {
               fontFamily: 'mono',
               fontSize: 'md',
               fontWeight: 'bold',
-              color: textColor,
+              color: "text",
               mt: 6,
               mb: 3,
             },
@@ -114,7 +108,7 @@ const DeepDiveDetailPage = ({ dive }: PageProps) => {
               fontFamily: 'mono',
               fontSize: 'md',
               fontWeight: 'bold',
-              color: textColor,
+              color: "text",
               mt: 4,
               mb: 2,
             },
@@ -123,15 +117,15 @@ const DeepDiveDetailPage = ({ dive }: PageProps) => {
             },
             'blockquote': {
               borderLeft: '2px solid',
-              borderColor: borderColor,
+              "border": "border",
               fontStyle: 'italic',
               pl: 4,
               my: 4,
-              color: subtleColor,
+              color: "subtle",
             },
             'code': {
               fontFamily: 'mono',
-              bg: codeBg,
+              bg: "highlight",
               px: 1,
             },
             'ul, ol': {
@@ -142,7 +136,7 @@ const DeepDiveDetailPage = ({ dive }: PageProps) => {
               mb: 1,
             },
             'a': {
-              color: accentColor,
+              color: "accent",
               textDecoration: 'underline',
               _hover: { opacity: 0.7 }
             }

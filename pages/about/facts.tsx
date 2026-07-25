@@ -1,4 +1,4 @@
-import { Container, Heading, Text, VStack, useColorModeValue } from "@chakra-ui/react";
+import { Container, Heading, Text, VStack } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 
 interface Fact {
@@ -58,9 +58,6 @@ const facts: Fact[] = [
 ];
 
 export default function Facts() {
-  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
-  const subtleColor = useColorModeValue('#666666', '#999999');
-
   return (
     <>
       <NextSeo
@@ -70,11 +67,11 @@ export default function Facts() {
 
       <Container maxW="650px" py={4}>
         <VStack align="stretch" spacing={6}>
-          <Heading fontFamily="mono" fontSize="xl" color={textColor} mb={2}>
+          <Heading fontFamily="mono" fontSize="xl" color="text" mb={2}>
             Interesting Things
           </Heading>
 
-          <Text fontFamily="mono" fontSize="14px" color={subtleColor} mb={2}>
+          <Text fontFamily="mono" fontSize="14px" color="subtle" mb={2}>
             Random facts, preferences, and pieces of who I am that don't fit anywhere else.
           </Text>
 
@@ -84,12 +81,12 @@ export default function Facts() {
                 <Text
                   fontFamily="mono"
                   fontSize="14px"
-                  color={textColor}
+                  color="text"
                   fontWeight="bold"
                 >
                   {fact.category}
                 </Text>
-                <Text fontFamily="mono" fontSize="14px" lineHeight="1.8" color={subtleColor}>
+                <Text fontFamily="mono" fontSize="14px" lineHeight="1.8" color="subtle">
                   {fact.content}
                 </Text>
               </VStack>

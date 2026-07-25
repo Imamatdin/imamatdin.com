@@ -1,8 +1,6 @@
-import { Box, HStack, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, HStack, Text } from '@chakra-ui/react';
 
 export function KeyboardHint() {
-  const color = useColorModeValue('#666666', '#999999');
-
   return (
     <Box
       position="fixed"
@@ -13,7 +11,7 @@ export function KeyboardHint() {
       py={2}
       display={{ base: 'none', md: 'block' }}
     >
-      <HStack spacing={4} fontFamily="mono" fontSize="12px" color={color} opacity={0.6}>
+      <HStack spacing={4} fontFamily="mono" fontSize="12px" color="subtle" opacity={0.6}>
         <Text>[j] next</Text>
         <Text>[k] prev</Text>
         <Text>[Enter] open</Text>

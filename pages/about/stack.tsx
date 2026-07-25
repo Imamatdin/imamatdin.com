@@ -1,4 +1,4 @@
-import { Container, Heading, Text, VStack, useColorModeValue } from "@chakra-ui/react";
+import { Container, Heading, Text, VStack } from "@chakra-ui/react";
 import { NextSeo } from "next-seo";
 
 interface Tool {
@@ -73,9 +73,6 @@ const stack: Category[] = [
 ];
 
 export default function Stack() {
-  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
-  const subtleColor = useColorModeValue('#666666', '#999999');
-
   return (
     <>
       <NextSeo
@@ -87,13 +84,13 @@ export default function Stack() {
         <Heading
           fontFamily="mono"
           fontSize="xl"
-          color={textColor}
+          color="text"
           mb={2}
         >
           Stack
         </Heading>
 
-        <Text fontFamily="mono" fontSize="14px" color={subtleColor} mb={6}>
+        <Text fontFamily="mono" fontSize="14px" color="subtle" mb={6}>
           Tools shape how we think. Here's what I use.
         </Text>
 
@@ -104,7 +101,7 @@ export default function Stack() {
                 fontFamily="mono"
                 fontSize="14px"
                 fontWeight="bold"
-                color={textColor}
+                color="text"
               >
                 {category.title}
               </Text>
@@ -114,11 +111,11 @@ export default function Stack() {
                   key={tool.name}
                   fontFamily="mono"
                   fontSize="14px"
-                  color={textColor}
+                  color="text"
                 >
                   {tool.name}
                   {tool.note && (
-                    <Text as="span" color={subtleColor}>: {tool.note}</Text>
+                    <Text as="span" color="subtle">: {tool.note}</Text>
                   )}
                 </Text>
               ))}

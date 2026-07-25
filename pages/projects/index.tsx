@@ -4,7 +4,6 @@ import {
   Text,
   Container,
   Box,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { NextSeo } from 'next-seo';
@@ -16,9 +15,6 @@ interface PageProps {
 }
 
 const ProjectsPage = ({ projects }: PageProps) => {
-  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
-  const subtleColor = useColorModeValue('#666666', '#999999');
-  const borderColor = useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)');
 
   return (
     <>
@@ -31,7 +27,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
         <Heading
           fontFamily="mono"
           fontSize="xl"
-          color={textColor}
+          color="text"
           mb={2}
         >
           Projects
@@ -40,7 +36,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
         <Text
           fontFamily="mono"
           fontSize="14px"
-          color={subtleColor}
+          color="subtle"
           mb={6}
         >
           Things I've built or am currently building.
@@ -52,7 +48,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
               <Box
                 py={3}
                 borderBottom="1px solid"
-                borderColor={borderColor}
+                borderColor="border"
                 cursor="pointer"
                 transition="opacity 0.2s"
                 _hover={{ opacity: 0.7 }}
@@ -61,7 +57,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
                   fontFamily="mono"
                   fontSize="14px"
                   fontWeight="bold"
-                  color={textColor}
+                  color="text"
                   mb={1}
                 >
                   {project.title} [{project.status}]
@@ -69,7 +65,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
                 <Text
                   fontFamily="mono"
                   fontSize="14px"
-                  color={subtleColor}
+                  color="subtle"
                 >
                   {project.description}
                 </Text>
@@ -82,7 +78,7 @@ const ProjectsPage = ({ projects }: PageProps) => {
           <Text
             fontFamily="mono"
             fontSize="14px"
-            color={subtleColor}
+            color="subtle"
             textAlign="center"
             py={4}
           >

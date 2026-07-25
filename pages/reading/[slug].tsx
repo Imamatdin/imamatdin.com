@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { Box, Container, Heading, Text, VStack, Divider, Link as ChakraLink, useColorModeValue } from '@chakra-ui/react';
+import { Box, Container, Heading, Text, VStack, Divider, Link as ChakraLink } from '@chakra-ui/react';
 import { getAllBooks, getBookBySlug, Book } from '../../lib/books';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
@@ -12,11 +12,6 @@ interface BookPageProps {
 }
 
 export default function BookPage({ book, mdxSource }: BookPageProps) {
-  const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
-  const subtleColor = useColorModeValue("#666666", "#999999");
-  const borderColor = useColorModeValue("rgba(0,0,0,0.1)", "rgba(255,255,255,0.1)");
-  const accentColor = useColorModeValue("#0066cc", "#66b3ff");
-
   return (
     <>
       <NextSeo
@@ -33,17 +28,17 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
               fontSize="xl"
               fontWeight="bold"
               lineHeight="1.3"
-              color={textColor}
+              color="text"
             >
               {book.title}
             </Heading>
 
-            <Text fontFamily="mono" fontSize="14px" color={subtleColor}>
+            <Text fontFamily="mono" fontSize="14px" color="subtle">
               by {book.author}
             </Text>
 
             {book.date && (
-              <Text fontFamily="mono" fontSize="12px" color={subtleColor}>
+              <Text fontFamily="mono" fontSize="12px" color="subtle">
                 Read in {new Date(book.date).toLocaleDateString('en-US', {
                   month: 'long',
                   year: 'numeric'
@@ -52,30 +47,30 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
             )}
 
             {book.rating && (
-              <Text fontFamily="mono" fontSize="12px" color={subtleColor}>
+              <Text fontFamily="mono" fontSize="12px" color="subtle">
                 Rating: {book.rating}/10
               </Text>
             )}
 
             {book.category && (
-              <Text fontFamily="mono" fontSize="12px" color={subtleColor}>
+              <Text fontFamily="mono" fontSize="12px" color="subtle">
                 {Array.isArray(book.category) ? book.category.join(', ') : book.category}
               </Text>
             )}
           </VStack>
 
-          <Divider borderColor={borderColor} />
+          <Divider borderColor="border" />
 
           {/* Book Notes/Content */}
           <Box
             fontFamily="mono"
             fontSize="14px"
             lineHeight="1.8"
-            color={textColor}
+            color="text"
             sx={{
               '& h1, & h2, & h3': {
                 fontFamily: 'mono',
-                color: textColor,
+                color: "text",
                 mt: 6,
                 mb: 3
               },
@@ -87,19 +82,19 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
               '& li': { mb: 1 },
               '& blockquote': {
                 borderLeft: '2px solid',
-                borderColor: borderColor,
+                "border": "border",
                 pl: 4,
                 py: 1,
                 fontStyle: 'italic',
-                color: subtleColor
+                color: "subtle"
               },
               '& code': {
                 fontFamily: 'mono',
                 fontSize: 'sm',
-                color: textColor
+                color: "text"
               },
               '& a': {
-                color: accentColor,
+                color: "accent",
                 textDecoration: 'underline',
                 _hover: { opacity: 0.7 }
               }
@@ -109,13 +104,13 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
           </Box>
 
           {/* Back to Library Link */}
-          <Box pt={6} borderTop="1px solid" borderColor={borderColor}>
+          <Box pt={6} borderTop="1px solid" borderColor="border">
             <NextLink href="/reading" passHref legacyBehavior>
               <ChakraLink
                 fontFamily="mono"
                 fontSize="sm"
-                color={subtleColor}
-                _hover={{ color: textColor }}
+                color="subtle"
+                _hover={{ color: "text" }}
               >
                 ← Back to Library
               </ChakraLink>

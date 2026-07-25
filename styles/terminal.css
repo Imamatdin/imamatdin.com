@@ -1,22 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
 
+/* Flexoki (kepano/flexoki). These four color vars are the single source of
+   truth for the whole site — Chakra's semantic tokens in _app.tsx resolve to
+   them, so nothing below the theme layer should ever name a hex. */
 :root {
-  --bg: #fafafa;
-  --text: #1a1a1a;
-  --accent: #0066cc;
-  --subtle: #666666;
-  --border: rgba(0, 0, 0, 0.1);
-  --highlight: rgba(0, 0, 0, 0.05);
+  --bg: #FFFCF0;      /* paper */
+  --text: #100F0F;    /* black */
+  --accent: #205EA6;  /* blue-600 */
+  --subtle: #6F6E69;  /* base-600 */
+  --border: rgba(16, 15, 15, 0.1);
+  --highlight: #E6E4D9; /* base-100 */
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
+/* Chakra's color mode sets data-theme on <html>; .dark is kept as an alias. */
+html[data-theme='dark'],
 .dark {
-  --bg: #0a0a0a;
-  --text: #e0e0e0;
-  --accent: #66b3ff;
-  --subtle: #999999;
-  --border: rgba(255, 255, 255, 0.1);
-  --highlight: rgba(255, 255, 255, 0.05);
+  --bg: #100F0F;      /* black */
+  --text: #CECDC3;    /* base-200 */
+  --accent: #4385BE;  /* blue-400 */
+  --subtle: #878580;  /* base-500 */
+  --border: rgba(206, 205, 195, 0.1);
+  --highlight: #1C1B1A; /* base-950 */
 }
 
 body {
@@ -97,49 +102,26 @@ a, button, [role="button"], [tabindex] {
   }
 }
 
-/* Konami/Hacker Mode - Complete override */
+/* Konami/Hacker Mode — Flexoki green phosphor.
+   !important is load-bearing here: .konami-mode (0,1,0) loses on specificity
+   to html[data-theme='dark'] (0,1,1) without it. Overriding the vars is all
+   that's needed — every token downstream resolves through them. */
 .konami-mode {
-  --bg: #000000 !important;
-  --text: #00ff00 !important;
-  --accent: #00ff00 !important;
-  --subtle: #008800 !important;
-  --border: rgba(0, 255, 0, 0.3) !important;
-  --highlight: rgba(0, 255, 0, 0.1) !important;
+  --bg: #100F0F !important;      /* black */
+  --text: #A0AF54 !important;    /* green-300 */
+  --accent: #BEC97E !important;  /* green-200 */
+  --subtle: #66800B !important;  /* green-600 */
+  --border: rgba(160, 175, 84, 0.3) !important;
+  --highlight: rgba(160, 175, 84, 0.1) !important;
 }
 
-.konami-mode body,
-.konami-mode .chakra-container,
-.konami-mode [class*="chakra"] {
-  background-color: #000 !important;
-  color: #0f0 !important;
-}
-
-/* Force all text elements in konami mode */
-.konami-mode h1, .konami-mode h2, .konami-mode h3, .konami-mode h4, .konami-mode h5, .konami-mode h6,
-.konami-mode p, .konami-mode span, .konami-mode a,
-.konami-mode li, .konami-mode text, .konami-mode pre, .konami-mode code {
-  color: #00ff00 !important;
-}
-
-/* Links in konami mode */
 .konami-mode a {
-  color: #00ff00 !important;
   text-decoration: underline !important;
 }
 
-.konami-mode a:hover {
-  color: #88ff88 !important;
-}
-
-/* Logo icon in konami mode */
+/* Logo icon in konami mode — tuned to green-300 #A0AF54 */
 .konami-mode .logo-icon {
-  filter: invert(48%) sepia(99%) saturate(2000%) hue-rotate(85deg) brightness(118%) contrast(119%) !important;
-}
-
-/* Nav and borders in konami mode */
-.konami-mode nav,
-.konami-mode [class*="border"] {
-  border-color: rgba(0, 255, 0, 0.3) !important;
+  filter: invert(66%) sepia(24%) saturate(760%) hue-rotate(30deg) brightness(94%) contrast(88%) !important;
 }
 
 /* Keyboard shortcut hints */

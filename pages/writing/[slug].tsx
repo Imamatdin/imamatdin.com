@@ -5,7 +5,6 @@ import {
   Heading,
   Text,
   Container,
-  useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import Layout from "../../components/Layout";
@@ -19,11 +18,6 @@ interface PostProps {
 }
 
 const Post: NextPageWithLayout<PostProps> = ({ post }) => {
-  const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
-  const subtleColor = useColorModeValue("#666666", "#999999");
-  const borderColor = useColorModeValue("rgba(0,0,0,0.1)", "rgba(255,255,255,0.1)");
-  const accentColor = useColorModeValue("#0066cc", "#66b3ff");
-  const codeBg = useColorModeValue("rgba(0,0,0,0.05)", "rgba(255,255,255,0.05)");
 
   return (
     <>
@@ -43,7 +37,7 @@ const Post: NextPageWithLayout<PostProps> = ({ post }) => {
             <Heading
               fontFamily="mono"
               fontSize={{ base: "xl", md: "2xl" }}
-              color={textColor}
+              color="text"
               fontWeight="700"
               lineHeight="1.3"
               mb={2}
@@ -52,19 +46,19 @@ const Post: NextPageWithLayout<PostProps> = ({ post }) => {
             </Heading>
 
             {post.metadata.date && (
-              <Text fontFamily="mono" fontSize="sm" color={subtleColor}>
+              <Text fontFamily="mono" fontSize="sm" color="subtle">
                 {post.metadata.date}
               </Text>
             )}
           </Box>
 
           {/* Divider */}
-          <Box h="1px" bg={borderColor} w="100%" />
+          <Box h="1px" bg="border" w="100%" />
 
           {/* Content */}
           <Box
             fontFamily="mono"
-            color={textColor}
+            color="text"
             lineHeight="1.8"
             fontSize={{ base: "14px", md: "14px" }}
             sx={{
@@ -85,22 +79,22 @@ const Post: NextPageWithLayout<PostProps> = ({ post }) => {
               },
               '& blockquote': {
                 borderLeft: '2px solid',
-                borderColor: borderColor,
+                "border": "border",
                 pl: 4,
                 ml: 0,
                 fontStyle: 'italic',
-                color: subtleColor,
+                color: "subtle",
                 my: 4,
               },
               '& code': {
                 fontFamily: 'mono',
-                bg: codeBg,
+                bg: "highlight",
                 px: 1.5,
                 py: 0.5,
                 fontSize: '0.9em',
               },
               '& pre': {
-                bg: codeBg,
+                bg: "highlight",
                 p: 4,
                 overflow: 'auto',
                 my: 4,
@@ -110,7 +104,7 @@ const Post: NextPageWithLayout<PostProps> = ({ post }) => {
                 }
               },
               '& a': {
-                color: accentColor,
+                color: "accent",
                 textDecoration: 'underline',
                 _hover: { opacity: 0.7 }
               },
@@ -123,7 +117,7 @@ const Post: NextPageWithLayout<PostProps> = ({ post }) => {
               '& hr': {
                 border: 'none',
                 h: '1px',
-                bg: borderColor,
+                bg: "border",
                 my: 8,
               },
             }}
@@ -132,14 +126,14 @@ const Post: NextPageWithLayout<PostProps> = ({ post }) => {
           </Box>
 
           {/* Back link */}
-          <Box pt={6} borderTop="1px solid" borderColor={borderColor}>
+          <Box pt={6} borderTop="1px solid" borderColor="border">
             <NextLink href="/writing" passHref>
               <Text
                 as="a"
                 fontFamily="mono"
                 fontSize="sm"
-                color={subtleColor}
-                _hover={{ color: textColor }}
+                color="subtle"
+                _hover={{ color: "text" }}
                 cursor="pointer"
               >
                 ← back to writing

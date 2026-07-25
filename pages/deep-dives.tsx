@@ -4,7 +4,6 @@ import {
   Text,
   Container,
   Box,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { NextSeo } from 'next-seo';
@@ -16,9 +15,6 @@ interface PageProps {
 }
 
 const DeepDivesListPage = ({ dives }: PageProps) => {
-  const textColor = useColorModeValue('#1a1a1a', '#e0e0e0');
-  const subtleColor = useColorModeValue('#666666', '#999999');
-  const borderColor = useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)');
 
   return (
     <>
@@ -31,7 +27,7 @@ const DeepDivesListPage = ({ dives }: PageProps) => {
         <Heading
           fontFamily="mono"
           fontSize="xl"
-          color={textColor}
+          color="text"
           mb={2}
         >
           Deep Dives
@@ -40,7 +36,7 @@ const DeepDivesListPage = ({ dives }: PageProps) => {
         <Text
           fontFamily="mono"
           fontSize="14px"
-          color={subtleColor}
+          color="subtle"
           mb={6}
         >
           Independent research proposals exploring the intersection of history, engineering, and cognition.
@@ -52,7 +48,7 @@ const DeepDivesListPage = ({ dives }: PageProps) => {
               <Box
                 py={3}
                 borderBottom="1px solid"
-                borderColor={borderColor}
+                borderColor="border"
                 cursor="pointer"
                 transition="opacity 0.2s"
                 _hover={{ opacity: 0.7 }}
@@ -61,7 +57,7 @@ const DeepDivesListPage = ({ dives }: PageProps) => {
                   fontFamily="mono"
                   fontSize="14px"
                   fontWeight="bold"
-                  color={textColor}
+                  color="text"
                   mb={1}
                 >
                   {dive.title} [{dive.status}]
@@ -69,7 +65,7 @@ const DeepDivesListPage = ({ dives }: PageProps) => {
                 <Text
                   fontFamily="mono"
                   fontSize="14px"
-                  color={subtleColor}
+                  color="subtle"
                 >
                   {dive.question}
                 </Text>

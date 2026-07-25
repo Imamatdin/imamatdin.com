@@ -27,8 +27,6 @@ import { SiSubstack } from "react-icons/si";
 function NavLink({ href, children, shortcut }: { href: string; children: string; shortcut?: string }) {
   const router = useRouter();
   const isActive = router.asPath === href || router.asPath.startsWith(href + '/');
-  const activeColor = useColorModeValue("#1a1a1a", "#e0e0e0");
-  const inactiveColor = useColorModeValue("#666666", "#999999");
 
   return (
     <NextLink href={href} passHref>
@@ -37,12 +35,12 @@ function NavLink({ href, children, shortcut }: { href: string; children: string;
           as="span"
           fontFamily="mono"
           fontWeight={isActive ? "bold" : 400}
-          color={isActive ? activeColor : inactiveColor}
+          color={isActive ? "text" : "subtle"}
           fontSize="14px"
           cursor="pointer"
           transition="all 0.2s"
           _hover={{
-            color: activeColor,
+            color: "text",
           }}
         >
           {children}
@@ -52,7 +50,7 @@ function NavLink({ href, children, shortcut }: { href: string; children: string;
             as="span"
             fontFamily="mono"
             fontSize="11px"
-            color={inactiveColor}
+            color="subtle"
             opacity={0.5}
             display={{ base: "none", md: "inline" }}
           >
@@ -66,7 +64,6 @@ function NavLink({ href, children, shortcut }: { href: string; children: string;
 
 // Logo with icon and name
 function Logo() {
-  const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
   const iconFilter = useColorModeValue("none", "invert(1)");
 
   return (
@@ -84,7 +81,7 @@ function Logo() {
           fontFamily="mono"
           fontWeight="bold"
           fontSize="14px"
-          color={textColor}
+          color="text"
         >
           Imamatdin
         </Text>
@@ -94,10 +91,6 @@ function Logo() {
 }
 
 function Layout({ children }: PropsWithChildren) {
-  const borderColor = useColorModeValue("rgba(0, 0, 0, 0.1)", "rgba(255, 255, 255, 0.1)");
-  const textColor = useColorModeValue("#1a1a1a", "#e0e0e0");
-  const subtleColor = useColorModeValue("#666666", "#999999");
-
   return (
     <Container maxW="72ch" centerContent>
       {/* Header: Logo + Now + Theme Toggle */}
@@ -120,7 +113,7 @@ function Layout({ children }: PropsWithChildren) {
       <Box
         width="100%"
         borderBottom="1px solid"
-        borderColor={borderColor}
+        borderColor="border"
       />
 
       {/* Navigation below divider */}
@@ -149,7 +142,7 @@ function Layout({ children }: PropsWithChildren) {
         py={6}
         spacing={3}
         borderTop="1px solid"
-        borderColor={borderColor}
+        borderColor="border"
         align="center"
       >
         {/* Social Icons */}
@@ -158,8 +151,8 @@ function Layout({ children }: PropsWithChildren) {
             <Icon
               as={FaXTwitter}
               boxSize={4}
-              color={subtleColor}
-              _hover={{ color: textColor }}
+              color="subtle"
+              _hover={{ color: "text" }}
               transition="color 0.2s"
             />
           </ChakraLink>
@@ -167,8 +160,8 @@ function Layout({ children }: PropsWithChildren) {
             <Icon
               as={SiSubstack}
               boxSize={4}
-              color={subtleColor}
-              _hover={{ color: textColor }}
+              color="subtle"
+              _hover={{ color: "text" }}
               transition="color 0.2s"
             />
           </ChakraLink>
@@ -176,8 +169,8 @@ function Layout({ children }: PropsWithChildren) {
             <Icon
               as={FaLinkedin}
               boxSize={4}
-              color={subtleColor}
-              _hover={{ color: textColor }}
+              color="subtle"
+              _hover={{ color: "text" }}
               transition="color 0.2s"
             />
           </ChakraLink>
@@ -185,8 +178,8 @@ function Layout({ children }: PropsWithChildren) {
             <Icon
               as={FaTelegram}
               boxSize={4}
-              color={subtleColor}
-              _hover={{ color: textColor }}
+              color="subtle"
+              _hover={{ color: "text" }}
               transition="color 0.2s"
             />
           </ChakraLink>
@@ -194,8 +187,8 @@ function Layout({ children }: PropsWithChildren) {
             <Icon
               as={FaGithub}
               boxSize={4}
-              color={subtleColor}
-              _hover={{ color: textColor }}
+              color="subtle"
+              _hover={{ color: "text" }}
               transition="color 0.2s"
             />
           </ChakraLink>
@@ -203,14 +196,14 @@ function Layout({ children }: PropsWithChildren) {
             <Icon
               as={FaEnvelope}
               boxSize={4}
-              color={subtleColor}
-              _hover={{ color: textColor }}
+              color="subtle"
+              _hover={{ color: "text" }}
               transition="color 0.2s"
             />
           </ChakraLink>
         </HStack>
 
-        <Text fontFamily="mono" fontSize="12px" color={subtleColor}>
+        <Text fontFamily="mono" fontSize="12px" color="subtle">
           {new Date().getFullYear()} Imamatdin Sultaniyazov
         </Text>
       </VStack>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
+import { useColorMode } from '@chakra-ui/react';
 
 interface Command {
   id: string;
@@ -14,6 +15,7 @@ export function CommandPalette() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const { toggleColorMode } = useColorMode();
 
   const commands: Command[] = [
     { id: 'home', name: 'Home', shortcut: 'g h', action: () => router.push('/') },
@@ -22,10 +24,7 @@ export function CommandPalette() {
     { id: 'projects', name: 'Projects', shortcut: 'g p', action: () => router.push('/projects') },
     { id: 'deep-dives', name: 'Deep Dives', shortcut: 'g d', action: () => router.push('/deep-dives') },
     { id: 'now', name: 'Now', shortcut: 'g n', action: () => router.push('/now') },
-    { id: 'theme', name: 'Toggle Theme', shortcut: 't', action: () => {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-    }},
+    { id: 'theme', name: 'Toggle Theme', shortcut: 't', action: toggleColorMode },
   ];
 
   // Fuzzy search
