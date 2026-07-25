@@ -1,10 +1,4 @@
-import {
-  VStack,
-  Heading,
-  Text,
-  Container,
-  Box,
-} from '@chakra-ui/react';
+import { VStack, HStack, Heading, Text, Container, Box, Link as ChakraLink } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { NextSeo } from 'next-seo';
 import { GetStaticProps } from 'next';
@@ -14,95 +8,97 @@ interface PageProps {
   projects: Project[];
 }
 
-const ProjectsPage = ({ projects }: PageProps) => {
+/**
+ * Hand-ordered rather than sorted by date — this is the order he wants people
+ * to read them in. Anything not listed falls to the bottom, newest first.
+ */
+const ORDER = [
+  'radiative-cooling-control',
+  'sentinel',
+  'thermotouch',
+  'buildcored',
+  'flowcored',
+  'agentic-os',
+  'aral-basin-platform',
+];
 
-  return (
-    <>
-      <NextSeo
-        title="Projects | Imamatdin"
-        description="A collection of inventions and constructions."
-      />
+const ProjectsPage = ({ projects }: PageProps) => (
+  <>
+    <NextSeo
+      title="Projects | Imamatdin"
+      description="Things I've built or am currently building."
+    />
 
-      <Container maxW="650px" py={4}>
-        <Heading
-          fontFamily="mono"
-          fontSize="xl"
-          color="text"
-          mb={2}
-        >
-          Projects
-        </Heading>
+    <Container maxW="650px" py={4}>
+      <Heading fontFamily="mono" fontSize="xl" color="text" mb={2}>
+        Projects
+      </Heading>
 
-        <Text
-          fontFamily="mono"
-          fontSize="14px"
-          color="subtle"
-          mb={6}
-        >
-          Things I've built or am currently building.
-        </Text>
+      <Text fontFamily="mono" fontSize="14px" color="subtle" mb={8}>
+        Things I&apos;ve built or am currently building.
+      </Text>
 
-        <VStack align="stretch" spacing={4}>
-          {projects.map((project) => (
-            <NextLink href={`/projects/${project.slug}`} key={project.slug}>
-              <Box
-                py={3}
-                borderBottom="1px solid"
-                borderColor="border"
+      <VStack align="stretch" spacing={7}>
+        {projects.map((project) => (
+          <Box key={project.slug}>
+            <NextLink href={`/projects/${project.slug}`}>
+              <Text
+                as="div"
+                fontFamily="mono"
+                fontSize="14px"
+                fontWeight="bold"
+                color="accent"
+                textDecoration="underline"
                 cursor="pointer"
-                transition="opacity 0.2s"
-                // The whole card is an anchor, so the underline has to be
-                // switched off here and put back on the title alone.
-                textDecoration="none"
                 _hover={{ opacity: 0.7 }}
               >
-                <Text
-                  fontFamily="mono"
-                  fontSize="14px"
-                  fontWeight="bold"
-                  color="text"
-                  textDecoration="underline"
-                  mb={1}
-                >
-                  {project.title}
-                </Text>
-                <Text
-                  fontFamily="mono"
-                  fontSize="14px"
-                  color="subtle"
-                  textDecoration="none"
-                >
-                  {project.description}
-                </Text>
-              </Box>
+                {project.title}
+              </Text>
             </NextLink>
-          ))}
-        </VStack>
 
-        {projects.length === 0 && (
-          <Text
-            fontFamily="mono"
-            fontSize="14px"
-            color="subtle"
-            textAlign="center"
-            py={4}
-          >
-            More projects coming soon...
-          </Text>
-        )}
-      </Container>
-    </>
-  );
-};
+            <Text as="div" fontFamily="mono" fontSize="14px" color="subtle" lineHeight="1.7" mt={1}>
+              {project.description}
+            </Text>
+
+            {project.links && project.links.length > 0 && (
+              <HStack as="div" spacing={3} mt={2} flexWrap="wrap">
+                {project.links.map((link) => (
+                  <ChakraLink
+                    key={link.href}
+                    href={link.href}
+                    isExternal={link.href.startsWith('http')}
+                    fontFamily="mono"
+                    fontSize="12px"
+                    color="subtle"
+                    textDecoration="underline"
+                    _hover={{ color: 'accent' }}
+                  >
+                    {link.label.toLowerCase()}
+                  </ChakraLink>
+                ))}
+              </HStack>
+            )}
+          </Box>
+        ))}
+      </VStack>
+    </Container>
+  </>
+);
 
 export const getStaticProps: GetStaticProps<PageProps> = async () => {
-  const projects = getProjects();
-
-  return {
-    props: {
-      projects,
-    },
+  const rank = (slug: string) => {
+    const i = ORDER.indexOf(slug);
+    return i === -1 ? ORDER.length : i;
   };
+
+  const projects = getProjects().sort((a, b) => {
+    const byOrder = rank(a.slug) - rank(b.slug);
+    if (byOrder !== 0) return byOrder;
+    // Unlisted projects keep their newest-first ordering.
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+
+  return { props: { projects } };
 };
 
 export default ProjectsPage;

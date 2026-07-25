@@ -106,8 +106,8 @@ export const ROUTES: RouteEntry[] = [
     // src: content/projects/*.mdx
     lines: [
       { text: 'everything he has built or is building. hover one and i will tell you what it does.', mood: 'happy' },
-      { text: 'the cooling one has the cleanest numbers. the Aral one has the biggest stakes.', mood: 'neutral' },
-      { text: 'the status tag on each is honest — some of these are genuinely unfinished.', mood: 'wink' },
+      { text: 'the cooling one has the cleanest numbers, and a paper you can actually read.', mood: 'neutral' },
+      { text: 'this order is deliberate, not chronological. the first one is first for a reason.', mood: 'wink' },
     ],
   },
   {
