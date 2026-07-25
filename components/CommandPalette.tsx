@@ -29,11 +29,12 @@ export function CommandPalette() {
   }, [isOpen]);
 
   const commands: Command[] = [
+    // Same order as the nav.
     { id: 'home', name: 'Home', shortcut: 'g h', action: () => router.push('/') },
-    { id: 'reading', name: 'Reading', shortcut: 'g r', action: () => router.push('/reading') },
-    { id: 'writing', name: 'Writing', shortcut: 'g w', action: () => router.push('/writing') },
     { id: 'projects', name: 'Projects', shortcut: 'g p', action: () => router.push('/projects') },
+    { id: 'reading', name: 'Library', shortcut: 'g r', action: () => router.push('/reading') },
     { id: 'deep-dives', name: 'Deep Dives', shortcut: 'g d', action: () => router.push('/deep-dives') },
+    { id: 'writing', name: 'Writing', shortcut: 'g w', action: () => router.push('/writing') },
     { id: 'now', name: 'Now', shortcut: 'g n', action: () => router.push('/now') },
     { id: 'theme', name: 'Toggle Theme', shortcut: 't', action: toggleColorMode },
     {
