@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
+import dynamic from "next/dynamic";
 import { ThemeToggleButton } from "./ThemeToggleButton";
 import NextLink from "next/link";
 import {
@@ -22,6 +23,9 @@ import {
   FaEnvelope,
 } from "react-icons/fa6";
 import { SiSubstack } from "react-icons/si";
+
+// Touches window on mount and has no meaningful server render.
+const RobotCompanion = dynamic(() => import("./robot/RobotCompanion"), { ssr: false });
 
 // NavLink with terminal styling and keyboard hint
 function NavLink({ href, children, shortcut }: { href: string; children: string; shortcut?: string }) {
@@ -207,6 +211,8 @@ function Layout({ children }: PropsWithChildren) {
           {new Date().getFullYear()} Imamatdin Sultaniyazov
         </Text>
       </VStack>
+
+      <RobotCompanion />
     </Container>
   );
 }
