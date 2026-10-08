@@ -108,7 +108,6 @@ function Layout({ children }: PropsWithChildren) {
         <Logo />
         <Spacer />
         <HStack spacing={3}>
-          <NavLink href="/now" shortcut="g n">now</NavLink>
           <ThemeToggleButton />
         </HStack>
       </Box>
@@ -130,9 +129,9 @@ function Layout({ children }: PropsWithChildren) {
       >
         <HStack spacing={{ base: 4, md: 6 }} justify="center" flexWrap="wrap">
           <NavLink href="/projects" shortcut="g p">projects</NavLink>
-          <NavLink href="/reading" shortcut="g r">library</NavLink>
-          <NavLink href="/deep-dives" shortcut="g d">deep-dives</NavLink>
+          <NavLink href="/library" shortcut="g l">library</NavLink>
           <NavLink href="/writing" shortcut="g w">writing</NavLink>
+          <NavLink href="/about" shortcut="g a">about</NavLink>
         </HStack>
       </Box>
 

@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { useColorMode } from '@chakra-ui/react';
 import { botCommand, botSetQuiet, onQuietChanged } from './robot/bus';
 
 interface Command {
@@ -16,7 +15,6 @@ export function CommandPalette() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  const { toggleColorMode } = useColorMode();
   const [robotQuiet, setRobotQuiet] = useState(false);
   const [konamiActive, setKonamiActive] = useState(false);
 
@@ -32,11 +30,11 @@ export function CommandPalette() {
     // Same order as the nav.
     { id: 'home', name: 'Home', shortcut: 'g h', action: () => router.push('/') },
     { id: 'projects', name: 'Projects', shortcut: 'g p', action: () => router.push('/projects') },
-    { id: 'reading', name: 'Library', shortcut: 'g r', action: () => router.push('/reading') },
-    { id: 'deep-dives', name: 'Deep Dives', shortcut: 'g d', action: () => router.push('/deep-dives') },
+    { id: 'library', name: 'Library', shortcut: 'g l', action: () => router.push('/library') },
     { id: 'writing', name: 'Writing', shortcut: 'g w', action: () => router.push('/writing') },
-    { id: 'now', name: 'Now', shortcut: 'g n', action: () => router.push('/now') },
-    { id: 'theme', name: 'Toggle Theme', shortcut: 't', action: toggleColorMode },
+    { id: 'about', name: 'About', shortcut: 'g a', action: () => router.push('/about') },
+    // Handled by ThemeToggleButton, which owns the three site modes.
+    { id: 'theme', name: 'Cycle Colour Mode', shortcut: 't', action: () => window.dispatchEvent(new Event('site-mode:cycle')) },
     {
       id: 'robot-talk',
       name: 'Talk to Robot',
@@ -110,8 +108,8 @@ export function CommandPalette() {
       if (!isOpen && e.key === 'g') {
         const handleSecondKey = (e2: KeyboardEvent) => {
           const shortcutMap: Record<string, string> = {
-            'h': '/', 'r': '/reading', 'w': '/writing',
-            'p': '/projects', 'd': '/deep-dives', 'n': '/now'
+            'h': '/', 'l': '/library', 'w': '/writing',
+            'p': '/projects', 'a': '/about'
           };
           if (shortcutMap[e2.key]) {
             e2.preventDefault();

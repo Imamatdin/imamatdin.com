@@ -5,6 +5,8 @@ import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import { NextSeo } from 'next-seo';
 import NextLink from 'next/link';
+import { Eyebrow } from '../../components/Eyebrow';
+import { shelfFor } from '../../lib/shelves';
 
 interface BookPageProps {
   book: Book;
@@ -15,12 +17,22 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
   return (
     <>
       <NextSeo
-        title={`${book.title} | Reading`}
+        title={`${book.title} | Library`}
         description={`My notes and reflections on ${book.title} by ${book.author}`}
       />
 
       <Container maxW="650px" py={4}>
         <VStack align="stretch" spacing={6}>
+          <Box>
+            <Eyebrow mb={3}>
+              <NextLink href="/library" className="ink-link">
+                library
+              </NextLink>{' '}
+              / bay {shelfFor(book.category).numeral} — {shelfFor(book.category).label}
+            </Eyebrow>
+            <Box height="4px" width="56px" bg={shelfFor(book.category).hue} />
+          </Box>
+
           {/* Book Header */}
           <VStack align="flex-start" spacing={2}>
             <Heading
@@ -91,7 +103,7 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
 
           {/* Back to Library Link */}
           <Box pt={6} borderTop="1px solid" borderColor="border">
-            <NextLink href="/reading" passHref legacyBehavior>
+            <NextLink href="/library" passHref legacyBehavior>
               <ChakraLink
                 fontFamily="mono"
                 fontSize="sm"

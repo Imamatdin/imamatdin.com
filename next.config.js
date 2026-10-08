@@ -15,16 +15,14 @@ const withMDX = require("@next/mdx")({
 module.exports = withMDX({
   async redirects() {
     return [
-      {
-        source: "/books/:slug*",
-        destination: "/reading/:slug*",
-        permanent: true,
-      },
-      {
-        source: "/about",
-        destination: "/",
-        permanent: true,
-      },
+      { source: "/books/:slug*", destination: "/library/:slug*", permanent: true },
+      { source: "/reading/:slug*", destination: "/library/:slug*", permanent: true },
+      { source: "/deep-dives/:slug*", destination: "/writing#questions", permanent: true },
+      { source: "/about/facts", destination: "/about#facts", permanent: true },
+      { source: "/about/stack", destination: "/about#stack", permanent: true },
+      { source: "/about/podcasts", destination: "/about#podcasts", permanent: true },
+      { source: "/about/:rest+", destination: "/about", permanent: true },
+      { source: "/now", destination: "/", permanent: false },
     ];
   },
   // Append the default value with md extensions

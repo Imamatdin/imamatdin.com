@@ -1,18 +1,9 @@
-import { Box, Text, TextProps } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { PropsWithChildren } from 'react';
+import { Eyebrow } from '../Eyebrow';
 
-export const Eyebrow = (props: TextProps) => (
-  <Text
-    as="div"
-    fontFamily="mono"
-    fontSize="11px"
-    textTransform="uppercase"
-    letterSpacing="0.071em"
-    color="subtle"
-    {...props}
-  />
-);
+export { Eyebrow };
 
 export function ExperimentShell({ trail, children }: PropsWithChildren<{ trail?: string }>) {
   return (

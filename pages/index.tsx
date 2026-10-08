@@ -46,23 +46,14 @@ export default function Home() {
       </Text>
 
       <Text color="subtle" lineHeight="1.8">
-        What I&apos;m on right now is under{' '}
-        <Link as={NextLink} href="/now" color="accent">now</Link>
-        {'. Things I’ve built are under '}
+        Things I&apos;ve built are under{' '}
         <Link as={NextLink} href="/projects" color="accent">projects</Link>
+        {', books under '}
+        <Link as={NextLink} href="/library" color="accent">library</Link>
+        {', and the rest of me under '}
+        <Link as={NextLink} href="/about" color="accent">about</Link>
         {'.'}
       </Text>
-
-      <Box>
-        <Text color="subtle" fontSize="12px">
-          Also:{' '}
-          <Link as={NextLink} href="/about/ideas" color="accent">ideas</Link>
-          {', '}
-          <Link as={NextLink} href="/about/stack" color="accent">stack</Link>
-          {', '}
-          <Link as={NextLink} href="/about/facts" color="accent">facts</Link>
-        </Text>
-      </Box>
     </VStack>
   );
 }

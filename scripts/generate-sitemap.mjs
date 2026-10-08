@@ -22,22 +22,10 @@ function getAllWritingSlugs() {
   return data.filter((item) => !item.external).map((item) => item.url);
 }
 
-function getAllEngineeringSlugs() {
-  const data = JSON.parse(
-    fs.readFileSync(
-      path.join(process.cwd(), "content", "engineering", "index.json"),
-      "utf8"
-    )
-  );
-
-  return data.filter((item) => !item.external).map((item) => item.url);
-}
-
 async function main() {
   const bookSlugs = getAllBookSlugs();
   const writingSlugs = getAllWritingSlugs();
-  const engineeringSlugs = getAllEngineeringSlugs();
-  const allSlugs = [...bookSlugs, ...writingSlugs, ...engineeringSlugs];
+  const allSlugs = [...bookSlugs, ...writingSlugs];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -48,10 +36,13 @@ async function main() {
     <loc>https://imamatdin.com/writing</loc>
   </url>
   <url>
-    <loc>https://imamatdin.com/reading</loc>
+    <loc>https://imamatdin.com/projects</loc>
   </url>
   <url>
-    <loc>https://imamatdin.com/deep-dives</loc>
+    <loc>https://imamatdin.com/library</loc>
+  </url>
+  <url>
+    <loc>https://imamatdin.com/about</loc>
   </url>${allSlugs
     .map((slug) => {
       return `

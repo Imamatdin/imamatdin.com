@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Project, getProjects } from '../../lib/projects';
 import { AsciiCanvas } from '../../components/experiments/AsciiCanvas';
 import { AsciiFilm } from '../../components/experiments/AsciiFilm';
-import { Eyebrow } from '../../components/experiments/ExperimentShell';
+import { Eyebrow } from '../../components/Eyebrow';
 import { Scene, field } from '../../components/experiments/scenes';
 import {
   DIAGRAMS,

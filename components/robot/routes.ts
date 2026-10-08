@@ -29,8 +29,7 @@ export interface RouteEntry {
 }
 
 /* ------------------------------------------------------------------ *
- * Per-item lines, keyed by slug. Covers content/projects/ and
- * content/deep-dives/ — slugs are unique across both.
+ * Per-item lines, keyed by slug, for content/projects/.
  * ------------------------------------------------------------------ */
 
 export const PROJECT_LINES: Record<string, Line[]> = {
@@ -48,6 +47,12 @@ export const PROJECT_LINES: Record<string, Line[]> = {
     { text: 'fifty years of satellites and 150 years of weather records, and the published work stops at random forests.', mood: 'surprised' },
     { text: "Prithvi-EO-2.0 — 600M parameters, NASA and IBM's — fine-tuned for dust storm early warning.", mood: 'happy' },
     { text: 'six modules: dust alerts, irrigation, water allocation, yield, salinity, crop disease.', mood: 'neutral' },
+  ],
+  // src: content/projects/zeroth-law-traffic.mdx
+  'zeroth-law-traffic': [
+    { text: 'one fixed camera, fourteen kinds of traffic event, and an alarm that may only look backwards.', mood: 'thinking' },
+    { text: 'the detectors stay switched off until they are validated. he would rather ship nothing than ship a guess.', mood: 'neutral' },
+    { text: 'both parts share one budget: three times the video length on a T4, or the output is thrown away.', mood: 'surprised' },
   ],
   // src: content/projects/sentinel.mdx
   sentinel: [
@@ -111,39 +116,21 @@ export const ROUTES: RouteEntry[] = [
     ],
   },
   {
-    id: 'reading-detail',
+    id: 'library-detail',
     kind: 'article',
-    match: /^\/reading\/[^/]+/,
+    match: /^\/library\/[^/]+/,
     quiet: true,
     lines: [],
   },
   {
-    id: 'reading',
+    id: 'library',
     kind: 'index',
-    match: /^\/reading\/?$/,
-    // src: pages/reading.tsx, content/books/, pages/about/facts.tsx (Reading)
+    match: /^\/library\/?$/,
+    // src: pages/library/index.tsx, content/books/, pages/about.tsx (Reading)
     lines: [
       { text: 'the library. Russian literature mostly, and he reads several at once on purpose.', mood: 'happy' },
       { text: 'one fiction, one non-fiction, one philosophical, in parallel. he says it keeps his mind fresh.', mood: 'neutral' },
-      { text: 'each one has notes attached. click a title if you want the actual thinking.', mood: 'wink' },
-    ],
-  },
-  {
-    id: 'deep-dive-detail',
-    kind: 'article',
-    match: /^\/deep-dives\/[^/]+/,
-    quiet: true,
-    lines: [],
-  },
-  {
-    id: 'deep-dives',
-    kind: 'index',
-    match: /^\/deep-dives\/?$/,
-    // src: content/deep-dives/*.mdx
-    lines: [
-      { text: 'research proposals. history, engineering and cognition, mostly where they overlap.', mood: 'thinking' },
-      { text: 'the Antikythera one and the desert grammar one are the two i would start with.', mood: 'neutral' },
-      { text: 'these are proposals, not results. the difference matters and he keeps it honest.', mood: 'neutral' },
+      { text: 'pull a spine off the shelf. each one has his notes behind it.', mood: 'wink' },
     ],
   },
   {
@@ -157,28 +144,18 @@ export const ROUTES: RouteEntry[] = [
     id: 'writing',
     kind: 'index',
     match: /^\/writing\/?$/,
-    // src: pages/writing/index.tsx, content/writing/external.json
+    // src: pages/writing/index.tsx, content/writing/external.json, content/deep-dives/
     lines: [
-      { text: 'his writing. some of it lives here, some of it points out to Medium and Substack.', mood: 'neutral' },
-      { text: 'he writes to work out what he thinks. his words, on the facts page.', mood: 'neutral' },
+      { text: 'two essays out on Medium, and a list of questions he has not answered yet.', mood: 'neutral' },
+      { text: 'the questions are open on purpose. none of them is pretending to be finished.', mood: 'thinking' },
+      { text: 'he writes to work out what he thinks. his words, on the about page.', mood: 'neutral' },
     ],
   },
   {
-    id: 'now',
+    id: 'about',
     kind: 'meta',
-    match: /^\/now\/?$/,
-    // src: pages/now.tsx — currently a single placeholder line, so the robot
-    // does not promise any detail the page does not have.
-    lines: [
-      { text: 'one line. he ran out of time to write the long version, which is itself the update.', mood: 'wink' },
-      { text: 'AI and robotics. that is genuinely all this page says today.', mood: 'neutral' },
-    ],
-  },
-  {
-    id: 'facts',
-    kind: 'meta',
-    match: /^\/about\/facts\/?$/,
-    // src: pages/about/facts.tsx
+    match: /^\/about\/?$/,
+    // src: pages/about.tsx
     lines: [
       { text: 'five languages, and Turkish still in progress. i manage one, and it has semicolons.', mood: 'wink' },
       { text: 'Nukus holds the second-largest collection of Russian avant-garde art in the world. in a desert.', mood: 'surprised' },
@@ -187,28 +164,12 @@ export const ROUTES: RouteEntry[] = [
     ],
   },
   {
-    id: 'stack',
-    kind: 'meta',
-    match: /^\/about\/stack\/?$/,
-    lines: [{ text: 'the tools he actually uses, rather than the ones that look good in a list.', mood: 'neutral' }],
-  },
-  {
     id: 'secret',
     kind: 'meta',
     match: /^\/secret\/?$/,
     lines: [
       { text: 'you found this on purpose. that is the kind of person the page is written for.', mood: 'surprised' },
     ],
-  },
-  {
-    // These pages still contain placeholder copy. The robot stays out of the
-    // way and never points anyone here until they are written.
-    id: 'about-unfinished',
-    kind: 'meta',
-    match: /^\/about\/(ideas|academics)/,
-    thin: true,
-    quiet: true,
-    lines: [],
   },
   {
     id: 'home',

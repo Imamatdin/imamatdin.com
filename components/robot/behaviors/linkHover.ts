@@ -23,7 +23,7 @@ export const linkHover: Behavior = {
 
     const slugFrom = (target: EventTarget | null): string | null => {
       if (!(target instanceof Element)) return null;
-      const anchor = target.closest('a[href^="/projects/"], a[href^="/deep-dives/"]');
+      const anchor = target.closest('a[href^="/projects/"]');
       const href = anchor?.getAttribute('href');
       if (!href) return null;
       const slug = href.split('/')[2]?.split(/[?#]/)[0];

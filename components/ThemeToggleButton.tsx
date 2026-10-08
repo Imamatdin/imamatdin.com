@@ -125,6 +125,16 @@ export const ThemeToggleButton = () => {
   const closeTimer = useRef<number>();
   const lastPointer = useRef<string>('mouse');
 
+  // The command palette asks for a cycle without knowing about the modes.
+  useEffect(() => {
+    const onCycle = () => {
+      const i = MODES.findIndex((m) => m.id === mode);
+      setMode(MODES[(i + 1) % MODES.length].id, window.innerWidth / 2, window.innerHeight / 2);
+    };
+    window.addEventListener('site-mode:cycle', onCycle);
+    return () => window.removeEventListener('site-mode:cycle', onCycle);
+  }, [mode, setMode]);
+
   useEffect(() => {
     if (!open) return;
     const id = window.setInterval(() => setTick((t) => t + 1), 260);
