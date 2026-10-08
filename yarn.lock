@@ -1499,21 +1499,6 @@
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.2.tgz"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
 
-"@types/stats.js@*":
-  version "0.17.4"
-  resolved "https://registry.npmjs.org/@types/stats.js/-/stats.js-0.17.4.tgz"
-  integrity sha512-jIBvWWShCvlBqBNIZt0KAshWpvSjhkwkEu4ZUcASoAvhmrgAUI2t1dXrjSL4xXVLB4FznPrIsX3nKXFl/Dt4vA==
-
-"@types/three@^0.160.0":
-  version "0.160.0"
-  resolved "https://registry.npmjs.org/@types/three/-/three-0.160.0.tgz"
-  integrity sha512-jWlbUBovicUKaOYxzgkLlhkiEQJkhCVvg4W2IYD2trqD2om3VK4DGLpHH5zQHNr7RweZK/5re/4IVhbhvxbV9w==
-  dependencies:
-    "@types/stats.js" "*"
-    "@types/webxr" "*"
-    fflate "~0.6.10"
-    meshoptimizer "~0.18.1"
-
 "@types/unist@*", "@types/unist@^2.0.0":
   version "2.0.6"
   resolved "https://registry.npmjs.org/@types/unist/-/unist-2.0.6.tgz"
@@ -1523,11 +1508,6 @@
   version "3.0.3"
   resolved "https://registry.npmjs.org/@types/unist/-/unist-3.0.3.tgz"
   integrity sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==
-
-"@types/webxr@*":
-  version "0.5.24"
-  resolved "https://registry.npmjs.org/@types/webxr/-/webxr-0.5.24.tgz"
-  integrity sha512-h8fgEd/DpoS9CBrjEQXR+dIDraopAEfu4wYVNY2tEPwk60stPWhvZMf4Foo5FakuQ7HFZoa8WceaWFervK2Ovg==
 
 "@typescript-eslint/parser@^5.42.0":
   version "5.47.1"
@@ -2667,16 +2647,6 @@ fastq@^1.6.0:
   dependencies:
     reusify "^1.0.4"
 
-fflate@^0.4.1:
-  version "0.4.8"
-  resolved "https://registry.npmjs.org/fflate/-/fflate-0.4.8.tgz"
-  integrity sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA==
-
-fflate@~0.6.10:
-  version "0.6.11"
-  resolved "https://registry.npmjs.org/fflate/-/fflate-0.6.11.tgz"
-  integrity sha512-3JyEFWGjFn7zHmoa9+zG1BmW7X2okcmAB+0Cnu9UFbVs/jCBnl2A8o065ZlXiw145K3eBM3uLuzrYXC0RK7eDg==
-
 figlet@^1.9.4:
   version "1.10.0"
   resolved "https://registry.npmjs.org/figlet/-/figlet-1.10.0.tgz"
@@ -3735,11 +3705,6 @@ merge2@^1.3.0, merge2@^1.4.1:
   version "1.4.1"
   resolved "https://registry.npmjs.org/merge2/-/merge2-1.4.1.tgz"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
-
-meshoptimizer@~0.18.1:
-  version "0.18.1"
-  resolved "https://registry.npmjs.org/meshoptimizer/-/meshoptimizer-0.18.1.tgz"
-  integrity sha512-ZhoIoL7TNV4s5B6+rx5mC//fw8/POGyNxS/DZyCJeiZ12ScLfVwRE/GfsxwiTkMYYD5DmK2/JXnEVXqL4rF+Sw==
 
 micromark-core-commonmark@^1.0.0, micromark-core-commonmark@^1.0.1:
   version "1.0.6"
@@ -5283,11 +5248,6 @@ text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/text-table/-/text-table-0.2.0.tgz"
   integrity sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==
-
-three@^0.160.1:
-  version "0.160.1"
-  resolved "https://registry.npmjs.org/three/-/three-0.160.1.tgz"
-  integrity sha512-Bgl2wPJypDOZ1stAxwfWAcJ0WQf7QzlptsxkjYiURPz+n5k4RBDLsq+6f9Y75TYxn6aHLcWz+JNmwTOXWrQTBQ==
 
 tiny-glob@^0.2.9:
   version "0.2.9"

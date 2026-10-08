@@ -6,7 +6,6 @@ import { serialize } from 'next-mdx-remote/serialize';
 import { NextSeo } from 'next-seo';
 import NextLink from 'next/link';
 import { Eyebrow } from '../../components/Eyebrow';
-import { shelfFor } from '../../lib/shelves';
 
 interface BookPageProps {
   book: Book;
@@ -23,15 +22,21 @@ export default function BookPage({ book, mdxSource }: BookPageProps) {
 
       <Container maxW="650px" py={4}>
         <VStack align="stretch" spacing={6}>
-          <Box>
-            <Eyebrow mb={3}>
-              <NextLink href="/library" className="ink-link">
-                library
-              </NextLink>{' '}
-              / bay {shelfFor(book.category).numeral} — {shelfFor(book.category).label}
-            </Eyebrow>
-            <Box height="4px" width="56px" bg={shelfFor(book.category).hue} />
-          </Box>
+          <Eyebrow>
+            <NextLink href="/library" className="ink-link">
+              library
+            </NextLink>{' '}
+            / {[book.kind && book.kind !== 'book' ? book.kind : null, book.set].filter(Boolean).join(' · ') || 'read'}
+          </Eyebrow>
+
+          {book.coverImage && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={book.coverImage}
+              alt={`Cover of ${book.title}`}
+              style={{ width: 132, height: 198, objectFit: 'cover', display: 'block' }}
+            />
+          )}
 
           {/* Book Header */}
           <VStack align="flex-start" spacing={2}>

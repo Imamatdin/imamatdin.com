@@ -4,7 +4,7 @@ import { Eyebrow } from '../components/Eyebrow';
 
 const FACTS: [string, string][] = [
   ['Origin', "I'm from Nukus, Karakalpakstan - a place most people have never heard of. It's home to the second-largest collection of Russian avant-garde art in the world, hidden in the middle of the desert."],
-  ['Languages', "I speak Karakalpak (native), Russian (fluent), Uzbek (fluent), English (fluent), and I'm learning Turkish. Each language unlocks a different way of thinking."],
+  ['Languages', "I speak Karakalpak (native), Russian (fluent), Uzbek (fluent), English (fluent), and I'm learning Korean. Each language unlocks a different way of thinking."],
   ['Basketball', "I've played basketball for 5+ years. It taught me that raw talent means nothing without discipline - and that the best players make everyone around them better."],
   ['Sleep', "I'm naturally a night owl but forcing myself to become a morning person. The quiet hours before sunrise are when my best thinking happens."],
   ['Memory', "I can't remember faces well, but I never forget a conversation. Ideas stick with me longer than names."],

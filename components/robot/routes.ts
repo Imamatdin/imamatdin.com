@@ -157,7 +157,7 @@ export const ROUTES: RouteEntry[] = [
     match: /^\/about\/?$/,
     // src: pages/about.tsx
     lines: [
-      { text: 'five languages, and Turkish still in progress. i manage one, and it has semicolons.', mood: 'wink' },
+      { text: 'five languages, and Korean still in progress. i manage one, and it has semicolons.', mood: 'wink' },
       { text: 'Nukus holds the second-largest collection of Russian avant-garde art in the world. in a desert.', mood: 'surprised' },
       { text: "Imamatdin means 'pillar of faith'. mine is more of a load-bearing div.", mood: 'wink' },
       { text: "he can't remember faces but never forgets a conversation. i have the opposite problem.", mood: 'thinking' },
@@ -184,7 +184,7 @@ export const ROUTES: RouteEntry[] = [
       { text: 'four things on that list, and he is actively building all four. i checked.', mood: 'happy' },
       { text: 'Nukus, Karakalpakstan. that is where this is being written from.', mood: 'neutral' },
       { text: 'Dostoevsky, Tolstoy, Chekhov, and Ibrayim Yusupov. the library is up in the nav.', mood: 'neutral' },
-      { text: 'five languages, Turkish still in progress. i manage one and it has semicolons.', mood: 'wink' },
+      { text: 'five languages, Korean still in progress. i manage one and it has semicolons.', mood: 'wink' },
       { text: 'he writes to work out what he thinks. his words, not mine — mine are all curated.', mood: 'wink' },
       { text: 'he is looking for compute and research funding. the email is in the footer.', mood: 'happy' },
     ],

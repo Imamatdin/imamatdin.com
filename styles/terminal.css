@@ -195,39 +195,3 @@ html.ink-transition::view-transition-new(root) {
   .ink-link { transition: none; }
 }
 
-/* Library spines, one Flexoki hue per shelf. 600s carry paper-coloured
-   lettering on light grounds; at night the 400s carry black. Gold is kept for
-   gilt only — the bands on the spines and the ornament in the hall. */
-:root {
-  --sp-red: #AF3029;
-  --sp-purple: #5E409D;
-  --sp-blue: #205EA6;
-  --sp-cyan: #24837B;
-  --sp-magenta: #A02F6F;
-  --sp-green: #66800B;
-  --sp-ink: #FFFCF0;  /* paper */
-  --gilt: #AD8301;    /* yellow-600 */
-}
-
-html[data-mode='night'],
-html[data-theme='dark'] {
-  --sp-red: #D14D41;
-  --sp-purple: #8B7EC8;
-  --sp-blue: #4385BE;
-  --sp-cyan: #3AA99F;
-  --sp-magenta: #CE5D97;
-  --sp-green: #879A39;
-  --sp-ink: #100F0F;  /* black */
-  --gilt: #D0A215;    /* yellow-400 */
-}
-
-.konami-mode {
-  --sp-red: #66800B !important;
-  --sp-purple: #66800B !important;
-  --sp-blue: #66800B !important;
-  --sp-cyan: #66800B !important;
-  --sp-magenta: #66800B !important;
-  --sp-green: #66800B !important;
-  --sp-ink: #100F0F !important;
-  --gilt: #BEC97E !important;
-}

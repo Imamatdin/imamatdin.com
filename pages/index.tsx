@@ -36,7 +36,7 @@ export default function Home() {
       </Text>
 
       <Text color="text" lineHeight="1.8">
-        Karakalpak, Russian, Uzbek, English, and Turkish in progress. Each one unlocks a
+        Karakalpak, Russian, Uzbek, English, and Korean in progress. Each one unlocks a
         different way of thinking.
       </Text>
 

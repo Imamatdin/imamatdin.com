@@ -1,127 +1,112 @@
-import { Box, Container, Flex, Grid, Text } from '@chakra-ui/react';
+import { Box, Container, Flex, Grid, Link as ChakraLink, Text } from '@chakra-ui/react';
 import { GetStaticProps } from 'next';
-import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
 import { NextSeo } from 'next-seo';
-import { useMemo, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Eyebrow } from '../../components/Eyebrow';
+import { Bookshelf } from '../../components/library/Bookshelf';
 import { getAllBooks } from '../../lib/books';
-import { SHELVES, shelfFor } from '../../lib/shelves';
 
-// WebGL, window and fonts: nothing to render on the server.
-const Hall = dynamic(() => import('../../components/library/Hall'), { ssr: false });
+type Status = 'reading' | 'next' | 'later' | 'finished';
+type Kind = 'book' | 'essay' | 'talk';
 
-interface Volume {
+interface Entry {
   slug: string;
   title: string;
-  short: string;
   author: string;
-  shelf: string;
-  excerpt: string;
+  kind: Kind;
+  status: Status;
+  set: string | null;
+  setOrder: number;
+  order: number;
+  cover: string;
+  spine: string;
+  ink: string;
+  note: string;
+  link: string | null;
+  rating: number | null;
+  read: string | null;
 }
 
 interface LibraryProps {
-  volumes: Volume[];
+  entries: Entry[];
 }
 
-const EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
+const STAGES: { status: Status; label: string }[] = [
+  { status: 'reading', label: 'reading now' },
+  { status: 'next', label: 'up next' },
+  { status: 'later', label: 'after the applications · from nov' },
+  { status: 'finished', label: 'read' },
+];
 
-// The reading column is 650px; the hall and the bookcase take a wider band.
-// Margins rather than a transform, so nothing fights sticky or overflow.
-const BREAKOUT = {
-  width: 'min(980px, calc(100vw - 32px))',
-  marginLeft: 'calc(50% - min(490px, 50vw - 16px))',
-};
+const KINDS: { id: 'all' | Kind; label: string }[] = [
+  { id: 'all', label: 'all' },
+  { id: 'book', label: 'books' },
+  { id: 'essay', label: 'essays' },
+  { id: 'talk', label: 'talks' },
+];
 
-const hash = (s: string, salt = 0) => {
-  let h = 2166136261 ^ salt;
-  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
-  return ((h >>> 0) % 1000) / 1000;
-};
-
-function Spine({
-  volume,
-  hue,
-  open,
-  onOpen,
-  onHover,
-}: {
-  volume: Volume;
-  hue: string;
-  open: boolean;
-  onOpen: () => void;
-  onHover: (on: boolean) => void;
-}) {
-  const width = 27 + Math.round(hash(volume.slug) * 7);
-  const height = 184 + Math.round(hash(volume.slug, 7) * 46);
-
+function Row({ e }: { e: Entry }) {
   return (
-    <Box
-      as="button"
-      type="button"
-      onClick={onOpen}
-      onMouseEnter={() => onHover(true)}
-      onMouseLeave={() => onHover(false)}
-      onFocus={() => onHover(true)}
-      onBlur={() => onHover(false)}
-      aria-expanded={open}
-      aria-label={`${volume.title} by ${volume.author}`}
-      title={`${volume.title} — ${volume.author}`}
-      position="relative"
-      flexShrink={0}
-      width={`${width}px`}
-      height={`${height}px`}
-      bg={hue}
-      color="var(--sp-ink)"
-      transform={open ? 'translateY(-24px)' : 'translateY(0)'}
-      transition={`transform 0.22s ${EASE}`}
-      _hover={{ transform: open ? 'translateY(-24px)' : 'translateY(-12px)' }}
-      _focusVisible={{ transform: 'translateY(-12px)' }}
-      // Double gilt bands top and bottom, as on a bound spine.
-      boxShadow="inset 0 9px 0 -7px var(--gilt), inset 0 -9px 0 -7px var(--gilt), inset 0 15px 0 -13px var(--gilt), inset 0 -15px 0 -13px var(--gilt)"
-    >
-      <Box
-        position="absolute"
-        top="22px"
-        bottom="22px"
-        left={0}
-        right={0}
-        overflow="hidden"
-        sx={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-        display="flex"
-        alignItems="center"
-        fontFamily="mono"
-        fontSize="10.5px"
-        letterSpacing="0.06em"
-        textTransform="uppercase"
-        whiteSpace="nowrap"
-      >
-        {volume.short}
+    <Grid templateColumns="72px 1fr" gap={5} py={5} borderBottom="1px solid" borderColor="border">
+      <NextLink href={`/library/${e.slug}`} aria-label={e.title}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={e.cover}
+          alt=""
+          loading="lazy"
+          style={{ width: 72, height: 108, objectFit: 'cover', display: 'block', boxShadow: '0 1px 0 var(--border)' }}
+        />
+      </NextLink>
+      <Box minW={0}>
+        <Text as="div" fontFamily="mono" fontSize="14px" fontWeight={500} lineHeight="1.4">
+          <NextLink href={`/library/${e.slug}`} className="ink-link">
+            {e.title}
+          </NextLink>
+        </Text>
+        <Text as="div" fontFamily="mono" fontSize="12px" color="subtle" mt={1}>
+          {e.author}
+        </Text>
+        {(e.kind !== 'book' || e.read || e.rating) && (
+          <Eyebrow mt={2}>
+            {[e.kind !== 'book' ? e.kind : null, e.read, e.rating ? `${e.rating}/10` : null].filter(Boolean).join(' · ')}
+          </Eyebrow>
+        )}
+        {e.note && (
+          <Text as="div" fontFamily="mono" fontSize="13px" color="text" lineHeight="1.75" mt={2}>
+            {e.note}
+          </Text>
+        )}
+        {e.link && (
+          <Text as="div" fontFamily="mono" fontSize="12px" mt={2}>
+            <ChakraLink href={e.link} isExternal className="ink-link">
+              {new URL(e.link).hostname.replace(/^www\./, '')} ↗
+            </ChakraLink>
+          </Text>
+        )}
       </Box>
-    </Box>
+    </Grid>
   );
 }
 
-export default function Library({ volumes }: LibraryProps) {
-  const bays = useMemo(
-    () =>
-      SHELVES.map((s) => ({ ...s, volumes: volumes.filter((v) => v.shelf === s.id) })).filter(
-        (b) => b.volumes.length > 0
-      ),
-    [volumes]
-  );
-  const [openSlug, setOpenSlug] = useState<string | null>(null);
-  const [hoverBay, setHoverBay] = useState<number | null>(null);
-  const focus = useRef<number | null>(null);
+export default function Library({ entries }: LibraryProps) {
+  const [kind, setKind] = useState<'all' | Kind>('all');
+  const shown = entries.filter((e) => kind === 'all' || e.kind === kind);
+  const count = (k: 'all' | Kind) => entries.filter((e) => k === 'all' || e.kind === k).length;
 
-  const open = volumes.find((v) => v.slug === openSlug);
-  const openBay = open ? bays.findIndex((b) => b.id === open.shelf) : null;
-  const activeBay = hoverBay ?? openBay;
-  focus.current = activeBay;
+  const shelf = entries.map((e, i) => ({
+    slug: e.slug,
+    title: e.title,
+    author: e.author,
+    cover: e.cover,
+    spine: e.spine,
+    ink: e.ink,
+    breakBefore: i > 0 && entries[i - 1].status !== e.status,
+  }));
 
   return (
     <>
-      <NextSeo title="Library | Imamatdin" description="Books I've read and found worth rereading." />
+      <NextSeo title="Library | Imamatdin" description="What I'm reading, what's next, and what I've read." />
 
       <Container maxW="650px" py={4}>
         <Eyebrow mb={3}>index / library</Eyebrow>
@@ -129,94 +114,65 @@ export default function Library({ volumes }: LibraryProps) {
           Library
         </Text>
         <Text as="div" fontFamily="mono" fontSize="13px" color="subtle" mt={3}>
-          Books I&apos;ve read and found worth rereading. {volumes.length} volumes in {bays.length} bays. Pull one off
-          the shelf.
+          Books, essays and talks: what I&apos;m reading, the plan for what&apos;s next, and what I&apos;ve read.
         </Text>
 
-        <Box
-          sx={BREAKOUT}
-          position="relative"
-          mt={8}
-          height={{ base: '260px', md: '440px' }}
-          border="1px solid"
-          borderColor="border"
-          bg="background"
-        >
-          <Hall focus={focus} bays={bays.length} />
-          <Flex position="absolute" left={0} right={0} bottom={0} p={3} justify="space-between" pointerEvents="none">
-            <Eyebrow bg="background" color="text" px={1}>
-              {activeBay !== null ? `bay ${bays[activeBay].numeral} — ${bays[activeBay].label}` : 'the hall'}
-            </Eyebrow>
-            <Eyebrow bg="background" px={1} display={{ base: 'none', md: 'block' }}>
-              after admont, 1776
-            </Eyebrow>
-          </Flex>
+        <Box mt={8}>
+          <Bookshelf books={shelf} />
         </Box>
 
-        {/* One bookcase, bays side by side on shared planks. */}
-        <Box sx={BREAKOUT} mt={12}>
-          <Flex wrap="wrap" align="flex-end" rowGap={10}>
-            {bays.map((b, i) => (
-              <Box key={b.id} borderBottom="3px solid" borderColor="text" pl={i === 0 ? 2 : 4} pr={1}>
-                {/* Zero-width so a long label never pushes its bay apart. */}
-                <Eyebrow
-                  mb={4}
-                  width={0}
-                  whiteSpace="nowrap"
-                  color={activeBay === i ? 'text' : 'subtle'}
-                  transition={`color 0.15s ${EASE}`}
-                >
-                  {b.numeral} · {b.label}
-                </Eyebrow>
-                <Flex align="flex-end" gap="3px">
-                  {b.volumes.map((v) => (
-                    <Spine
-                      key={v.slug}
-                      volume={v}
-                      hue={b.hue}
-                      open={v.slug === openSlug}
-                      onOpen={() => setOpenSlug(v.slug === openSlug ? null : v.slug)}
-                      onHover={(on) => setHoverBay(on ? i : null)}
-                    />
-                  ))}
-                </Flex>
+        <Flex gap={5} mt={10} flexWrap="wrap" role="tablist" aria-label="Filter by kind">
+          {KINDS.map((k) => (
+            <Box
+              as="button"
+              key={k.id}
+              role="tab"
+              aria-selected={kind === k.id}
+              onClick={() => setKind(k.id)}
+              fontFamily="mono"
+              fontSize="12px"
+              pb="3px"
+              borderBottom="1px solid"
+              borderColor={kind === k.id ? 'text' : 'transparent'}
+              color={kind === k.id ? 'text' : 'subtle'}
+              _hover={{ color: 'text' }}
+            >
+              {k.label}{' '}
+              <Box as="span" color="subtle">
+                {count(k.id)}
               </Box>
-            ))}
-          </Flex>
-        </Box>
+            </Box>
+          ))}
+        </Flex>
 
-        <Box minH="180px" mt={8}>
-          {open ? (
-            <Grid templateColumns="6px 1fr" gap={4} key={open.slug}>
-              <Box bg={shelfFor(open.shelf).hue} />
-              <Box py={1}>
-                <Eyebrow>
-                  bay {shelfFor(open.shelf).numeral} — {shelfFor(open.shelf).label}
-                </Eyebrow>
-                <Text as="div" fontFamily="mono" fontSize="17px" fontWeight={500} color="text" letterSpacing="-0.01em" mt={2}>
-                  {open.title}
-                </Text>
-                <Text as="div" fontFamily="mono" fontSize="12px" color="subtle" mt={1}>
-                  {open.author}
-                </Text>
-                {open.excerpt && (
-                  <Text as="div" fontFamily="mono" fontSize="13px" color="text" lineHeight="1.8" mt={3}>
-                    {open.excerpt}
-                  </Text>
-                )}
-                <Text as="div" fontFamily="mono" fontSize="12px" mt={3}>
-                  <NextLink href={`/library/${open.slug}`} className="ink-link">
-                    open the notes →
-                  </NextLink>
-                </Text>
-              </Box>
-            </Grid>
-          ) : (
-            <Text as="div" fontFamily="mono" fontSize="12px" color="subtle">
-              Hover a spine to walk to its bay. Click to read what I thought of it.
-            </Text>
-          )}
-        </Box>
+        {STAGES.map(({ status, label }) => {
+          const items = shown.filter((e) => e.status === status);
+          if (!items.length) return null;
+          const sets = Array.from(new Set(items.map((e) => e.set ?? '')));
+          return (
+            <Box as="section" key={status} mt={12}>
+              <Eyebrow color="text" mb={2}>
+                {label}
+              </Eyebrow>
+              {sets.map((set) => (
+                <Box key={set}>
+                  {set && status !== 'later' && (
+                    <Eyebrow mt={6} mb={1}>
+                      {set}
+                    </Eyebrow>
+                  )}
+                  <Box borderTop="1px solid" borderColor="border">
+                    {items
+                      .filter((e) => (e.set ?? '') === set)
+                      .map((e) => (
+                        <Row key={e.slug} e={e} />
+                      ))}
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          );
+        })}
       </Container>
     </>
   );
@@ -230,28 +186,42 @@ const plain = (md: string) =>
     .replace(/\s+/g, ' ')
     .trim();
 
-// A spine only has room for the title proper: drop subtitles and articles.
-const shortTitle = (title: string) =>
-  title
-    .split(/[:(]/)[0]
-    .replace(/^(the|a|an)\s+/i, '')
-    .trim();
+const RANK: Record<Status, number> = { reading: 0, next: 1, later: 2, finished: 3 };
 
 export const getStaticProps: GetStaticProps<LibraryProps> = async () => {
-  const order = new Map(SHELVES.map((s, i) => [s.id, i]));
-  const volumes = getAllBooks()
+  const entries: Entry[] = getAllBooks()
     .map((b) => {
       const body = (b.content ?? '').split('## My Notes')[0];
-      const first = body.split(/\n\s*\n/).map(plain).find((p) => p.length > 0) ?? '';
+      const note = body.split(/\n\s*\n/).map(plain).find((p) => p.length > 0) ?? '';
+      const status: Status = b.status === 'reading' || b.status === 'next' || b.status === 'later' ? b.status : 'finished';
+      const date = b.date ? new Date(b.date) : null;
       return {
         slug: b.slug,
         title: b.title,
-        short: shortTitle(b.title),
         author: b.author,
-        shelf: shelfFor(b.category).id,
-        excerpt: first.length > 420 ? `${first.slice(0, 417).trimEnd()}…` : first,
+        kind: (b.kind as Kind) ?? 'book',
+        status,
+        set: b.set ?? null,
+        setOrder: b.setOrder ?? 99,
+        order: b.order ?? 99,
+        cover: b.coverImage ?? '',
+        spine: b.spineColor ?? '#6F6E69',
+        ink: b.textColor ?? '#FFFCF0',
+        note: note.length > 360 ? `${note.slice(0, 357).trimEnd()}…` : note,
+        link: b.link && b.link.startsWith('http') ? b.link : null,
+        rating: b.rating ?? null,
+        read:
+          status === 'finished' && date && !isNaN(date.getTime())
+            ? date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).toLowerCase()
+            : null,
       };
     })
-    .sort((a, b) => (order.get(a.shelf) ?? 99) - (order.get(b.shelf) ?? 99) || a.title.localeCompare(b.title));
-  return { props: { volumes } };
+    .sort(
+      (a, b) =>
+        RANK[a.status] - RANK[b.status] ||
+        a.setOrder - b.setOrder ||
+        a.order - b.order ||
+        a.title.localeCompare(b.title)
+    );
+  return { props: { entries } };
 };

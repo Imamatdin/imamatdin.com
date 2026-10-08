@@ -9,7 +9,13 @@ export interface Book {
   title: string;
   author: string;
   link?: string | null;
-  status?: 'reading' | 'finished' | 'want-to-read' | null;
+  /** reading now, next in the plan, later (after applications), or read. */
+  status?: 'reading' | 'next' | 'later' | 'finished' | 'want-to-read' | null;
+  kind?: 'book' | 'essay' | 'talk' | null;
+  /** The reading-plan set, e.g. "Set 2 · Oct 10–15", with its sort position. */
+  set?: string | null;
+  setOrder?: number | null;
+  order?: number | null;
   year?: number | null;
   rating?: number | null;
   date?: string | null;
