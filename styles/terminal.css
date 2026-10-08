@@ -1,19 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
 
-/* Flexoki (kepano/flexoki). These four color vars are the single source of
-   truth for the whole site — Chakra's semantic tokens in _app.tsx resolve to
-   them, so nothing below the theme layer should ever name a hex. */
+/* Flexoki (kepano/flexoki). These color vars are the single source of truth
+   for the whole site — Chakra's semantic tokens in _app.tsx resolve to them,
+   so nothing below the theme layer should ever name a hex.
+
+   Three modes, set as data-mode on <html> by ThemeToggleButton (and before
+   first paint by the script in _document):
+     noon   (default) — neutral #FFFFFF. Flexoki has no pure white; paper is
+                        warm on purpose, which is what read as beige.
+     candle           — Flexoki paper, the original reading surface.
+     night            — Flexoki black.
+   Chakra's data-theme='dark' is kept in sync for night so Chakra-internal
+   colours follow along. */
 :root {
-  --bg: #FFFCF0;      /* paper */
+  --bg: #FFFFFF;
   --text: #100F0F;    /* black */
   --accent: #205EA6;  /* blue-600 */
   --subtle: #6F6E69;  /* base-600 */
   --border: rgba(16, 15, 15, 0.1);
-  --highlight: #E6E4D9; /* base-100 */
+  --highlight: #F2F0E5; /* base-50 */
+  --live: #BC5215;    /* orange-600 */
+  --ok: #66800B;      /* green-600 */
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-/* Chakra's color mode sets data-theme on <html>; .dark is kept as an alias. */
+html[data-mode='candle'] {
+  --bg: #FFFCF0;      /* paper */
+  --highlight: #E6E4D9; /* base-100 */
+}
+
+html[data-mode='night'],
 html[data-theme='dark'],
 .dark {
   --bg: #100F0F;      /* black */
@@ -22,6 +38,8 @@ html[data-theme='dark'],
   --subtle: #878580;  /* base-500 */
   --border: rgba(206, 205, 195, 0.1);
   --highlight: #1C1B1A; /* base-950 */
+  --live: #DA702C;    /* orange-400 */
+  --ok: #879A39;      /* green-400 */
 }
 
 body {
@@ -39,6 +57,11 @@ body::after {
   opacity: 0.03;
   pointer-events: none;
   z-index: 9999;
+}
+
+/* Paper grain belongs to paper; on pure white it reads as dirt. */
+html:not([data-mode='candle']):not([data-mode='night']):not([data-theme='dark']) body::after {
+  display: none;
 }
 
 /* Remove all rounded corners */
@@ -113,6 +136,8 @@ a, button, [role="button"], [tabindex] {
   --subtle: #66800B !important;  /* green-600 */
   --border: rgba(160, 175, 84, 0.3) !important;
   --highlight: rgba(160, 175, 84, 0.1) !important;
+  --live: #BEC97E !important;    /* green-200 */
+  --ok: #A0AF54 !important;      /* green-300 */
 }
 
 .konami-mode a {
@@ -135,4 +160,37 @@ a, button, [role="button"], [tabindex] {
   .shortcut-hint {
     display: none;
   }
+}
+
+/* Mode change: the new palette floods out from the control that was clicked.
+   Scoped by .ink-transition so page navigations keep the plain fade above. */
+html.ink-transition::view-transition-old(root) {
+  animation: none;
+}
+html.ink-transition::view-transition-new(root) {
+  animation: ink-spread 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes ink-spread {
+  from { clip-path: circle(0 at var(--ink-x) var(--ink-y)); }
+  to { clip-path: circle(var(--ink-r) at var(--ink-x) var(--ink-y)); }
+}
+
+/* A 1px line draws in from the left on hover and leaves to the right. */
+.ink-link {
+  color: inherit !important;
+  text-decoration: none !important;
+  padding-bottom: 1px;
+  background: linear-gradient(currentColor, currentColor) 100% 100% / 0% 1px no-repeat;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background-size 0.3s ease-out;
+}
+.ink-link:hover,
+.ink-link:focus-visible {
+  background-size: 100% 1px;
+  background-position: 0% 100%;
+  opacity: 1 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ink-link { transition: none; }
 }

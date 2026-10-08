@@ -7,6 +7,7 @@ import { ReactElement, useEffect } from 'react';
 import { DefaultSeo } from 'next-seo';
 import { useKonamiCode } from '../hooks/useKonamiCode';
 import '../styles/terminal.css';
+import '../styles/experiments.css';
 
 const config: ThemeConfig = {
   initialColorMode: 'light',

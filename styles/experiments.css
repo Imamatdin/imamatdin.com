@@ -1,0 +1,20 @@
+/* Google Fonts' JetBrains Mono subset drops box-drawing and block glyphs, so
+   the browser borrows them from a fallback with a different advance width and
+   ASCII scenes shear. The full upstream build has them all at one width. */
+@font-face {
+  font-family: 'JetBrains Mono Full';
+  src: url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono@2.304/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --font-ascii: 'JetBrains Mono Full', 'JetBrains Mono', monospace;
+}
+
+/* JetBrains Mono fuses ==, |=, -| and friends into ligatures, which tears an
+   ASCII grid apart. Every character has to stay its own cell. */
+.ascii {
+  font-variant-ligatures: none;
+  font-feature-settings: 'liga' 0, 'calt' 0;
+}
