@@ -1,0 +1,45 @@
+---
+title: "Zeroth Law Traffic"
+description: "WIUT Hackathon 2026, computer vision track. Traffic event detection and causal accident anticipation from a fixed CCTV camera."
+date: "2026-09-24"
+status: "completed"
+tags: ["computer-vision", "hackathon", "yolo", "tracking", "traffic", "safety"]
+links:
+  - label: "GitHub"
+    href: "https://github.com/Imamatdin/zeroth-law-traffic"
+  - label: "Website"
+    href: "https://zeroth-law-traffic.vercel.app"
+---
+
+Submission for the WIUT Hackathon 2026 computer vision track, built as team lead in a
+team of three. One fixed road camera, a few unlabelled sample videos, and a hidden
+annotated test set from the same angle.
+
+**Part A, event detection:** given an `.mp4`, return every traffic event as
+`[start_sec, end_sec, label]` across 14 official classes: accidents, near misses,
+red-light running, wrong-way driving, illegal U-turns, stopped vehicles, jaywalking,
+failure to yield, illegal turns, solid-line crossings, stop-line violations,
+congestion, road obstacles, fire and smoke. Segments are matched by temporal IoU, so
+boundaries have to be tight.
+
+**Part B, accident anticipation:** at every frame, the probability that an accident
+starts within the next 5 seconds, using only frames seen so far. The estimator never
+opens the video; the harness feeds it frame by frame, which keeps it causal.
+
+**Approach.** CPU decode of every third frame, COCO-pretrained YOLO11m (no team
+fine-tuning), ByteTrack with Kalman filtering, rider fusion. A world model combines
+hand-mapped camera geometry, signal lamp colours, per-track kinematics and a flow atlas
+fitted to the samples, then one state machine per event class and segment
+post-processing. Part B runs its own detector and tracker, builds conflict features
+(closest approach, closing speed, braking, red-light and wrong-way modifiers) and turns
+them into an analytic risk score, smoothed and calibrated.
+
+Part A and Part B share one budget: together they must finish within 3x the video's
+duration on a single T4, or both outputs for that video are discarded.
+
+**Honest status:** the event engines stay disabled until they are validated against
+labels, so Part A currently emits no events. Risk calibration uses synthetic scenarios,
+not real accidents. T4 runtime is unmeasured; the historical CPU-laptop runs were 6-9x
+real time, not a 3x pass.
+
+**Stack:** Python 3.11, Ultralytics YOLO11m, ByteTrack, PyTorch, OpenCV, imageio-ffmpeg

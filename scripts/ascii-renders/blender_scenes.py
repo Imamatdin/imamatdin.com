@@ -277,7 +277,66 @@ def buildcored(frames):
     return pose
 
 
+# --------------------------------------------------------------------------
+# Zeroth Law — the fixed CCTV view the task is built around: cross traffic
+# flowing, a queue held at red, one car running the light through a gap.
+# --------------------------------------------------------------------------
+def car(name, color=WHITE):
+    body = box(f'{name}_body', (4.2, 2.0, 1.0), (0, 0, 0.7), color)
+    cabin = box(f'{name}_cabin', (2.2, 1.8, 0.8), (0, 0, 1.6), color)
+    return body, cabin
+
+
+def place(parts, x, y, heading):
+    body, cabin = parts
+    for ob, z in ((body, 0.7), (cabin, 1.6)):
+        ob.location = (x, y, z)
+        ob.rotation_euler.z = heading
+
+
+def traffic(frames):
+    L, half = 48.0, 24.0
+    box('road_ew', (L, 9, 0.2), (0, 0, 0))
+    box('road_ns', (9, L, 0.2), (0, 0, 0.01))
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            box(f'kerb{sx}{sy}', (12, 12, 0.5), (sx * 11, sy * 11, 0.15))
+            cylinder(f'pole{sx}{sy}', 0.2, 6, (sx * 5.5, sy * 5.5, 3), verts=12)
+            box(f'lamp{sx}{sy}', (0.6, 0.6, 1.4), (sx * 5.5, sy * 5.5, 6.4))
+    for k in range(-5, 6):
+        if abs(k) > 1:
+            box(f'dash_ew{k}', (2.2, 0.25, 0.05), (k * 4, 0, 0.13))
+            box(f'dash_ns{k}', (0.25, 2.2, 0.05), (0, k * 4, 0.14))
+    for k in range(5):
+        box(f'zebra{k}', (1.0, 3.6, 0.05), (-3.6 + k * 1.8, -7.6, 0.14))
+    box('stop_s', (4.2, 0.4, 0.05), (2.2, -9.8, 0.14))
+    box('stop_n', (4.2, 0.4, 0.05), (-2.2, 9.8, 0.14))
+
+    east = [car(f'e{i}') for i in range(3)]
+    west = [car(f'w{i}') for i in range(3)]
+    queue = [car(f'q{i}') for i in range(2)]
+    runner = car('runner', ACCENT)
+    for i, parts in enumerate(queue):
+        place(parts, -2.2, 12.5 + i * 5.5, math.pi / 2)
+
+    camera((19, -23, 17), (0, 1.5, 0), lens=30)
+
+    def pose(f):
+        p = f / frames
+        for i, parts in enumerate(east):
+            place(parts, -half + ((i / 3 + p) % 1) * L, -2.2, 0)
+        for i, parts in enumerate(west):
+            place(parts, half - ((i / 3 + 1 / 6 + p) % 1) * L, 2.2, math.pi)
+        # Timed into the gap between cross-traffic platoons (p ~ 0.25).
+        y = -40 + 160 * p if p < 0.5 else -999
+        place(runner, 2.2, y, math.pi / 2)
+        return f'cam 01  t={p * frames / 12:04.1f}s'
+
+    return pose
+
+
 SCENES = {
+    'zeroth-law-traffic': traffic,
     'thermotouch': thermotouch,
     'radiative-cooling-control': cooling,
     'aral-basin-platform': aral,

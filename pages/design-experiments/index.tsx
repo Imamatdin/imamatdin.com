@@ -7,8 +7,8 @@ import { field } from '../../components/experiments/scenes';
 
 const EXPERIMENTS = [
   {
-    href: '/design-experiments/projects',
-    title: 'projects — figures',
+    href: '/projects',
+    title: 'projects — figures (graduated → /projects)',
     date: '2026-10-08',
     summary:
       'Each project as numbered figures: a Blender render converted to edge-aware ASCII, its real architecture with a signal stepping through it, and its measured results.',

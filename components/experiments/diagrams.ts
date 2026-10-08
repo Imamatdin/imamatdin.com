@@ -425,11 +425,77 @@ export const buildcoredReadout: Scene = ({ t, cols }) => {
   return L.toStrings();
 };
 
+// One budget for both parts: A + B must finish within 3x the video's length on
+// a T4. The CPU runs are the measured history; the T4 run is still owed.
+export const zerothReadout: Scene = ({ t, cols }) => {
+  const L = new Layers(cols, 13);
+  const grow = ease(t / 2.4);
+  const scale = 4.2; // cells per 1x
+  const axis = 18;
+  L.text(0, 0, 0, 'budget per video: A + B ≤ 3× duration, one T4');
+  const parts: [string, number, number][] = [['A', 1.25, 1], ['B', 1.55, 2], ['margin', 0.2, 0]];
+  let x = axis;
+  parts.forEach(([name, v, layer]) => {
+    const n = Math.round(v * scale * grow);
+    for (let k = 0; k < n; k++) L.set(layer, x + k, 2, ['░', '█', '▓'][layer]);
+    L.text(0, x, 3, name);
+    x += Math.round(v * scale);
+  });
+  L.text(0, 0, 2, 'allocation');
+  const limit = axis + Math.round(3 * scale);
+  for (let y = 1; y <= 10; y++) if (y !== 3) L.set(0, limit, y, '┊');
+  L.text(1, limit + 2, 1, '3×');
+
+  L.text(0, 0, 5, 'measured, CPU laptop (historical)');
+  const runs: [string, number][] = [['127.6 s clip', 6.02], ['127.6 s clip', 6.48], ['20.05 s clip', 9.33]];
+  runs.forEach(([name, v], i) => {
+    const y = 6 + i;
+    L.text(0, 0, y, name);
+    const n = Math.round(Math.min(v * scale * grow, cols - axis - 7));
+    for (let k = 0; k < n; k++) L.set(k + axis < limit ? 1 : 2, axis + k, y, '█');
+    L.text(1, axis + n + 1, y, `${v.toFixed(2)}×`);
+  });
+  L.text(0, 0, 10, 'T4, full pipeline');
+  L.text(2, axis, 10, 'unmeasured');
+  L.text(0, 0, 12, '14 event classes · engines off until validated');
+  return L.toStrings();
+};
+
 // ---------------------------------------------------------------------------
 // Diagrams, from each project's write-up.
 // ---------------------------------------------------------------------------
 
 export const DIAGRAMS: Record<string, DiagramSpec> = {
+  'zeroth-law-traffic': {
+    cols: 64,
+    rows: 17,
+    nodes: [
+      { id: 'video', label: 'video .mp4', sub: 'every 3rd frame', x: 0, y: 0 },
+      { id: 'yolo', label: 'YOLO11m', sub: 'COCO · 6 classes', x: 0, y: 6 },
+      { id: 'track', label: 'ByteTrack', sub: 'Kalman · riders', x: 0, y: 12 },
+      { id: 'world', label: 'world model', sub: 'geometry·atlas', x: 23, y: 6 },
+      {
+        id: 'engines',
+        label: '14 engines',
+        items: ['accident', 'near_miss', 'red_light', 'wrong_way', 'jaywalking', '+9 more'],
+        x: 46,
+        y: 0,
+      },
+      { id: 'segments', label: 'segments', sub: 'start·end·label', x: 45, y: 11 },
+      { id: 'risk', label: 'risk(t)', sub: 'B · past only', x: 23, y: 12 },
+    ],
+    edges: [
+      ['video', 'yolo'],
+      ['yolo', 'track'],
+      ['track', 'world'],
+      ['world', 'engines'],
+      ['world', 'risk'],
+      ['engines', 'segments'],
+    ],
+    steps: [['video'], ['yolo'], ['track'], ['world'], ['engines', 'risk'], ['segments']],
+    holds: { engines: 2.8 },
+  },
+
   'radiative-cooling-control': {
     cols: 64,
     rows: 17,

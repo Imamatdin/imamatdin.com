@@ -24,6 +24,7 @@ SCENES = {
     'radiative-cooling-control': dict(cols=88, rows=36, frames=96),
     'aral-basin-platform': dict(cols=88, rows=36, frames=72),
     'buildcored': dict(cols=88, rows=36, frames=72),
+    'zeroth-law-traffic': dict(cols=88, rows=36, frames=96),
 }
 
 
