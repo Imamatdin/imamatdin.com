@@ -2,32 +2,38 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 interface HallProps {
-  /** 0 at the entrance, 1 at the far end; written by the page on scroll. */
-  progress: React.MutableRefObject<number>;
+  /** Bay to walk to (hovered or opened book), or null to drift down the nave. */
+  focus: React.MutableRefObject<number | null>;
   bays: number;
 }
 
 type Mode = 'noon' | 'candle' | 'night';
 
-const FONT_PX = 11;
-const CELL_W = 7;
-const CELL_H = 13;
+const FONT_PX = 10;
+const CELL_W = 6;
+const CELL_H = 12;
 // Fill ramp, sparse to dense, then the four edge strokes.
 const GLYPHS = [' ', '.', ':', '-', '=', '+', '*', '#', '%', '@', '-', '/', '|', '\\'];
 
 const NAVE_W = 12;
 const BAY_LEN = 9;
+const FRONT = 4.5;
 
 const css = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
-/** CSS colour to raw sRGB floats: the shader writes them straight out. */
+/**
+ * CSS colour to raw sRGB floats: the shader writes them straight out. The
+ * browser normalises any form (#fff, #ffffff, rgb()) through a 1px canvas, so
+ * a minifier shortening a hex can't break it.
+ */
 function srgb(value: string): [number, number, number] {
-  const hex = value.replace('#', '');
-  if (/^[0-9a-f]{6}$/i.test(hex)) {
-    return [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255) as [number, number, number];
-  }
-  const m = value.match(/[\d.]+/g);
-  return m ? [Number(m[0]) / 255, Number(m[1]) / 255, Number(m[2]) / 255] : [0.5, 0.5, 0.5];
+  const ctx = document.createElement('canvas').getContext('2d');
+  if (!ctx) return [1, 1, 1];
+  ctx.fillStyle = '#000';
+  ctx.fillStyle = value;
+  ctx.fillRect(0, 0, 1, 1);
+  const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+  return [r / 255, g / 255, b / 255];
 }
 
 const currentMode = (): Mode => {
@@ -56,18 +62,20 @@ function canvasTexture(size: number, paint: (ctx: CanvasRenderingContext2D, s: n
 /** The hall, built in code: Admont's nave, two tiers of books, a gilt vault. */
 function buildHall(bays: number) {
   const scene = new THREE.Scene();
-  const length = (bays + 1) * BAY_LEN;
+  scene.background = new THREE.Color(0xf0eee8);
+  // Shelves run from the entrance (z = FRONT) to a short end bay before the far window.
+  const length = bays * BAY_LEN + 3;
   const half = NAVE_W / 2;
 
   const white = new THREE.MeshStandardMaterial({ color: 0xf0eee8, roughness: 0.85 });
-  const wood = new THREE.MeshStandardMaterial({ color: 0x8a8378, roughness: 0.9 });
+  const wood = new THREE.MeshStandardMaterial({ color: 0xc4bcae, roughness: 0.9 });
   const gilt = new THREE.MeshStandardMaterial({ color: 0xd9a21a, roughness: 0.4, metalness: 0.3 });
 
   // Admont's floor is rhombus marble; a diamond texture gives the cells rhythm.
   const floorTex = canvasTexture(128, (ctx, s) => {
-    ctx.fillStyle = '#d8d6cf';
+    ctx.fillStyle = '#ece9e2';
     ctx.fillRect(0, 0, s, s);
-    ctx.fillStyle = '#8f8c84';
+    ctx.fillStyle = '#cdc8bd';
     ctx.beginPath();
     ctx.moveTo(s / 2, 0);
     ctx.lineTo(s, s / 2);
@@ -79,26 +87,32 @@ function buildHall(bays: number) {
   floorTex.repeat.set(NAVE_W / 2, length / 2);
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(NAVE_W, length), new THREE.MeshStandardMaterial({ map: floorTex }));
   floor.rotation.x = -Math.PI / 2;
-  floor.position.z = -length / 2 + BAY_LEN / 2;
+  floor.position.z = FRONT - length / 2;
   scene.add(floor);
 
-  // Books: one instanced mesh for every volume on both walls and both tiers.
-  const bookGeo = new THREE.BoxGeometry(1, 1, 1);
-  const bookMat = new THREE.MeshStandardMaterial({ roughness: 0.8 });
-  const perRow = 26;
-  const rowsPerTier = 5;
-  const total = bays * 2 * 2 * rowsPerTier * perRow;
-  const books = new THREE.InstancedMesh(bookGeo, bookMat, total);
-  const m = new THREE.Matrix4();
-  const q = new THREE.Quaternion();
-  const col = new THREE.Color();
-  let n = 0;
-
+  // Bookcase faces: a texture of upright spines rather than thousands of
+  // boxes, so the ASCII pass reads rows of books instead of edge noise.
+  const spines = canvasTexture(256, (ctx, sz) => {
+    ctx.fillStyle = '#b9b2a5';
+    ctx.fillRect(0, 0, sz, sz);
+    let x = 0;
+    let i = 0;
+    while (x < sz) {
+      const w = 6 + rand(i) * 8;
+      const top = rand(i + 50) * sz * 0.22;
+      // Light, close tones: the fill stays sparse and the shelf edges draw.
+      const tone = 168 + Math.floor(rand(i + 9) * 50);
+      ctx.fillStyle = `rgb(${tone + 12},${tone + 6},${tone})`;
+      ctx.fillRect(x, top, w - 1.5, sz - top);
+      x += w;
+      i++;
+    }
+  });
   const windows: THREE.MeshBasicMaterial[] = [];
   const candles: THREE.PointLight[] = [];
 
   for (let b = 0; b < bays; b++) {
-    const zc = -b * BAY_LEN - BAY_LEN;
+    const zc = FRONT - BAY_LEN / 2 - b * BAY_LEN;
     for (const side of [-1, 1]) {
       const wallX = side * half;
       // Pilaster on the near edge of each bay, white with a gilt capital.
@@ -113,32 +127,22 @@ function buildHall(bays: number) {
         [0, 4.2],
         [4.8, 8.8],
       ]) {
-        const back = new THREE.Mesh(new THREE.BoxGeometry(0.2, y1 - y0, BAY_LEN - 0.9), wood);
-        back.position.set(wallX, (y0 + y1) / 2, zc);
-        scene.add(back);
-        const spacing = (y1 - y0) / rowsPerTier;
-        for (let r = 0; r < rowsPerTier; r++) {
-          const shelfY = y0 + r * spacing;
-          const board = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.08, BAY_LEN - 0.9), wood);
-          board.position.set(wallX - side * 0.25, shelfY + 0.04, zc);
+        const rows = 2;
+        const spacing = (y1 - y0) / rows;
+        const tex = spines.clone();
+        tex.needsUpdate = true;
+        tex.repeat.set((BAY_LEN - 0.9) / 2.4, 1);
+        const face = new THREE.Mesh(
+          new THREE.PlaneGeometry(BAY_LEN - 0.9, y1 - y0),
+          new THREE.MeshStandardMaterial({ map: tex, roughness: 0.9 })
+        );
+        face.position.set(wallX - side * 0.12, (y0 + y1) / 2, zc);
+        face.rotation.y = -side * Math.PI / 2;
+        scene.add(face);
+        for (let r = 0; r <= rows; r++) {
+          const board = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.1, BAY_LEN - 0.9), wood);
+          board.position.set(wallX - side * 0.25, y0 + r * spacing, zc);
           scene.add(board);
-          let z = zc - (BAY_LEN - 1.2) / 2;
-          for (let k = 0; k < perRow && n < total; k++) {
-            const seed = n * 1.37 + b * 7.1;
-            const w = 0.18 + rand(seed) * 0.16;
-            const h = spacing * (0.62 + rand(seed + 1) * 0.3);
-            m.compose(
-              new THREE.Vector3(wallX - side * 0.3, shelfY + 0.08 + h / 2, z + w / 2),
-              q,
-              new THREE.Vector3(0.42, h, w)
-            );
-            books.setMatrixAt(n, m);
-            // Spines in muted, varied tones so the shelves read as texture.
-            col.setHSL(0.08 + rand(seed + 2) * 0.05, 0.25, 0.22 + rand(seed + 3) * 0.35);
-            books.setColorAt(n, col);
-            z += w + 0.015;
-            n++;
-          }
         }
       }
 
@@ -149,11 +153,6 @@ function buildHall(bays: number) {
       const rail = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, BAY_LEN), gilt);
       rail.position.set(wallX - side * 1.35, 5.45, zc);
       scene.add(rail);
-      for (let k = 0; k < 12; k++) {
-        const post = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.85, 0.06), white);
-        post.position.set(wallX - side * 1.35, 5.0, zc - BAY_LEN / 2 + 0.4 + k * 0.72);
-        scene.add(post);
-      }
 
       // Clerestory window above each bay.
       const glass = new THREE.MeshBasicMaterial({ color: 0xffffff });
@@ -167,7 +166,9 @@ function buildHall(bays: number) {
       scene.add(wall);
     }
 
-    const candle = new THREE.PointLight(0xffa04a, 0, 16, 1.6);
+    // Neutral light: gilt is found by colour, so warmth comes from the candle
+    // palette on the page, not from tinting every surface orange.
+    const candle = new THREE.PointLight(0xffffff, 0, 16, 1.6);
     candle.position.set(0, 3.2, zc);
     scene.add(candle);
     candles.push(candle);
@@ -179,7 +180,7 @@ function buildHall(bays: number) {
     ctx.fillRect(0, 0, s, s);
     for (let i = 0; i < 40; i++) {
       const g = ctx.createRadialGradient(rand(i) * s, rand(i + 9) * s, 0, rand(i) * s, rand(i + 9) * s, 20 + rand(i + 4) * 50);
-      g.addColorStop(0, `rgba(120,110,95,${0.12 + rand(i + 2) * 0.18})`);
+      g.addColorStop(0, `rgba(120,110,95,${0.04 + rand(i + 2) * 0.08})`);
       g.addColorStop(1, 'rgba(120,110,95,0)');
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, s, s);
@@ -187,13 +188,14 @@ function buildHall(bays: number) {
   });
   fresco.repeat.set(1, bays);
   const vaultGeo = new THREE.CylinderGeometry(half, half, length, 40, 1, true, -Math.PI / 2, Math.PI);
-  vaultGeo.rotateX(Math.PI / 2);
+  // -90deg puts the open half-cylinder overhead rather than under the floor.
+  vaultGeo.rotateX(-Math.PI / 2);
   const vault = new THREE.Mesh(vaultGeo, new THREE.MeshStandardMaterial({ map: fresco, side: THREE.BackSide }));
-  vault.position.set(0, 13.2, -length / 2 + BAY_LEN / 2);
+  vault.position.set(0, 13.2, FRONT - length / 2);
   scene.add(vault);
   for (let b = 0; b <= bays; b++) {
-    const rib = new THREE.Mesh(new THREE.TorusGeometry(half - 0.05, 0.12, 6, 32, Math.PI), gilt);
-    rib.position.set(0, 13.2, -b * BAY_LEN - BAY_LEN / 2);
+    const rib = new THREE.Mesh(new THREE.TorusGeometry(half - 0.1, 0.28, 6, 40, Math.PI), gilt);
+    rib.position.set(0, 13.2, FRONT - b * BAY_LEN);
     scene.add(rib);
   }
 
@@ -201,15 +203,12 @@ function buildHall(bays: number) {
   const endGlass = new THREE.MeshBasicMaterial({ color: 0xffffff });
   windows.push(endGlass);
   const endWall = new THREE.Mesh(new THREE.PlaneGeometry(NAVE_W, 20), white);
-  endWall.position.set(0, 10, -length + BAY_LEN / 2);
+  endWall.position.set(0, 10, FRONT - length);
   scene.add(endWall);
   const endWin = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 9), endGlass);
-  endWin.position.set(0, 9, -length + BAY_LEN / 2 + 0.05);
+  endWin.position.set(0, 9, FRONT - length + 0.05);
   scene.add(endWin);
 
-  books.instanceMatrix.needsUpdate = true;
-  if (books.instanceColor) books.instanceColor.needsUpdate = true;
-  scene.add(books);
 
   const hemi = new THREE.HemisphereLight(0xffffff, 0x777777, 1);
   scene.add(hemi);
@@ -227,6 +226,9 @@ void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }
 
 // Each character cell samples the tiny render once: luminance picks a fill
 // glyph, the normal pass picks an edge stroke, warm saturated colour is gilt.
+// Each character cell reads its 2x2 block of a half-resolution render:
+// averaged luminance picks the stipple, the strongest normal crease picks an
+// edge stroke and its direction, and any warm saturated texel makes it gilt.
 const FRAG = `
 uniform sampler2D tColor;
 uniform sampler2D tNormal;
@@ -240,39 +242,58 @@ uniform vec3 uFill;
 uniform vec3 uGilt;
 uniform float uDark;
 
+vec3 nrm(vec2 t, vec2 res) { return texture2D(tNormal, (t + 0.5) / res).rgb; }
+
 void main() {
   vec2 cell = floor(gl_FragCoord.xy / uCell);
   vec2 local = fract(gl_FragCoord.xy / uCell);
-  vec2 uv = (cell + 0.5) / uGrid;
-  vec2 px = 1.0 / uGrid;
+  vec2 res = uGrid * 2.0;
+  vec2 base = cell * 2.0;
 
-  vec3 c = texture2D(tColor, uv).rgb;
-  float lum = pow(clamp(dot(c, vec3(0.299, 0.587, 0.114)), 0.0, 1.0), 1.0 / 2.2);
-  float isGilt = step(0.18, c.r - c.b) * step(0.08, c.r);
+  float lum = 0.0;
+  float gilt = 0.0;
+  float best = 0.0;
+  vec2 dir = vec2(0.0);
+  for (int j = 0; j < 2; j++) {
+    for (int i = 0; i < 2; i++) {
+      vec2 t = base + vec2(float(i), float(j));
+      vec3 c = texture2D(tColor, (t + 0.5) / res).rgb;
+      lum += dot(c, vec3(0.299, 0.587, 0.114)) * 0.25;
+      gilt = max(gilt, step(0.16, c.r - c.b) * step(0.06, c.r));
+      vec3 n0 = nrm(t, res);
+      vec3 gx = n0 - nrm(t - vec2(1.0, 0.0), res);
+      vec3 gy = n0 - nrm(t - vec2(0.0, 1.0), res);
+      float e = length(vec2(length(gx), length(gy)));
+      if (e > best) {
+        best = e;
+        dir = vec2(dot(gx, vec3(1.0)), dot(gy, vec3(1.0)));
+      }
+    }
+  }
+  lum = pow(clamp(lum, 0.0, 1.0), 1.0 / 2.2);
 
-  vec3 gx = texture2D(tNormal, uv + vec2(px.x, 0.0)).rgb - texture2D(tNormal, uv - vec2(px.x, 0.0)).rgb;
-  vec3 gy = texture2D(tNormal, uv + vec2(0.0, px.y)).rgb - texture2D(tNormal, uv - vec2(0.0, px.y)).rgb;
-  float edge = length(vec2(length(gx), length(gy)));
+  vec2 bc = mod(cell, 4.0);
+  float bayer = mod(bc.x * 4.0 + bc.y * 11.0 + bc.x * bc.y * 3.0, 16.0) / 16.0 - 0.5;
 
   float glyph;
-  bool isEdge = edge > 0.5;
+  bool isEdge = best > 0.7;
   if (isEdge) {
-    float sx = dot(gx, vec3(1.0));
-    float sy = dot(gy, vec3(1.0));
-    float phi = mod(atan(sx, -sy) + 3.14159265, 3.14159265);
+    float phi = mod(atan(dir.x, -dir.y) + 3.14159265, 3.14159265);
     glyph = 10.0 + mod(floor(phi / 0.78539816 + 0.5), 4.0);
   } else {
-    float level = uDark > 0.5 ? lum : 1.0 - pow(lum, 0.8);
-    glyph = floor(clamp(level, 0.0, 0.999) * 10.0);
+    float tone = uDark > 0.5 ? lum : 1.0 - lum;
+    float level = clamp((tone - 0.34) * 2.1 + bayer * 0.3, 0.0, 0.999);
+    glyph = floor(level * 4.0);
+    glyph = glyph == 3.0 ? 5.0 : glyph;
   }
 
   float a = texture2D(tAtlas, vec2((glyph + local.x) / uGlyphs, local.y)).a;
-  vec3 ink = isGilt > 0.5 ? uGilt : (isEdge ? uInk : uFill);
+  vec3 ink = gilt > 0.5 ? uGilt : (isEdge ? uInk : uFill);
   gl_FragColor = vec4(mix(uBg, ink, a), 1.0);
 }
 `;
 
-export default function Hall({ progress, bays }: HallProps) {
+export default function Hall({ focus, bays }: HallProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -292,7 +313,7 @@ export default function Hall({ progress, bays }: HallProps) {
     renderer.domElement.style.display = 'block';
 
     const hall = buildHall(bays);
-    const camera = new THREE.PerspectiveCamera(62, 2, 0.1, 200);
+    const camera = new THREE.PerspectiveCamera(72, 2, 0.1, 200);
     const normalMat = new THREE.MeshNormalMaterial();
     let rtColor = new THREE.WebGLRenderTarget(2, 2);
     let rtNormal = new THREE.WebGLRenderTarget(2, 2);
@@ -356,7 +377,7 @@ export default function Hall({ progress, bays }: HallProps) {
         night: { hemi: 0.05, sun: 0.35, glass: 0.95, candle: 0 },
       }[mode];
       hall.hemi.intensity = preset.hemi;
-      hall.hemi.color.set(mode === 'night' ? 0x8fa4c8 : mode === 'candle' ? 0xffc890 : 0xffffff);
+      hall.hemi.color.set(mode === 'night' ? 0x8fa4c8 : 0xffffff);
       hall.sun.intensity = preset.sun;
       hall.sun.color.set(mode === 'night' ? 0xa8b8e0 : 0xffffff);
       hall.windows.forEach((w) => w.color.setScalar(preset.glass));
@@ -378,8 +399,8 @@ export default function Hall({ progress, bays }: HallProps) {
       camera.updateProjectionMatrix();
       rtColor.dispose();
       rtNormal.dispose();
-      rtColor = new THREE.WebGLRenderTarget(cols, rows);
-      rtNormal = new THREE.WebGLRenderTarget(cols, rows);
+      rtColor = new THREE.WebGLRenderTarget(cols * 2, rows * 2);
+      rtNormal = new THREE.WebGLRenderTarget(cols * 2, rows * 2);
       uniforms.tColor.value = rtColor.texture;
       uniforms.tNormal.value = rtNormal.texture;
     };
@@ -399,22 +420,27 @@ export default function Hall({ progress, bays }: HallProps) {
     io.observe(wrap);
 
     const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let z = 6;
+
+    let z = 3.5;
     let yaw = 0;
     let raf = 0;
     let last = 0;
-    const walk = hall.length - BAY_LEN * 1.6;
+    const walk = hall.length - 12;
+    // Stand just short of the bay so its shelves fill the sides of the view.
+    const bayZ = (i: number) => FRONT - i * BAY_LEN + 1;
 
     const frame = (now: number) => {
       raf = requestAnimationFrame(frame);
       if (!visible || document.hidden || now - last < 33) return;
       last = now;
       const t = now / 1000;
-      const targetZ = 6 - progress.current * walk;
-      z += (targetZ - z) * (still ? 1 : 0.08);
-      yaw += ((still ? 0 : pointer.x * 0.35 + Math.sin(t * 0.25) * 0.08) - yaw) * 0.05;
-      camera.position.set(Math.sin(t * 0.18) * (still ? 0 : 0.4), 2.4, z);
-      camera.lookAt(Math.sin(yaw) * 10, 6.2, z - 14);
+      const drift = 0.5 - 0.5 * Math.cos(t * 0.045);
+      const targetZ = focus.current !== null ? bayZ(focus.current) : 3.5 - drift * walk;
+      z += (targetZ - z) * (still ? 1 : focus.current !== null ? 0.06 : 0.02);
+      // Symmetric one-point view; only the visitor's pointer turns the head.
+      yaw += ((still ? 0 : pointer.x * 0.3) - yaw) * 0.05;
+      camera.position.set(0, 3.4, z);
+      camera.lookAt(Math.sin(yaw) * 6, 7.4, z - 16);
       hall.candles.forEach((c, i) => {
         const flicker = 0.82 + 0.18 * Math.sin(t * 7.3 + i * 1.7) * Math.sin(t * 3.1 + i);
         c.intensity = (c.userData.base ?? 0) * (still ? 1 : flicker);
@@ -449,7 +475,7 @@ export default function Hall({ progress, bays }: HallProps) {
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [bays, progress]);
+  }, [bays, focus]);
 
   return <div ref={wrapRef} style={{ width: '100%', height: '100%', overflow: 'hidden' }} />;
 }

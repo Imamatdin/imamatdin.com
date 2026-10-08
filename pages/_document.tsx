@@ -35,11 +35,12 @@ export default function Document() {
       </Head>
       <body>
         <ColorModeScript initialColorMode="light" />
-        {/* Applies the saved mode before first paint. Visitors from before the
-            three modes keep night if Chakra had them on dark. */}
+        {/* Applies the saved mode before first paint (?mode= overrides it for a
+            shareable link). Visitors from before the three modes keep night if
+            Chakra had them on dark. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var m=localStorage.getItem('site-mode');if(m!=='noon'&&m!=='candle'&&m!=='night'){m=localStorage.getItem('chakra-ui-color-mode')==='dark'?'night':'noon'}document.documentElement.setAttribute('data-mode',m)}catch(e){}})()`,
+            __html: `(function(){try{var q=new URLSearchParams(location.search).get('mode');var m=q||localStorage.getItem('site-mode');if(m!=='noon'&&m!=='candle'&&m!=='night'){m=localStorage.getItem('chakra-ui-color-mode')==='dark'?'night':'noon'}document.documentElement.setAttribute('data-mode',m)}catch(e){}})()`,
           }}
         />
         <Main />
